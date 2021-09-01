@@ -1,6 +1,6 @@
 # Team Contract
 
-#### Team name: `name`
+#### Team name: `Name`
 #### Date: `09/01/2021`
 #### GitHub Repository: `https://github.com/nursimadonuk/CS-Capstone-Project`
 

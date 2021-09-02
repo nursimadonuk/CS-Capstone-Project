@@ -1,6 +1,6 @@
 # Team Contract
 
-#### Team name: `Lens Cleanse`
+#### Team name: `Lens Cleansers`
 #### Date: `09/02/2021`
 #### GitHub Repository: `https://github.com/nursimadonuk/CS-Capstone-Project`
 

@@ -1,1 +1,1 @@
-# CS-Capstone-Project
+# CS-Capstone-Project: Lens Cleanse App

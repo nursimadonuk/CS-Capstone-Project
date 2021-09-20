@@ -1,3 +1,14 @@
 * {
   margin: 0;
 }
+
+.app {
+  background-color:rgb(221, 199, 153);
+}
+
+.app_header {
+  background-color: floralwhite;
+  padding: 20px;
+  border-bottom: 1px solid rgb(109, 91, 65);
+  object-fit: contain;
+}

@@ -1,7 +1,20 @@
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post';
+import { collectPosts } from './firebase'
+import { doc, onSnapshot } from 'firebase/firestore';
 
 function App() {
+  const [posts, setPosts] = useState([]);
+
+  // runs piece of code on specific condition
+  useEffect(() => {
+    onSnapshot(collectPosts, (snapshot) => {
+      // when posts changes this code runs
+      setPosts(snapshot.docs.map(doc=>doc.data()));
+    })
+  }, []);
+
   return (
     <div className="app">
 
@@ -14,11 +27,7 @@ function App() {
         />
         <h1>Welcome to Lens Cleanse!!</h1>
       </div>  
-
-      <Post username="NursimaDonuk" caption="First Post" imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlyhZtrjdFZkkTpR6ludPBtdB3poErWgqGUQ&usqp=CAU"/>
-      <Post username="Rafsan" caption="Second Post" imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlyhZtrjdFZkkTpR6ludPBtdB3poErWgqGUQ&usqp=CAU"/>
-      <Post username="Mena" caption="Third Post" imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlyhZtrjdFZkkTpR6ludPBtdB3poErWgqGUQ&usqp=CAU"/>
-      <Post username="Jiaying" caption="Fourth Post" imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlyhZtrjdFZkkTpR6ludPBtdB3poErWgqGUQ&usqp=CAU"/>
+      
     </div>
   );
 }

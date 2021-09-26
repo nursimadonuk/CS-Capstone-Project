@@ -5,7 +5,7 @@ import { collectPosts, auth } from './firebase'
 import { onSnapshot } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut, signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Input, makeStyles, Modal } from '@material-ui/core';
-
+import ImageUpload from './ImageUpload';
 
 function getModalStyle() {
   const top = 50;
@@ -106,7 +106,7 @@ function App() {
   return (
     <div className="app">
 
-      
+      <ImageUpload />
 
       <Modal
         open={open}

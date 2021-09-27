@@ -5,12 +5,17 @@
 .app {
   background-color: #F2E9E4;
   height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .app_header {
   display: flex;
+  justify-content: center;
+align-content: center;
   background-color: #B0BBBF;
-  padding: 20px;
+  /* padding: 20px; */
   border-bottom: 1px solid #A1A499;
   object-fit: contain;
 }
@@ -21,6 +26,18 @@
 }
 
 .app_header_image {
-  width: 50px;
+  width: 100px;
+  padding: 0;
   height: auto;
+  /* border: 2px solid red; */
+}
+
+.app_header_h1{
+  display: flex;
+  align-items: center
+}
+
+.posts{
+  display: flex;
+  justify-content: center;
 }

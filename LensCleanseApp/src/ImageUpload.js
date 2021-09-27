@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 import { storage, collectPosts } from './firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
 import { serverTimestamp, FieldValue } from 'firebase/firestore';
+import { TextField, Input } from "@material-ui/core"
+
+import "./Post.css"
+
 
 function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
@@ -62,10 +66,12 @@ function ImageUpload({ username }) {
 
   return (
     <div>
-
       <progress className="imageupload_progress" value={progress} max="100" />
-      <input type="text" placeholder="Enter a caption..." onChange={event => setCaption(event.target.value)} value={caption} />
-      <input type="file" onChange={handleChange} />
+
+      <TextField id="standard-basic" className="TextBox" label="Enter a caption" variant="standard" onChange={event => setCaption(event.target.value)} value={caption} />
+      {/* <input type="text" placeholder="Enter a caption..." onChange={event => setCaption(event.target.value)} value={caption} /> */}
+      <Input type="file" onChange={handleChange} />
+      {/* <input type="file" onChange={handleChange} /> */}
       <Button onClick={handleUpload}>
         Upload
       </Button>

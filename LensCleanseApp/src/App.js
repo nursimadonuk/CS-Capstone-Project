@@ -5,6 +5,8 @@ import { collectPosts, auth } from './firebase'
 import { onSnapshot } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut, signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Input, makeStyles, Modal } from '@material-ui/core';
+import { createTheme, ThemeProvider } from '@material-ui/core';
+import { blue, red } from '@material-ui/core/colors';
 import ImageUpload from './ImageUpload';
 
 function getModalStyle() {
@@ -104,115 +106,137 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <ThemeProvider theme={theme}>
+      <div className="app">
 
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ) : (
-        <h3>Login to upload image</h3>
-      )}
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+        >
+          <div style={modalStyle} className={classes.paper}>
+            <form className="app_signup">
+              <center>
+                <img
+                  className="app_header_image"
+                  src=""
+                  alt=""
+                />
+              </center>
 
-
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app_signup">
-            <center>
-              <img
-                className="app_header_image"
-                src=""
-                alt=""
+              <Input
+                type="text"
+                placeholder="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
-            </center>
-
-            <Input
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Input
-              type="text"
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <Input
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <Button type="submit" onClick={signUp}>Sign Up</Button>
-          </form>
-        </div>
-      </Modal>
-
-      <Modal
-        open={openSignIn}
-        onClose={() => setOpenSignIn(false)}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app_signup">
-            <center>
-              <img
-                className="app_header_image"
-                src=""
-                alt=""
+              <Input
+                type="text"
+                placeholder="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-            </center>
 
-            <Input
-              type="text"
-              placeholder="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+              <Input
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-            <Input
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <Button type="submit" onClick={signIn}>Sign In</Button>
-          </form>
-        </div>
-      </Modal>
-
-      <div className="app_header">
-        <img
-          className="app_header_image"
-          src="LensCleanse.png"
-          alt="Lens Cleanse"
-        />
-        <h1 className="app_header_h1">Welcome to Lens Cleanse!</h1>
-      </div>
-
-      {user ? (
-        <Button onClick={() => signOut(auth)}>Log Out</Button>
-      ) : (
-        <div className="app_loginContainer">
-          <Button onClick={() => setOpenSignIn(true)}>Sign in</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
-        </div>
-      )}
-
-      {
-        posts.map(({ id, post }) => (
-          <div className="posts" >
-            <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+              <Button type="submit" onClick={signUp}>Sign Up</Button>
+            </form>
           </div>
-        ))
-      }
+        </Modal>
 
-    </div>
+        <Modal
+          open={openSignIn}
+          onClose={() => setOpenSignIn(false)}
+        >
+          <div style={modalStyle} className={classes.paper}>
+            <form className="app_signup">
+              <center>
+                <img
+                  className="app_header_image"
+                  src=""
+                  alt=""
+                />
+              </center>
+
+              <Input
+                type="text"
+                placeholder="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+
+              <Input
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <Button type="submit" onClick={signIn}>Sign In</Button>
+            </form>
+          </div>
+        </Modal>
+
+        <div className="app_header">
+          <img
+            className="app_header_image"
+            src="LensCleanse.png"
+            alt="Lens Cleanse"
+          />
+          <h1 className="app_header_h1">Welcome to Lens Cleanse!</h1>
+        </div>
+
+        {user?.displayName ? (
+          <ImageUpload username={user.displayName} />
+        ) : (
+          <h3>Login to upload image</h3>
+        )}
+
+        {user ? (
+          <div className="LogOutButton">
+            <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
+          </div>
+        ) : (
+          <div className="app_loginContainer">
+            <div className="SignUpButtons">
+              <Button variant="contained" color="primary" onClick={() => setOpenSignIn(true)}>Sign in</Button>
+            </div>
+            <div className="SignUpButtons">
+              <Button variant="contained" color="primary" onClick={() => setOpen(true)}>Sign Up</Button>
+            </div>
+          </div>
+        )}
+
+        {
+          posts.map(({ id, post }) => (
+            <div className="posts" >
+              <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+            </div>
+          ))
+        }
+
+      </div>
+    </ThemeProvider>
   );
 }
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      // Purple and green play nicely together.
+      main: blue[500],
+    },
+    secondary: {
+      // This is green.A700 as hex.
+      main: red[500],
+    },
+  },
+});
+
 
 export default App;

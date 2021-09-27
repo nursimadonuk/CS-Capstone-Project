@@ -26,3 +26,15 @@
 .post_avatar {
     margin-right: 10px;
 }
+
+.uploadFiles{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  flex-direction: row;
+}
+
+.uploadFileComponents{
+  padding: 2px 30px
+}
+

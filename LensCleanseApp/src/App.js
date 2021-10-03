@@ -8,6 +8,7 @@ import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import ImageUpload from './ImageUpload';
+import AppDrawer from './components/AppDrawer';
 
 function getModalStyle() {
   const top = 50;
@@ -170,8 +171,10 @@ function App() {
             </form>
           </div>
         </Modal>
-
         <div className="app_header">
+          <div>
+            <AppDrawer />
+          </div>
           <img
             className="app_header_image"
             src="LensCleanse.png"

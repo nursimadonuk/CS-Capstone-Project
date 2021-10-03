@@ -3,7 +3,7 @@
 }
 
 .app {
-  background-color: #F2E9E4;
+  background-color: #C0D6DF;
   height: 100%;
   text-align: center;
   display: flex;
@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
 align-content: center;
-  background-color: #B0BBBF;
+  background-color: #DBE9EE;
   /* padding: 20px; */
   border-bottom: 1px solid #A1A499;
   object-fit: contain;

@@ -1,6 +1,6 @@
 # CS-Capstone-Project: Lens Cleanse App
 
-Image Sharing App for Photographers by
+Image Sharing App designed for Photographers by
 
  - `Nursima Donuk`
  - `Rafsan Hasan`

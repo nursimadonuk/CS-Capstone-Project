@@ -12,12 +12,20 @@
 
 .app_header {
   display: flex;
-  justify-content: center;
-align-content: center;
+  justify-content: space-between;
+  align-content: center;
   background-color: #DBE9EE;
   /* padding: 20px; */
   border-bottom: 1px solid #A1A499;
   object-fit: contain;
+}
+
+.drawer_and_logo {
+  display: flex;
+}
+
+.app_loginContainer {
+  display: flex;
 }
 
 .app_signup {
@@ -26,20 +34,24 @@ align-content: center;
 }
 
 .app_header_image {
-  width: 100px;
+  width: 120px;
   padding: 0;
   height: auto;
+  object-fit: contain;
   /* border: 2px solid red; */
 }
 
 .app_header_h1{
   display: flex;
-  align-items: center
+  align-items: center;
+  font-family: 'Brush Script MT', cursive;
+  color: #4F6D7A;
 }
 
 .posts{
   display: flex;
   justify-content: center;
+  /* padding: 10px; */
 }
 
 .LogOutButton{

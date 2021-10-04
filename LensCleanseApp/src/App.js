@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post';
 import { collectPosts, auth } from './firebase'
-import { onSnapshot } from 'firebase/firestore';
+import { onSnapshot, orderBy, query, Timestamp } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut, signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import ImageUpload from './ImageUpload';
 import AppDrawer from './components/AppDrawer';
+// import InstagramEmbed from 'react-instagram-embed';
 
 function getModalStyle() {
   const top = 50;
@@ -65,7 +66,7 @@ function App() {
 
   // runs piece of code on specific condition
   useEffect(() => {
-    onSnapshot(collectPosts, (snapshot) => {
+    onSnapshot(query(collectPosts, orderBy('timestamp', 'desc')), (snapshot) => {
       // when posts changes this code runs
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
@@ -174,15 +175,31 @@ function App() {
 
 
         <div className="app_header">
-          <div>
-            <AppDrawer />
+          <div className="drawer_and_logo">
+            <div>
+              <AppDrawer />
+            </div>
+            <img
+              className="app_header_image"
+              src="LensCleanse.png"
+              alt="Lens Cleanse"
+            />
           </div>
-          <img
-            className="app_header_image"
-            src="LensCleanse.png"
-            alt="Lens Cleanse"
-          />
-          <h1 className="app_header_h1">Welcome to Lens Cleanse!</h1>
+          <h1 className="app_header_h1">Lens Cleanse</h1>
+          {user ? (
+            <div className="LogOutButton">
+              <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
+            </div>
+          ) : (
+            <div className="app_loginContainer">
+              <div className="SignUpButtons">
+                <Button variant="contained" color="primary" onClick={() => setOpenSignIn(true)}>Sign in</Button>
+              </div>
+              <div className="SignUpButtons">
+                <Button variant="contained" color="primary" onClick={() => setOpen(true)}>Sign Up</Button>
+              </div>
+            </div>
+          )}
         </div>
 
         {user?.displayName ? (
@@ -191,25 +208,10 @@ function App() {
           <h3>Login to upload image</h3>
         )}
 
-        {user ? (
-          <div className="LogOutButton">
-            <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
-          </div>
-        ) : (
-          <div className="app_loginContainer">
-            <div className="SignUpButtons">
-              <Button variant="contained" color="primary" onClick={() => setOpenSignIn(true)}>Sign in</Button>
-            </div>
-            <div className="SignUpButtons">
-              <Button variant="contained" color="primary" onClick={() => setOpen(true)}>Sign Up</Button>
-            </div>
-          </div>
-        )}
-
         {
           posts.map(({ id, post }) => (
             <div className="posts" >
-              <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
             </div>
           ))
         }

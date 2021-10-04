@@ -1,6 +1,7 @@
 .post {
     background-color:#4F6D7A;
     max-width: 500px;
+    min-width: 500px;
     border: 1px solid #9C9583;
     margin-bottom: 45px;
 }
@@ -15,6 +16,7 @@
 .post_text {
     font-weight: normal;
     padding: 20px;
+    border-bottom: 1px solid black;
 }
 
 .post_header {
@@ -38,3 +40,33 @@
   padding: 2px 30px
 }
 
+.post_commentbox {
+    display: flex;
+    margin-top: 10px;
+}
+
+.post_input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    border-top: 1px solid #9C9583;
+
+}
+
+.post_input_logout {
+    flex: 1;
+    border: none;
+    width: 90%;
+    padding: 10px;
+    border-top: 1px solid #9C9583;
+}
+
+.post_button {
+    border-top: 1px solid #9C9583;
+    border: none;
+    flex: 0;
+}
+
+.post_comments {
+    padding: 20px;
+}

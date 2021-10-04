@@ -1,0 +1,14 @@
+.imageupload {
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.imageupload_progress {
+    width: 85%;
+}
+.imageupload_caption {
+    width: 90%;
+}

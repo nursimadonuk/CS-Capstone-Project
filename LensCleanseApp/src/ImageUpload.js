@@ -1,12 +1,13 @@
 // import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
 import { storage, collectPosts } from './firebase';
-import { ref, getDownloadURL } from 'firebase/storage';
-import { serverTimestamp, FieldValue } from 'firebase/firestore';
-import { TextField, Input, LinearProgress, Button, IconButton, } from "@material-ui/core"
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { serverTimestamp, FieldValue, addDoc } from 'firebase/firestore';
+import { TextField, Input, LinearProgress, Button, IconButton } from "@material-ui/core"
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import "./Post.css"
+import "./ImageUpload.css"
 
 function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
@@ -23,13 +24,14 @@ function ImageUpload({ username }) {
   };
 
   const handleUpload = () => {
-    //************** NEEDS TO BE FIXED: put ***************/
+   
     if (!image || !caption) {
       alert('PLEASE MAKE SURE YOU ENTERED BOTH IMAGE AND CAPTION')
     }
     else {
-      const uploadTask = ref(storage, `images/${image.name}`).put(image);
-      // const uploadTask = ref(storage, `images/${image.name}`);
+
+      const uploadTask = uploadBytesResumable(ref(storage, `images/${image.name}`), image);
+      
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -46,9 +48,9 @@ function ImageUpload({ username }) {
         () => {
           // complete function
           //************** NEEDS TO BE FIXED: child ***************/
-          getDownloadURL(ref(storage, "images").child(image.name))
+          getDownloadURL(ref(storage, `images/${image.name}`))
             .then(url => {
-              collectPosts.add({
+              addDoc(collectPosts, {
                 timestamp: serverTimestamp(FieldValue),
                 caption: caption,
                 imageUrl: url,
@@ -68,14 +70,14 @@ function ImageUpload({ username }) {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="uploadFiles">
-        {/* <progress className="imageupload_progress" value={progress} max="100" /> */}
+    <ThemeProvider theme={theme} className="imageupload">
+      <div>
 
-        {/* <input type="text" placeholder="Enter a caption..." onChange={event => setCaption(event.target.value)} value={caption} /> */}
-        {/* <Input type="file" onChange={handleChange} /> */}
-        {/* <input type="file" onChange={handleChange} /> */}
-
+        <progress className="imageupload_progress" value={progress} max="100" />
+        <div className="uploadFileComponents">
+            <TextField id="standard-basic" className="imageupload_caption" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setCaption(event.target.value)} value={caption} />
+        </div>
+        
         <div className="uploadFileComponents">
           <label htmlFor="contained-button-file">
             <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange}
@@ -86,11 +88,7 @@ function ImageUpload({ username }) {
             </Button>
           </label>
         </div>
-        <div className="uploadFileComponents">
-          <div>
-            <TextField id="standard-basic" className="TextBox" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setCaption(event.target.value)} value={caption} />
-          </div>
-        </div>
+
         <div className="uploadFileComponents">
           <Button variant="contained" color="primary" onClick={handleUpload}>
             Upload

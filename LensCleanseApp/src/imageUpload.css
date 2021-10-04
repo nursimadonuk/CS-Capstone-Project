@@ -12,3 +12,8 @@
 .imageupload_caption {
     width: 90%;
 }
+
+.uploadFileComponents Button {
+    padding: 10px;
+    margin-left: 10px;
+}

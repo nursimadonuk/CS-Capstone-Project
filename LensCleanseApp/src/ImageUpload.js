@@ -87,13 +87,11 @@ function ImageUpload({ username }) {
               Choose File
             </Button>
           </label>
-        </div>
-
-        <div className="uploadFileComponents">
           <Button variant="contained" color="primary" onClick={handleUpload}>
             Upload
           </Button>
         </div>
+
       </div>
     </ThemeProvider>
   )

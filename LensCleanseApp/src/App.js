@@ -184,8 +184,17 @@ function App() {
               src="LensCleanse.png"
               alt="Lens Cleanse"
             />
+            <h1 className="app_header_h1">Lens Cleanse</h1>
           </div>
-          <h1 className="app_header_h1">Lens Cleanse</h1>
+          
+          
+          <div class="search-container">
+            <form>
+              <Input type="text" placeholder="Search.." name="search"/>
+              <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </div>
+
           {user ? (
             <div className="LogOutButton">
               <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
@@ -205,7 +214,7 @@ function App() {
         {user?.displayName ? (
           <ImageUpload username={user.displayName} />
         ) : (
-          <h3>Login to upload image</h3>
+          <h3 className="upload-login-message">Login to upload an image...</h3>
         )}
 
         {

@@ -176,17 +176,19 @@ function App() {
 
         <div className="app_header">
           <div className="drawer_and_logo">
-            <div>
+            {user?.displayName ? (
               <AppDrawer />
-            </div>
-            <img
+            ) : (
+              <img
               className="app_header_image"
               src="LensCleanse.png"
               alt="Lens Cleanse"
-            />
-            <h1 className="app_header_h1">Lens Cleanse</h1>
+              width='120'
+              height='auto'
+              />
+            )}
+            <h1 className="app_header_h1">Lens Cleanse</h1>     
           </div>
-          
           
           <div class="search-container">
             <form>
@@ -196,8 +198,13 @@ function App() {
           </div>
 
           {user ? (
-            <div className="LogOutButton">
-              <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
+            <div className='app_logoutContainer'>
+              <div className="SignUpButtons">
+                <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
+              </div>
+              <div className="SignUpButtons">
+                <Button variant="contained" color="primary" onClick={()=>signOut(auth)}>Upload Image</Button>
+              </div>
             </div>
           ) : (
             <div className="app_loginContainer">

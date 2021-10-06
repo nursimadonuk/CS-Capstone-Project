@@ -30,10 +30,6 @@
   display: flex;
 }
 
-.app_header_image .app_header_h1 {
-  position: inherit;
-}
-
 .app_loginContainer {
   display: flex;
 }
@@ -46,14 +42,6 @@
 .app_signup {
   display: flex;
   flex-direction: column;
-}
-
-.app_header_image {
-  width: 120px;
-  padding: 0;
-  height: auto;
-  object-fit: contain;
-  /* border: 2px solid red; */
 }
 
 .app_header_h1{
@@ -91,15 +79,26 @@
   background: #ccc;
 }
 
-
 .posts{
   display: flex;
   justify-content: center;
   /* padding: 10px; */
 }
 
-.LogOutButton{
-  padding: 10px 2px
+.LogOutButton .UploadImageButton{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 5px 2px;
+}
+
+.app_logoutContainer {
+  display: flex;
+}
+
+.app_logoutContainer Button {
+  /* color: #4F6D7A;*/
+  background-color: #4F6D7A;
 }
 
 .SignUpButtons{

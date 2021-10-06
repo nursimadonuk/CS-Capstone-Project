@@ -36,7 +36,7 @@ function AppDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+        {['My Profile', 'Inbox', 'Starred', 'Drafts', 'Friends', 'Collaborate'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemText primary={text} />
           </ListItem>
@@ -49,7 +49,7 @@ function AppDrawer() {
   return (
     <div>
       <React.Fragment key={'left'}>
-        <Button onClick={toggleDrawer('left', true)}><MenuIcon /></Button>
+        <Button onClick={toggleDrawer('left', true)}><img src="LensCleanse.png" alt="Lens Cleanse" width='120' height='auto'/></Button>
         <Drawer
           anchor={'left'}
           open={state['left']}

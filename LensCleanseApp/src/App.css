@@ -11,6 +11,9 @@
 }
 
 .app_header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -99,6 +102,11 @@
 .app_logoutContainer Button {
   /* color: #4F6D7A;*/
   background-color: #4F6D7A;
+}
+
+.sign_up_heading {
+  display: flex;
+  flex-direction: row;
 }
 
 .SignUpButtons{

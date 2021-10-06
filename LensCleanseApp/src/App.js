@@ -107,12 +107,15 @@ function App() {
         >
           <div style={modalStyle} className={classes.paper}>
             <form className="app_signup">
-              <center>
+              <center className='sign_up_heading'>
                 <img
                   className="app_header_image"
-                  src=""
-                  alt=""
+                  src="LensCleanse.png"
+                  alt="Lens Cleanse"
+                  width='120'
+                  height='auto'
                 />
+                <h1 className="app_header_h1">Lens Cleanse</h1>
               </center>
 
               <Input
@@ -146,12 +149,15 @@ function App() {
         >
           <div style={modalStyle} className={classes.paper}>
             <form className="app_signup">
-              <center>
+              <center className='sign_up_heading'>
                 <img
                   className="app_header_image"
-                  src=""
-                  alt=""
+                  src="LensCleanse.png"
+                  alt="Lens Cleanse"
+                  width='120'
+                  height='auto'
                 />
+                <h1 className="app_header_h1">Lens Cleanse</h1>
               </center>
 
               <Input
@@ -176,17 +182,14 @@ function App() {
 
         <div className="app_header">
           <div className="drawer_and_logo">
-            {user?.displayName ? (
-              <AppDrawer />
-            ) : (
+
               <img
               className="app_header_image"
               src="LensCleanse.png"
               alt="Lens Cleanse"
               width='120'
-              height='auto'
+              height='80'
               />
-            )}
             <h1 className="app_header_h1">Lens Cleanse</h1>     
           </div>
           
@@ -198,6 +201,7 @@ function App() {
           </div>
 
           {user ? (
+            /*
             <div className='app_logoutContainer'>
               <div className="SignUpButtons">
                 <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
@@ -206,6 +210,8 @@ function App() {
                 <Button variant="contained" color="primary" onClick={()=>signOut(auth)}>Upload Image</Button>
               </div>
             </div>
+            */
+             <AppDrawer user={user} username={user.displayName}/>
           ) : (
             <div className="app_loginContainer">
               <div className="SignUpButtons">

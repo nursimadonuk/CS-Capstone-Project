@@ -10,8 +10,10 @@ import ListItemText from '@mui/material/ListItemText';
 // import InboxIcon from '@mui/icons-material/MoveToInbox';
 // import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
+import Avatar from '@material-ui/core/Avatar';
+import './AppDrawer.css';
 
-function AppDrawer() {
+function AppDrawer({ user, username }) {
 
   const [state, setState] = React.useState({
     top: false,
@@ -36,7 +38,7 @@ function AppDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['My Profile', 'Inbox', 'Starred', 'Drafts', 'Friends', 'Collaborate'].map((text, index) => (
+        {['My Profile', 'Inbox', 'Friends', 'Upload Image', 'Drafts', 'Starred', 'Captured', 'Collaborate', 'Log Out'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemText primary={text} />
           </ListItem>
@@ -48,14 +50,14 @@ function AppDrawer() {
 
   return (
     <div>
-      <React.Fragment key={'left'}>
-        <Button onClick={toggleDrawer('left', true)}><img src="LensCleanse.png" alt="Lens Cleanse" width='120' height='auto'/></Button>
+      <React.Fragment className='togglebutton' key={'right'}>
+        <Button onClick={toggleDrawer('right', true)}><Avatar className="post_avatar" alt={username} src={"/static/images/avatar/1.jpg"} /></Button>
         <Drawer
-          anchor={'left'}
-          open={state['left']}
-          onClose={toggleDrawer('left', false)}
+          anchor={'right'}
+          open={state['right']}
+          onClose={toggleDrawer('right', false)}
         >
-          {list('left')}
+          {list('right')}
         </Drawer>
       </React.Fragment>
     </div>

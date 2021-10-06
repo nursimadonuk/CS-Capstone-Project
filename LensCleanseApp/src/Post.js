@@ -46,41 +46,33 @@ function Post({ postId, username, user, caption, imageUrl }) {
 
             <h4 className="post_text"> <strong>{ username }</strong> { caption }</h4>
 
+            {/* 93728 comments... -> when clicked on opens a scrollable modal with the comments */}
+
             <div className='post_comments'>
                 {comments.map((comment) => (
-                    <p>
+                    <p className='a_comment'>
                         <strong>{comment.username}</strong> {comment.text}
                     </p>
                 ))}
             </div>
 
-        {user?.displayName ? (
-            <form className='post_commentbox'>
-                <Input
-                    className='post_input'
-                    type='text'
-                    placeholder='Add a comment...'
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-                <Button
-                    className="post_button"
-                    disabled={!comment}
-                    type='submit'
-                    onClick={postComment}
-                >Post</Button>
-
-            </form>
-        ) : (
-                <Input
-                    className='post_input_logout'
-                    type='text'
-                    placeholder='Login to add a comment...'
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-        )}
-
+            {user && (
+                <form className='post_commentbox'>
+                    <Input
+                        className='post_input'
+                        type='text'
+                        placeholder='Add a comment...'
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                    />
+                    <Button
+                        className="post_button"
+                        disabled={!comment}
+                        type='submit'
+                        onClick={postComment}
+                    >Post</Button>
+                </form>
+            )}
 
         </div>
     )

@@ -46,8 +46,7 @@ function ImageUpload({ username }) {
           alert(error.message);
         },
         () => {
-          // complete function
-          //************** NEEDS TO BE FIXED: child ***************/
+
           getDownloadURL(ref(storage, `images/${image.name}`))
             .then(url => {
               addDoc(collectPosts, {

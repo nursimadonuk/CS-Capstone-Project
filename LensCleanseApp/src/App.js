@@ -9,31 +9,13 @@ import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import ImageUpload from './ImageUpload';
 import AppDrawer from './components/AppDrawer';
-// import InstagramEmbed from 'react-instagram-embed';
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, ${left}%)`,
-  };
-}
-
+import Navbar from './Navbar';
 
 
 function App() {
   const classes = useStyles();
-  const [modalStyle] = React.useState(getModalStyle);
-
   const [posts, setPosts] = useState([]);
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const [open, setOpen] = useState(false);
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -76,153 +58,15 @@ function App() {
     })
   }, []);
 
-  const signUp = (event) => {
-    event.preventDefault();
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((authUser) => {
-        return updateProfile(authUser.user, {
-          displayName: username
-        })
-      })
-      .catch((error) => alert(error.message));
-  }
-
-  const signIn = (event) => {
-    event.preventDefault();
-
-    signInWithEmailAndPassword(auth, email, password)
-      .catch((error) => alert(error.message))
-
-    setOpenSignIn(false);
-  }
-
   return (
     <ThemeProvider theme={theme}>
       <div className="app">
 
-        <Modal
-          open={open}
-          onClose={() => setOpen(false)}
-        >
-          <div style={modalStyle} className={classes.paper}>
-            <form className="app_signup">
-              <center className='sign_up_heading'>
-                <img
-                  className="app_header_image"
-                  src="LensCleanse.png"
-                  alt="Lens Cleanse"
-                  width='120'
-                  height='auto'
-                />
-                <h1 className="app_header_h1">Lens Cleanse</h1>
-              </center>
-
-              <Input
-                type="text"
-                placeholder="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <Input
-                type="text"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <Input
-                type="password"
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-
-              <Button type="submit" onClick={signUp}>Sign Up</Button>
-            </form>
-          </div>
-        </Modal>
-
-        <Modal
-          open={openSignIn}
-          onClose={() => setOpenSignIn(false)}
-        >
-          <div style={modalStyle} className={classes.paper}>
-            <form className="app_signup">
-              <center className='sign_up_heading'>
-                <img
-                  className="app_header_image"
-                  src="LensCleanse.png"
-                  alt="Lens Cleanse"
-                  width='120'
-                  height='auto'
-                />
-                <h1 className="app_header_h1">Lens Cleanse</h1>
-              </center>
-
-              <Input
-                type="text"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-
-              <Input
-                type="password"
-                placeholder="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-
-              <Button type="submit" onClick={signIn}>Sign In</Button>
-            </form>
-          </div>
-        </Modal>
-
-
-        <div className="app_header">
-          <div className="drawer_and_logo">
-
-              <img
-              className="app_header_image"
-              src="LensCleanse.png"
-              alt="Lens Cleanse"
-              width='120'
-              height='80'
-              />
-            <h1 className="app_header_h1">Lens Cleanse</h1>     
-          </div>
-          
-          <div class="search-container">
-            <form>
-              <Input type="text" placeholder="Search.." name="search"/>
-              <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-          </div>
-
-          {user ? (
-            /*
-            <div className='app_logoutContainer'>
-              <div className="SignUpButtons">
-                <Button variant="contained" color="secondary" onClick={() => signOut(auth)}>Log Out</Button>
-              </div>
-              <div className="SignUpButtons">
-                <Button variant="contained" color="primary" onClick={()=>signOut(auth)}>Upload Image</Button>
-              </div>
-            </div>
-            */
-             <AppDrawer user={user} username={user.displayName}/>
-          ) : (
-            <div className="app_loginContainer">
-              <div className="SignUpButtons">
-                <Button variant="contained" color="primary" onClick={() => setOpenSignIn(true)}>Sign in</Button>
-              </div>
-              <div className="SignUpButtons">
-                <Button variant="contained" color="primary" onClick={() => setOpen(true)}>Sign Up</Button>
-              </div>
-            </div>
-          )}
-        </div>
+        {user?.displayName ? (
+          <Navbar user={user} username={user.displayName} ></Navbar>
+        ) : (
+          <Navbar ></Navbar>
+        )}       
 
         {user?.displayName ? (
           <ImageUpload username={user.displayName} />

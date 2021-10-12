@@ -12,6 +12,9 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import './AppDrawer.css';
+import { auth } from '../firebase'
+import { signOut } from "firebase/auth";
+
 
 function AppDrawer({ user, username }) {
 
@@ -38,11 +41,33 @@ function AppDrawer({ user, username }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['My Profile', 'Inbox', 'Friends', 'Upload Image', 'Drafts', 'Starred', 'Captured', 'Collaborate', 'Log Out'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemText primary={text} />
+          <ListItem button key={'My Profile'}>
+            <ListItemText primary={'My Profile'} />
           </ListItem>
-        ))}
+          <ListItem button key={'Inbox'}>
+            <ListItemText primary={'Inbox'} />
+          </ListItem>
+          <ListItem button key={'Friends'}>
+            <ListItemText primary={'Friends'} />
+          </ListItem>
+          <ListItem button key={'Upload Image'}>
+            <ListItemText primary={'Upload Image'} />
+          </ListItem>
+          <ListItem button key={'Drafts'}>
+            <ListItemText primary={'Drafts'} />
+          </ListItem>
+          <ListItem button key={'Starred'}>
+            <ListItemText primary={'Starred'} />
+          </ListItem>
+          <ListItem button key={'Captured'}>
+            <ListItemText primary={'Captured'} />
+          </ListItem>
+          <ListItem button key={'Collaborate'}>
+            <ListItemText primary={'Collaborate'} />
+          </ListItem>
+          <ListItem onClick={() => signOut(auth)} button key={'Log Out'}>
+            <ListItemText primary={'Log Out'} />
+          </ListItem>
       </List>
       <Divider />
     </Box>

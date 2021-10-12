@@ -1,0 +1,83 @@
+.app_header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    background-color: #DBE9EE;
+    /* padding: 20px; */
+    border-bottom: 1px solid #A1A499;
+    object-fit: contain;
+  }
+
+  .drawer_and_logo {
+    display: flex;
+  }
+  
+  .app_loginContainer {
+    display: flex;
+  }
+  
+  .app_loginContainer Button {
+    /* color: #4F6D7A;*/
+    background-color: #4F6D7A;
+  }
+  
+  .app_header_h1{
+    display: flex;
+    align-items: center;
+    font-family: 'Brush Script MT', cursive;
+    color: #4F6D7A;
+  }
+  
+  .search-container {
+    display: flex;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 60px;
+    align-self: center;
+    background: #C0D6DF;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+  }
+  
+  .search-container button{
+    flex: 0;
+    align-self: right;
+  }
+  
+  .search-container Input{
+    flex: 1;
+    width: 80%;
+  }
+  
+  .search-container button:hover {
+    background: #ccc;
+  }
+
+  .LogOutButton .UploadImageButton{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px 2px;
+  }
+  
+  .app_logoutContainer {
+    display: flex;
+  }
+  
+  .app_logoutContainer Button {
+    /* color: #4F6D7A;*/
+    background-color: #4F6D7A;
+  }
+
+  .SignUpButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px 2px;
+  }

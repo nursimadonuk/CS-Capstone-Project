@@ -3,14 +3,12 @@ import './App.css';
 import Post from './Post';
 import { collectPosts, auth } from './firebase'
 import { onSnapshot, orderBy, query, Timestamp } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import ImageUpload from './ImageUpload';
-import AppDrawer from './components/AppDrawer';
 import Navbar from './Navbar';
-
 
 function App() {
   const classes = useStyles();
@@ -65,7 +63,7 @@ function App() {
         {user?.displayName ? (
           <Navbar user={user} username={user.displayName} ></Navbar>
         ) : (
-          <Navbar ></Navbar>
+          <Navbar></Navbar>
         )}       
 
         {user?.displayName ? (

@@ -1,19 +1,24 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@material-ui/core/Avatar';
 import './AppDrawer.css';
 import { auth } from '../firebase'
 import { signOut } from "firebase/auth";
+
+import PowerIcon from "../Icons/HeaderIcons/PowerIcon";
+import SettingsIcon from "../Icons/HeaderIcons/SettingsIcon";
+
+import HomeIcon from '../Icons/SidebarIcons/HomeIcon';
+import TypographyIcon from '../Icons/SidebarIcons/TypographyIcon';
+import TablesIcon from '../Icons/SidebarIcons/TablesIcon';
+import NotificationsIcon from '../Icons/SidebarIcons/NotificationsIcon';
+import ComponentsIcon from '../Icons/SidebarIcons/ComponentsIcon';
 
 
 function AppDrawer({ user, username }) {
@@ -33,40 +38,70 @@ function AppDrawer({ user, username }) {
     setState({ ...state, [anchor]: open });
   };
 
+  let history = useHistory();
+
+  const toUpload = () => {
+      history.push('/imageupload')
+  }
+
+  const toProfile = () => {
+    history.push('/profile')
+  }
+
+  const toSettings = () => {
+    history.push('/settings')
+  }
+
   const list = (anchor) => (
     <Box
+      className='menu-box'
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
-          <ListItem button key={'My Profile'}>
-            <ListItemText primary={'My Profile'} />
+      <List className='menu-list'>
+          <ListItem onClick={toProfile} button key={'My Profile'}>
+            <div className='list-item'>
+              <HomeIcon className='icon'/>
+              <p>My Profile</p>
+            </div>
           </ListItem>
-          <ListItem button key={'Inbox'}>
-            <ListItemText primary={'Inbox'} />
-          </ListItem>
-          <ListItem button key={'Friends'}>
-            <ListItemText primary={'Friends'} />
-          </ListItem>
-          <ListItem button key={'Upload Image'}>
-            <ListItemText primary={'Upload Image'} />
+          <ListItem onClick={toUpload} button key={'Upload Image'}>
+            <div className='list-item'>
+              <NotificationsIcon className='icon'/>
+              <p>Upload Image</p>
+            </div>
           </ListItem>
           <ListItem button key={'Drafts'}>
-            <ListItemText primary={'Drafts'} />
-          </ListItem>
-          <ListItem button key={'Starred'}>
-            <ListItemText primary={'Starred'} />
+            <div className='list-item'>
+              <TypographyIcon className='icon'/>
+              <p>Drafts</p>
+            </div>
           </ListItem>
           <ListItem button key={'Captured'}>
-            <ListItemText primary={'Captured'} />
+            <div className='list-item'>
+              <ComponentsIcon className='icon'/>
+              <p>Captured</p>
+            </div>
           </ListItem>
           <ListItem button key={'Collaborate'}>
-            <ListItemText primary={'Collaborate'} />
+            <div className='list-item'>
+              <TablesIcon className='icon'/>
+              <p>Collaborate</p>
+            </div>
+          </ListItem>
+          <ListItem onClick={toSettings} button key={'Settings'}>
+            <div className='list-item'>
+              <SettingsIcon className='icon'/>
+              <p>Settings</p>
+            </div>
           </ListItem>
           <ListItem onClick={() => signOut(auth)} button key={'Log Out'}>
-            <ListItemText primary={'Log Out'} />
+            <div className='list-item'>
+              <PowerIcon className='icon'/>
+              <p>Log Out</p>
+            </div>
           </ListItem>
       </List>
       <Divider />

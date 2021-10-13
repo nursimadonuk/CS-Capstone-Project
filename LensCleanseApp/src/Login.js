@@ -3,7 +3,7 @@ import { Button, Input } from '@material-ui/core';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from './firebase'
 import { useHistory } from 'react-router-dom';
-import './Navbar.css'
+import Navbar from './Navbar'
 
 function Login() {
     let history = useHistory();
@@ -64,20 +64,9 @@ function Login() {
 
     return (
         <div className='login_page'>
-            <div className="app_header">
-                <div className="drawer_and_logo">
-                    <img
-                    className="app_header_image"
-                    src="LensCleanse.png"
-                    alt="Lens Cleanse"
-                    width='120'
-                    height='80'
-                    />
-                    <h1 className="app_header_h1">Lens Cleanse</h1>     
-                </div>
-            </div>
-
             <div>
+
+              <Navbar> </Navbar>
                 <form className="app_signup">
 
                 <Input

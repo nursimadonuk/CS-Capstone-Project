@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Login from './Login'
 import Profile from './Profile'
+import Settings from './Settings'
 import ImageUpload from './ImageUpload';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Route path="/imageupload">
             <ImageUpload />
         </Route>
+        <Route path="/settings" component={Settings} />
         <Route default component={App} />
       </Switch>
       
@@ -29,7 +31,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

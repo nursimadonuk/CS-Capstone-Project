@@ -2,3 +2,21 @@
     display: flex;
 }
 
+.menu-list {
+    background-color: #DBE9EE;
+}
+
+.list-item {
+    display: flex;
+    height: 30px;
+    align-content: left;
+}
+
+.list-item p {
+    margin-left: 10px;
+    align-self: center;
+}
+
+.icon {
+    align-self: center;
+}

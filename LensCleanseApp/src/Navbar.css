@@ -28,11 +28,15 @@
 .search-bar {
     align-self: center;
     align-content: center;
-    margin-right: 10px;
 }
 
 .search-input {
     height: 30px;
+    border:none;
+	padding:15px 20px;
+	border-radius:25px;
+	background:#C0D6DF;
+    color: black;
 }
 
 .search-bar Button {
@@ -44,7 +48,8 @@
 }
 
 .not-signed-in Button {
-    background-color: #4F6D7A;
+    background-color: #166088;
+    margin-left: 10px;
 }
 
 .signed-in {

@@ -20,6 +20,11 @@ function Navbar({ user, username }) {
         history.push('/login')
     }
 
+
+    const toAbout = () => {
+        history.push('/about')
+    }
+
     return (
         <div className='navbar'>
             <div className='logo-and-lc'>
@@ -56,6 +61,8 @@ function Navbar({ user, username }) {
                     // sign in sign up buttons
                     <div className='not-signed-in'>
                         <Button className='signin-button' variant="contained" color="primary" onClick={toLogin}>Sign in<br/>Sign up</Button>
+                        <Button className='signin-button' variant="contained" color="primary" onClick={toAbout}>About</Button>
+
                     </div>
                 )}
 

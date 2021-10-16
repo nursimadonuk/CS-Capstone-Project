@@ -15,7 +15,7 @@ ReactDOM.render(
     <div>
       <Switch>
         <Route exact path="/" component = {App}/>
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={Signup} />
         <Route path="/profile" component={Profile} />
         <Route path="/imageupload">
             <ImageUpload />

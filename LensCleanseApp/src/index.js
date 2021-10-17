@@ -6,6 +6,7 @@ import Login from './Login'
 import Profile from './Profile'
 import Settings from './Settings'
 import ImageUpload from './ImageUpload';
+import About from './About';
 import Signup from './Signup'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
@@ -22,6 +23,7 @@ ReactDOM.render(
         </Route>
         <Route path="/settings" component={Settings} />
         <Route path="/signup" component={Signup} />
+        <Route path="/about" component={About} />
         <Route default component={App} />
       </Switch>
       

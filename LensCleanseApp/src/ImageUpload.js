@@ -7,7 +7,7 @@ import { TextField, Input, LinearProgress, Button, IconButton } from "@material-
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import "./Post.css"
-import "./ImageUpload.css"
+import "./imageUpload.css"
 
 function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
@@ -24,14 +24,14 @@ function ImageUpload({ username }) {
   };
 
   const handleUpload = () => {
-   
+
     if (!image || !caption) {
       alert('PLEASE MAKE SURE YOU ENTERED BOTH IMAGE AND CAPTION')
     }
     else {
 
       const uploadTask = uploadBytesResumable(ref(storage, `images/${image.name}`), image);
-      
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -74,9 +74,9 @@ function ImageUpload({ username }) {
 
         <progress className="imageupload_progress" value={progress} max="100" />
         <div className="uploadFileComponents">
-            <TextField id="standard-basic" className="imageupload_caption" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setCaption(event.target.value)} value={caption} />
+          <TextField id="standard-basic" className="imageupload_caption" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setCaption(event.target.value)} value={caption} />
         </div>
-        
+
         <div className="uploadFileComponents">
           <label htmlFor="contained-button-file">
             <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange}

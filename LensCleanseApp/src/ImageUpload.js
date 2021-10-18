@@ -7,7 +7,7 @@ import { TextField, Input, LinearProgress, Button, IconButton } from "@material-
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import "./Post.css"
-import "./imageUpload.css"
+import "./ImageUpload.css"
 
 function ImageUpload({ username }) {
   const [image, setImage] = useState(null);

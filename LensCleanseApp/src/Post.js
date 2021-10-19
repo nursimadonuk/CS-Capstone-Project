@@ -4,6 +4,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query } from 'firebase/firestore';
 import { collectPosts } from './firebase'
 import { Button, Input } from '@material-ui/core';
+import CameraIcon from '@mui/icons-material/Camera';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 
 function Post({ postId, username, user, caption, imageUrl }) {
     const [comments, setComments] = useState([]);
@@ -43,6 +45,11 @@ function Post({ postId, username, user, caption, imageUrl }) {
             </div>
 
             <img className="post_image" src={imageUrl} alt="" />
+
+            <div className='post_like_comment'>
+                <Button><CameraIcon /></Button>
+                <Button><AddCommentIcon /></Button>
+            </div>
 
             <h4 className="post_text"> <strong>{ username }</strong> { caption }</h4>
 

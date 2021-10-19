@@ -17,7 +17,6 @@
     text-align: left;
     font-weight: normal;
     padding: 20px;
-    border-bottom: 1px solid black;
 }
 
 .post_header {
@@ -75,4 +74,8 @@
 
 .a_comment {
     margin-bottom: 10px;
+}
+
+.post_like_comment {
+    display: flex;
 }

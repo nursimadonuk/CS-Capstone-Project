@@ -11,14 +11,13 @@ import './AppDrawer.css';
 import { auth } from '../firebase'
 import { signOut } from "firebase/auth";
 
-import PowerIcon from "../Icons/HeaderIcons/PowerIcon";
-import SettingsIcon from "../Icons/HeaderIcons/SettingsIcon";
-
-import HomeIcon from '../Icons/SidebarIcons/HomeIcon';
-import TypographyIcon from '../Icons/SidebarIcons/TypographyIcon';
-import TablesIcon from '../Icons/SidebarIcons/TablesIcon';
-import NotificationsIcon from '../Icons/SidebarIcons/NotificationsIcon';
-import ComponentsIcon from '../Icons/SidebarIcons/ComponentsIcon';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CollectionsIcon from '@mui/icons-material/Collections';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import CameraIcon from '@mui/icons-material/Camera';
 
 
 function AppDrawer({ user, username }) {
@@ -63,31 +62,31 @@ function AppDrawer({ user, username }) {
       <List className='menu-list'>
           <ListItem onClick={toProfile} button key={'My Profile'}>
             <div className='list-item'>
-              <HomeIcon className='icon'/>
+              <AccountBoxIcon className='icon'/>
               <p>My Profile</p>
             </div>
           </ListItem>
           <ListItem onClick={toUpload} button key={'Upload Image'}>
             <div className='list-item'>
-              <NotificationsIcon className='icon'/>
+              <InsertPhotoIcon className='icon'/>
               <p>Upload Image</p>
             </div>
           </ListItem>
           <ListItem button key={'Drafts'}>
             <div className='list-item'>
-              <TypographyIcon className='icon'/>
+              <CollectionsIcon className='icon'/>
               <p>Drafts</p>
             </div>
           </ListItem>
           <ListItem button key={'Captured'}>
             <div className='list-item'>
-              <ComponentsIcon className='icon'/>
+              <CameraIcon className='icon'/>
               <p>Captured</p>
             </div>
           </ListItem>
           <ListItem button key={'Collaborate'}>
             <div className='list-item'>
-              <TablesIcon className='icon'/>
+              <SupervisorAccountIcon className='icon'/>
               <p>Collaborate</p>
             </div>
           </ListItem>
@@ -99,7 +98,7 @@ function AppDrawer({ user, username }) {
           </ListItem>
           <ListItem onClick={() => signOut(auth)} button key={'Log Out'}>
             <div className='list-item'>
-              <PowerIcon className='icon'/>
+              <PowerSettingsNewIcon className='icon'/>
               <p>Log Out</p>
             </div>
           </ListItem>

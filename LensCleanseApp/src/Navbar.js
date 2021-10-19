@@ -4,14 +4,12 @@ import { useHistory } from 'react-router-dom';
 import { Form, FormControl } from 'react-bootstrap';
 import { Button } from '@material-ui/core';
 
-import PowerIcon from "./Icons/HeaderIcons/PowerIcon";
-import BellIcon from "./Icons/HeaderIcons/BellIcon";
-import SettingsIcon from "./Icons/HeaderIcons/SettingsIcon";
-import MessageIcon from "./Icons/HeaderIcons/MessageIcon";
-import BurgerIcon from "./Icons/HeaderIcons/BurgerIcon";
-import SearchIcon from "./Icons/HeaderIcons/SearchIcon";
-import ArrowIcon from "./Icons/HeaderIcons/ArrowIcon";
 import AppDrawer from './components/AppDrawer';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import SearchIcon from '@mui/icons-material/Search';
+import ChatIcon from '@mui/icons-material/Chat';
+
+
 
 function Navbar({ user, username }) {
     let history = useHistory();
@@ -53,8 +51,8 @@ function Navbar({ user, username }) {
 
                 {user ? (
                     <div className='signed-in'>
-                        <Button><BellIcon /></Button>
-                        <Button><MessageIcon /></Button>
+                        <Button><NotificationsIcon /></Button>
+                        <Button><ChatIcon /></Button>
                         <AppDrawer user={user} username={username}></AppDrawer>
                     </div>
                 ):(

@@ -7,7 +7,7 @@ import { Button, Input } from '@material-ui/core';
 import CameraIcon from '@mui/icons-material/Camera';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
-function Post({ postId, username, user, caption, imageUrl }) {
+function Post({ postId, username, user, caption, imageUrl, iso, cameraType, exposure, fStop, shutterSpeed, specifyFocus, verticalTilt, zoomFactor}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
 
@@ -44,8 +44,29 @@ function Post({ postId, username, user, caption, imageUrl }) {
                 <h3> {username} </h3>
             </div>
 
-            <img className="post_image" src={imageUrl} alt="" />
+            {/*<img className="post_image" src={imageUrl} alt="" />*/}
 
+            <div id="1" className="flip-card">
+                <div id="2" className="flip-card-inner">
+                    <div id="3" className="flip-card-front">
+                        <img id="img" className="post_image" src={imageUrl} alt="" />
+                    </div>
+                    <div id="4" className="flip-card-back">
+                        <h4 className='info'><strong>Camera Type: </strong> {cameraType} </h4>
+                        <h4 className='info'><strong>ISO:</strong> {iso} </h4>
+                        <h4 className='info'><strong>Exposure: </strong> {toString(exposure)} </h4>
+                        <h4 className='info'><strong>f-Stop:</strong> {fStop} </h4>
+                        <h4 className='info'><strong>Shutter Speed:</strong> {shutterSpeed} </h4>
+                        <h4 className='info'><strong>Specify Focus:</strong> {specifyFocus} </h4>
+                        <h4 className='info'><strong>Vertical Tilt:</strong> {verticalTilt} </h4>
+                        <h4 className='info'><strong>Zoom Factor:</strong> {zoomFactor} </h4>
+                    </div>
+                </div>
+            </div>
+
+            {/*document.getElementById("1").style.height = document.getElementById("img").style.height*/}
+
+            <br></br>
             <div className='post_like_comment'>
                 <Button><CameraIcon /></Button>
                 <Button><AddCommentIcon /></Button>
@@ -57,9 +78,7 @@ function Post({ postId, username, user, caption, imageUrl }) {
 
             <div className='post_comments'>
                 {comments.map((comment) => (
-                    <p className='a_comment'>
-                        <strong>{comment.username}</strong> {comment.text}
-                    </p>
+                    <h4 className='a_comment'> <strong>{comment.username}</strong> {comment.text} </h4>
                 ))}
             </div>
 

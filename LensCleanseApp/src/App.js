@@ -75,7 +75,7 @@ function App() {
         {
           posts.map(({ id, post }) => (
             <div className="posts" >
-              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} />
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} iso={post.ISO} cameraType={post.cameraType} exposure={post.exposure} fStop={post.fStop} shutterSpeed={post.shutterSpeed} verticalTilt={post.verticalTilt} zoomFactor={post.zoomFactor}/>
             </div>
           ))
         }

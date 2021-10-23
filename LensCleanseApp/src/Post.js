@@ -44,6 +44,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
                 <h3> {username} </h3>
             </div>
 
+
             {/*<img className="post_image" src={imageUrl} alt="" />*/}
 
             <div id="1" className="flip-card">
@@ -63,7 +64,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
                     </div>
                 </div>
             </div>
-
+            
             {/*document.getElementById("1").style.height = document.getElementById("img").style.height*/}
 
             <br></br>

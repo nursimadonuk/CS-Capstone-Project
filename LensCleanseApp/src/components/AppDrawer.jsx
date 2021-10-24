@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function getModalStyle() {
   const top = 0;
-  const left = 0;
+  const left = 25;
 
   return {
     top: `${top}%`,
@@ -149,7 +149,7 @@ function AppDrawer({ user, username }) {
                     className="app_header_image"
                     src="LensCleanse.png"
                     alt="Lens Cleanse"
-                    width='120'
+                    width='80'
                     height='auto'
                   />
                   <h1 className="app_header_h1">Lens Cleanse</h1>

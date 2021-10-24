@@ -6,6 +6,13 @@
     background-color: #DBE9EE;
 }
 
+.navbar-logo {
+    margin-right: 20px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
 .logo-and-lc  {
     display: flex;
     align-content: flex-start;

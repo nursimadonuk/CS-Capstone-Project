@@ -30,8 +30,8 @@ function Navbar({ user, username }) {
                     className="navbar-logo"
                     src="LensCleanse.png"
                     alt="Lens Cleanse"
-                    width='120'
-                    height='70'
+                    width='75'
+                    height='auto'
                 />
                 <h1 className='navbar-lc'>Lens Cleanse</h1>
             </div>

@@ -55,26 +55,21 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
 
             {/*<img className="post_image" src={imageUrl} alt="" />*/}
 
-            <div id="1" className="flip-card">
-                <div id="2" className="flip-card-inner">
-                    <div id="3" className="flip-card-front">
-                        <img id="img" className="post_image" src={imageUrl} alt="" />
-                    </div>
-                    <div id="4" className="flip-card-back">
-                        <h4 className='info'><strong>Camera Type: </strong> {cameraType} </h4>
-                        <h4 className='info'><strong>ISO:</strong> {iso} </h4>
-                        <h4 className='info'><strong>Exposure: </strong> {exposure} </h4>
-                        <h4 className='info'><strong>f-Stop:</strong> {fStop} </h4>
-                        <h4 className='info'><strong>Shutter Speed:</strong> {shutterSpeed} </h4>
-                        <h4 className='info'><strong>Specify Focus:</strong> {specifyFocus} </h4>
-                        <h4 className='info'><strong>Vertical Tilt:</strong> {verticalTilt} </h4>
-                        <h4 className='info'><strong>Zoom Factor:</strong> {zoomFactor} </h4>
-                    </div>
-                </div>
+            <div className="inner-post">
+
+                <img id="img" className="image" src={imageUrl} alt="" />
+
+                <h4 className='info1'>Camera Type: {cameraType} </h4>
+                <h4 className='info2'>ISO: {iso} </h4>
+                <h4 className='info3'>Exposure: {exposure} </h4>
+                <h4 className='info4'>f-Stop: {fStop} </h4>
+                <h4 className='info5'>Shutter Speed: {shutterSpeed} </h4>
+                <h4 className='info6'>Specify Focus: {specifyFocus} </h4>
+                <h4 className='info7'>Vertical Tilt: {verticalTilt} </h4>
+                <h4 className='info8'>Zoom Factor: {zoomFactor} </h4>
+
             </div>
             
-            {/*document.getElementById("1").style.height = document.getElementById("img").style.height*/}
-
             <br></br>
             <div className='post_like_comment'>
                 <Button onClick={addCapture}><CameraIcon /></Button>

@@ -8,7 +8,7 @@ import Settings from './Settings'
 import ImageUpload from './ImageUpload';
 import About from './About';
 import Signup from './Signup'
-import Temp from './Temp';
+import Signin from './Signin';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ ReactDOM.render(
     <div>
       <Switch>
         <Route exact path="/" component = {App}/>
-        <Route path="/login" component={Temp} />
+        <Route path="/login" component={Signin} />
         <Route path="/profile" component={Profile} />
         <Route path="/imageupload">
             <ImageUpload />

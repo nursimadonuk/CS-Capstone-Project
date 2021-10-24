@@ -8,12 +8,19 @@ import './Signup.css'
 function Signup() {
     let history = useHistory();
 
+    const toSignIn = () => {
+        history.push('/login')
+    }
+
+    const toMain = () => {
+        history.push('/')
+    } 
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [user, setUser] = useState(null);
-    const [signinpassword, setSigninPassword] = useState('');
-    const [signinemail, setSigninEmail] = useState('');
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (authUser) => {
@@ -42,22 +49,6 @@ function Signup() {
         }
       }, [user, username]);
 
-    const signIn = (event) => {
-        event.preventDefault();
-    
-        signInWithEmailAndPassword(auth, signinemail, signinpassword)
-          .catch((error) => alert(error.message))
-
-        if(user) {
-            history.push('/');
-        } 
-        
-        else {
-            // not sure if this is a good idea
-            setSigninPassword('');
-            setSigninEmail('');
-        } 
-    }
 
     const signUp = (event) => {
         event.preventDefault();
@@ -72,65 +63,44 @@ function Signup() {
     }
 
     return(
-        <div>
-            <Navbar></Navbar>
-            <div className="login-wrap">
-                <div className="login-html">
-                    <input id="tab-1" type="radio" name="tab" className="sign-in" checked/><label for="tab-1" class="tab">Sign In</label>
-                    <input id="tab-2" type="radio" name="tab" className="sign-up"/><label for="tab-2" class="tab">Sign Up</label>
-                    <div className="login-form">
-                        <div className="sign-in-htm">
-                            <div className="group">
-                                <label for="user" className="label">Email</label>
-                                <input id="user" type="text" className="input" value={signinemail} onChange={(e) => setSigninEmail(e.target.value)} ></input>
-                            </div>
-                            <div className="group">
-                                <label for="pass" className="label">Password</label>
-                                <input id="pass" type="password" className="input" data-type="password" value={signinpassword} onChange={(e) => setSigninPassword(e.target.value)}></input>
-                            </div>
-                            <div className="group">
-                                <input id="check" type="checkbox" className="check" checked></input>
-                                <label for="check"><span className="icon"></span> Keep me Signed in</label>
-                            </div>
-                            <div className="group">
-                                <input type="submit" className="button" value="Sign In" onClick={signIn}></input>
-                            </div>
-                            <div className="hr"></div>
-                            <div className="foot-lnk">
-                                <a href="#forgot">Forgot Password?</a>
-                            </div>
-                        </div>
-                        <div className="sign-up-htm">
-                            <div className="group">
-                                <label for="user" className="label">Username</label>
-                                <input id="user" type="text" className="input" value={username} onChange={(e) => setUsername(e.target.value)}></input>
-                            </div>
-                            <div className="group">
-                                <label for="pass" className="label">Email Address</label>
-                                <input id="pass" type="text" className="input" value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                            </div>
-                            <div className="group">
-                                <label for="pass" className="label">Password</label>
-                                <input id="pass" type="password" className="input" data-type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
-                            </div>
-                            {/*
-                            <div className="group">
-                                <label for="pass" className="label">Repeat Password</label>
-                                <input id="pass" type="password" className="input" data-type="password"></input>
-                            </div>
-                            */}
-                            <div className="group">
-                                <input type="submit" className="button" value="Sign Up" onClick={signUp}></input>
-                            </div>
-                            <div className="hr"></div>
-                            <div className="foot-lnk">
-                                <label for="tab-1">Already Member?</label>
-                            </div>
+      <div className="wrap" >
+        <Navbar></Navbar>
+        <div className="login">
+            <div className="sign-in" style={{ backgroundImage: "url(/bg.jpg)" }}>
+                <form className="sign-in-form">
+                    <div className="section">
+                        <div className="heading">
+                            <h4 className="begin">Sign up for </h4>
+                            <h3 className="title"> Lens Cleanse </h3>
                         </div>
                     </div>
-                </div>
+                    <br></br>
+                    <div className="section">
+                        <input id="user" type="text" className="section-input" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} ></input>
+                    </div>
+                    <div className="section">
+                        <input id="user" type="text" className="section-input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} ></input>
+                    </div>
+                    <div className="section">
+                        <input id="user" type="password" className="section-input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} ></input>
+                    </div>
+                    <div className="section">
+                        <button type="submit" className="section-button" onClick={signUp}> SIGN UP </button>
+                    </div>
+
+                    <br></br>
+                    <br></br>
+                    <div className="section">
+                        <p class="text">&mdash; Already Have an Account? &mdash;</p>
+                    </div>
+                    <div class="section">
+                        <button className="bottom-buttons" onClick={toSignIn}>SIGN IN</button>
+                        <button className="bottom-buttons" onClick={toMain}>MAIN PAGE</button>
+                    </div>
+                </form>
             </div>
         </div>
+      </div>
     );
 }
 

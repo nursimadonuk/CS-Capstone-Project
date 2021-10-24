@@ -3,10 +3,18 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, sign
 import { auth } from './firebase'
 import { useHistory } from 'react-router-dom';
 import Navbar from './Navbar';
-import './Temp.css'
+import './Signin.css'
 
-function Temp() {
+function Signin() {
     let history = useHistory();
+
+    const toSignUp = () => {
+        history.push('/signup')
+    }
+
+    const toMain = () => {
+        history.push('/')
+    } 
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -91,7 +99,7 @@ function Temp() {
                             <input id="user" type="password" className="section-input" placeholder="Password" value={signinpassword} onChange={(e) => setSigninPassword(e.target.value)} ></input>
                         </div>
                         <div className="section">
-                            <button type="submit" className="section-button"> SIGN IN </button>
+                            <button type="submit" className="section-button" onClick={signIn}> SIGN IN </button>
                         </div>
                         <div className="section">
                             <div className="bottom">
@@ -110,8 +118,8 @@ function Temp() {
                             <p class="text">&mdash; Don't Have an Account &mdash;</p>
                         </div>
                         <div class="section">
-                            <button className="bottom-buttons">SIGN UP</button>
-                            <button className="bottom-buttons">MAIN PAGE</button>
+                            <button className="bottom-buttons" onClick={toSignUp}>SIGN UP</button>
+                            <button className="bottom-buttons" onClick={toMain}>MAIN PAGE</button>
                         </div>
                     </form>
                 </div>
@@ -121,4 +129,4 @@ function Temp() {
     );
 }
 
-export default Temp;
+export default Signin;

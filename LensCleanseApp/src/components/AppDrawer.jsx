@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -7,6 +7,10 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import Avatar from '@material-ui/core/Avatar';
+import { Input, makeStyles, Modal } from '@material-ui/core';
+import ImageUpload from '../ImageUpload';
+
+
 import './AppDrawer.css';
 import { auth } from '../firebase'
 import { signOut } from "firebase/auth";
@@ -19,15 +23,40 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraIcon from '@mui/icons-material/Camera';
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 700,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+function getModalStyle() {
+  const top = 0;
+  const left = 0;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, ${left}%)`,
+  };
+}
 
 function AppDrawer({ user, username }) {
 
+  const [modalStyle] = React.useState(getModalStyle);
+  const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
   });
+
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -40,7 +69,7 @@ function AppDrawer({ user, username }) {
   let history = useHistory();
 
   const toUpload = () => {
-      history.push('/imageupload')
+      setOpen(true)
   }
 
   const toProfile = () => {
@@ -109,6 +138,32 @@ function AppDrawer({ user, username }) {
 
   return (
     <div>
+        <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        >
+          <div style={modalStyle} className={classes.paper}>
+            <form className="app_signup">
+              <center className='sign_up_heading'>
+                  <img
+                    className="app_header_image"
+                    src="LensCleanse.png"
+                    alt="Lens Cleanse"
+                    width='120'
+                    height='auto'
+                  />
+                  <h1 className="app_header_h1">Lens Cleanse</h1>
+                </center>
+              {user?.displayName ? (           
+                <ImageUpload username={user.displayName} />
+
+              ) : (
+                <h3 className="upload-login-message">Login to upload an image...</h3>
+              )}
+            </form>
+          </div>
+        </Modal>
+
       <React.Fragment className='togglebutton' key={'right'}>
         <Button onClick={toggleDrawer('right', true)}><Avatar className="post_avatar" alt={username} src={"/static/images/avatar/1.jpg"} /></Button>
         <Drawer
@@ -122,6 +177,7 @@ function AppDrawer({ user, username }) {
     </div>
   );
 }
+
 
 export default AppDrawer
 

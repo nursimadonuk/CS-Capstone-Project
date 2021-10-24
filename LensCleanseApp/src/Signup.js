@@ -106,6 +106,10 @@ function Signup() {
                                 <input id="user" type="text" className="input" value={username} onChange={(e) => setUsername(e.target.value)}></input>
                             </div>
                             <div className="group">
+                                <label for="pass" className="label">Email Address</label>
+                                <input id="pass" type="text" className="input" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                            </div>
+                            <div className="group">
                                 <label for="pass" className="label">Password</label>
                                 <input id="pass" type="password" className="input" data-type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
                             </div>
@@ -115,10 +119,6 @@ function Signup() {
                                 <input id="pass" type="password" className="input" data-type="password"></input>
                             </div>
                             */}
-                            <div className="group">
-                                <label for="pass" className="label">Email Address</label>
-                                <input id="pass" type="text" className="input" value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                            </div>
                             <div className="group">
                                 <input type="submit" className="button" value="Sign Up" onClick={signUp}></input>
                             </div>

@@ -13,6 +13,15 @@ function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState('');
+  const [cameraType, setCameraType] = useState('');
+  const [ISO, setISO] = useState(0);
+  const [exposure, setExposure] = useState('');
+  const [fStop, setFStop] = useState(0);
+  const [shutterSpeed, setShutterSpeed] = useState(0);
+  const [specifyFocus, setSpecifyFocus] = useState("");
+  const [verticalTilt, setVerticalTilt] = useState(0);
+  const [zoomFactor, setZoomFactor] = useState(0);
+  const [other, setOther] = useState("");
 
 
   const fileInput = React.createRef()
@@ -53,12 +62,32 @@ function ImageUpload({ username }) {
                 timestamp: serverTimestamp(FieldValue),
                 caption: caption,
                 imageUrl: url,
-                username: username
+                username: username,
+                captures: 0,
+                ISO: ISO,
+                cameraType: cameraType,
+                exposure: exposure,
+                fStop: fStop,
+                shutterSpeed: shutterSpeed,
+                specifyFocus: specifyFocus,
+                verticalTilt: verticalTilt,
+                zoomFactor: zoomFactor,
+                other: other
+
               });
 
               setProgress(0);
               setCaption("");
               setImage(null);
+              setCameraType("");
+              setISO(0);
+              setExposure("");
+              setFStop(0);
+              setShutterSpeed(0);
+              setSpecifyFocus("");
+              setVerticalTilt(0);
+              setZoomFactor(0);
+              setOther("");
 
             })
 
@@ -80,12 +109,21 @@ function ImageUpload({ username }) {
         <div className="uploadFileComponents">
           <label htmlFor="contained-button-file">
             <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange}
-              style={{ display: "none" }}
             />
-            <Button variant="contained" component="span">
-              Choose File
-            </Button>
           </label>
+
+          <div className="uploadFileComponents">
+            <TextField className="imageupload_photoInfo" label="Enter Camera Type" defaultValue="Small" size="small" variant="filled" onChange={event => setCameraType(event.target.value)} value={cameraType} />
+            <TextField className="imageupload_photoInfo" label="Enter ISO" defaultValue="Small" size="small" variant="filled" onChange={event => setISO(event.target.value)} value={ISO} />
+            <TextField className="imageupload_photoInfo" label="Enter Exposure" defaultValue="Small" size="small" variant="filled" onChange={event => setExposure(event.target.value)} value={exposure} />
+            <TextField className="imageupload_photoInfo" label="Enter fStop" defaultValue="Small" size="small" variant="filled" onChange={event => setFStop(event.target.value)} value={fStop} />
+            <TextField className="imageupload_photoInfo" label="Enter Shutter Speed" defaultValue="Small" size="small" variant="filled" onChange={event => setShutterSpeed(event.target.value)} value={shutterSpeed} />
+            <TextField className="imageupload_photoInfo" label="Enter Specify Focus" defaultValue="Small" size="small" variant="filled" onChange={event => setSpecifyFocus(event.target.value)} value={specifyFocus} />
+            <TextField className="imageupload_photoInfo" label="Enter Verical Tilt" defaultValue="Small" size="small" variant="filled" onChange={event => setVerticalTilt(event.target.value)} value={verticalTilt} />
+            <TextField className="imageupload_photoInfo" label="Enter Zoom Factor" defaultValue="Small" size="small" variant="filled" onChange={event => setZoomFactor(event.target.value)} value={zoomFactor} />
+            <TextField className="imageupload_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setOther(event.target.value)} value={other} />
+
+          </div>
           <Button variant="contained" color="primary" onClick={handleUpload}>
             Upload
           </Button>

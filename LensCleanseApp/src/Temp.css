@@ -1,0 +1,160 @@
+.wrap {
+    height: 100%;
+}
+
+.login {
+    height: 100%;
+    width: auto;
+    justify-content: center;
+    align-self: center;
+}
+
+.sign-in {
+    height: 100%;
+    width: 100%;
+    position  : absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.sign-in-form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    height: 100%;
+    justify-self: center;
+    margin-top: 100px;
+    left      : 40%;
+    top       : 20%;
+}
+
+.section{
+    align-self: center;
+	margin-bottom:20px;
+}
+
+.heading {
+    display: flex;
+    flex-direction: row;
+}
+
+.begin {
+    margin-right: 10px;
+    color: #DBE9EE;
+    font-size: x-large;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+
+.title {
+    font-size: xx-large;
+    font-family: 'Brush Script MT', cursive;
+    color: #DBE9EE;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+
+.text {
+    color: #DBE9EE;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    color: #DBE9EE;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+.remember {
+    padding-right: 100px;
+}
+
+.section-input {
+    align-self: center;
+	padding:15px 20px;
+	border-radius:25px;
+    background: transparent;
+    border: none;
+    height: 50px;
+    width: 350px;
+    font-weight: bold;
+    color: white !important;
+    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.192);
+}
+
+.bottom-buttons {
+    align-self: center;
+	padding:15px 20px;
+	border-radius:25px;
+    height: 50px;
+    width: 150px;
+    background-color: #DBE9EE;
+    border: 1px solid transparent;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.bottom-buttons:hover {
+    background: rgba(97, 141, 192, 0.418);
+    color: #DBE9EE;
+    border: #DBE9EE solid 1px;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+
+.section-button {
+    align-self: center;
+	padding:15px 20px;
+	border-radius:25px;
+    height: 50px;
+    width: 350px;
+    background-color: #DBE9EE;
+    border: 1px solid transparent;
+}
+
+.section-button:hover {
+    background: rgba(97, 141, 192, 0.418);
+    color: #DBE9EE;
+    border: #DBE9EE solid 1px;
+    font-weight: bold;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
+    
+}
+
+.section-input:hover, .section-input:focus {
+    background: transparent;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.4); 
+}
+.section-input:focus {
+   border-color: rgba(255, 255, 255, 0.4); 
+}
+.section input[data-type="password"]{
+	/*text-security: circle;*/
+	-webkit-text-security: circle;
+}

@@ -20,3 +20,10 @@
 .icon {
     align-self: center;
 }
+
+.app_header_h1 {
+    text-align: center;
+    align-self: center;
+    color: #4F6D7A;
+    font-family: 'Brush Script MT', cursive;
+}

@@ -60,6 +60,10 @@
     margin-left: 10px;
 }
 
+.post_captures {
+    display: flex;
+    margin-left: 20px;
+}
 
 .post_text {
     text-align: left;

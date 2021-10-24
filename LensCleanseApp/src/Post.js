@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
-import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query } from 'firebase/firestore';
-import { collectPosts } from './firebase'
+import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc } from 'firebase/firestore';
+import { db, collectPosts } from './firebase'
 import { Button, Input } from '@material-ui/core';
 import CameraIcon from '@mui/icons-material/Camera';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
-function Post({ postId, username, user, caption, imageUrl, iso, cameraType, exposure, fStop, shutterSpeed, specifyFocus, verticalTilt, zoomFactor}) {
+function Post({ postId, username, user, caption, imageUrl, iso, cameraType, exposure, fStop, shutterSpeed, specifyFocus, verticalTilt, zoomFactor, captures}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
 
@@ -33,6 +33,14 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
         setComment('');
     }
 
+    const addCapture = (event) => {
+        event.preventDefault();
+        const current_post = doc(collectPosts, postId);
+        updateDoc(current_post, {
+            captures: captures+1
+        });
+    }
+
     return (
         <div className="post">
             <div className="post_header"> 
@@ -55,7 +63,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
                     <div id="4" className="flip-card-back">
                         <h4 className='info'><strong>Camera Type: </strong> {cameraType} </h4>
                         <h4 className='info'><strong>ISO:</strong> {iso} </h4>
-                        <h4 className='info'><strong>Exposure: </strong> {toString(exposure)} </h4>
+                        <h4 className='info'><strong>Exposure: </strong> {exposure} </h4>
                         <h4 className='info'><strong>f-Stop:</strong> {fStop} </h4>
                         <h4 className='info'><strong>Shutter Speed:</strong> {shutterSpeed} </h4>
                         <h4 className='info'><strong>Specify Focus:</strong> {specifyFocus} </h4>
@@ -69,8 +77,12 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
 
             <br></br>
             <div className='post_like_comment'>
-                <Button><CameraIcon /></Button>
-                <Button><AddCommentIcon /></Button>
+                <Button onClick={addCapture}><CameraIcon /></Button>
+                <Button className='b'><AddCommentIcon /></Button>
+            </div>
+            <br></br>
+            <div>
+                <h4 className="post_captures"><strong> {captures} captures </strong></h4>
             </div>
 
             <h4 className="post_text"> <strong>{ username }</strong> { caption }</h4>
@@ -86,6 +98,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
             {user && (
                 <form className='post_commentbox'>
                     <Input
+                        id='t'
                         className='post_input'
                         type='text'
                         placeholder='Add a comment...'

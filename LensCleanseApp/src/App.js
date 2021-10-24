@@ -4,11 +4,13 @@ import Post from './Post';
 import { collectPosts, auth } from './firebase'
 import { onSnapshot, orderBy, query, Timestamp } from 'firebase/firestore';
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import ImageUpload from './ImageUpload';
 import Navbar from './Navbar';
+import { popoverClasses } from '@mui/material';
 
 function App() {
   const classes = useStyles();
@@ -43,7 +45,6 @@ function App() {
     }
   }, [user, username]);
 
-
   // runs piece of code on specific condition
   useEffect(() => {
     onSnapshot(query(collectPosts, orderBy('timestamp', 'desc')), (snapshot) => {
@@ -64,18 +65,22 @@ function App() {
           <Navbar user={user} username={user.displayName} ></Navbar>
         ) : (
           <Navbar></Navbar>
-        )}       
+        )}  
 
-        {user?.displayName ? (
+        <br></br>  
+        <br></br>    
+
+        {/*user?.displayName ? (           
           <ImageUpload username={user.displayName} />
+
         ) : (
           <h3 className="upload-login-message">Login to upload an image...</h3>
-        )}
+        )*/}
 
         {
           posts.map(({ id, post }) => (
             <div className="posts" >
-              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} iso={post.ISO} cameraType={post.cameraType} exposure={post.exposure} fStop={post.fStop} shutterSpeed={post.shutterSpeed} verticalTilt={post.verticalTilt} zoomFactor={post.zoomFactor}/>
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} iso={post.ISO} cameraType={post.cameraType} exposure={post.exposure} fStop={post.fStop} shutterSpeed={post.shutterSpeed} specifyFocus={post.specifyFocus} verticalTilt={post.verticalTilt} zoomFactor={post.zoomFactor} captures={post.captures}/>
             </div>
           ))
         }
@@ -109,6 +114,5 @@ const theme = createTheme({
     },
   },
 });
-
 
 export default App;

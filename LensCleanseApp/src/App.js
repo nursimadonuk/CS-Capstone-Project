@@ -49,6 +49,7 @@ function App() {
   useEffect(() => {
     onSnapshot(query(collectPosts, orderBy('timestamp', 'desc')), (snapshot) => {
       // when posts changes this code runs
+      console.log(snapshot.docs[0])
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()
@@ -65,10 +66,10 @@ function App() {
           <Navbar user={user} username={user.displayName} ></Navbar>
         ) : (
           <Navbar></Navbar>
-        )}  
+        )}
 
-        <br></br>  
-        <br></br>    
+        <br></br>
+        <br></br>
 
         {/*user?.displayName ? (           
           <ImageUpload username={user.displayName} />
@@ -80,7 +81,7 @@ function App() {
         {
           posts.map(({ id, post }) => (
             <div className="posts" >
-              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} iso={post.ISO} cameraType={post.cameraType} exposure={post.exposure} fStop={post.fStop} shutterSpeed={post.shutterSpeed} specifyFocus={post.specifyFocus} verticalTilt={post.verticalTilt} zoomFactor={post.zoomFactor} captures={post.captures}/>
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl} iso={post.ISO} cameraType={post.cameraType} exposure={post.exposure} fStop={post.fStop} shutterSpeed={post.shutterSpeed} specifyFocus={post.specifyFocus} verticalTilt={post.verticalTilt} zoomFactor={post.zoomFactor} captures={post.captures} />
             </div>
           ))
         }

@@ -12,62 +12,68 @@ import ChatIcon from '@mui/icons-material/Chat';
 
 
 function Navbar({ user, username }) {
-    let history = useHistory();
+  let history = useHistory();
 
-    const toLogin = () => {
-        history.push('/login')
-    }
-
-
-    const toAbout = () => {
-        history.push('/about')
-    }
-
-    return (
-        <div className='navbar'>
-            <div className='logo-and-lc'>
-                <img
-                    className="navbar-logo"
-                    src="LensCleanse.png"
-                    alt="Lens Cleanse"
-                    width='75'
-                    height='auto'
-                />
-                <h1 className='navbar-lc'>Lens Cleanse</h1>
-            </div>
-            
-            <div className='navbar-right'>
-            {/* items aligned to the right of the navbar */}
-
-                <Form className="search-bar">
-                    <Button className='search-button' variant="outline-success"><SearchIcon /></Button>
-                    <FormControl
-                        type="search"
-                        placeholder="Search"
-                        className="search-input"
-                        aria-label="Search"
-                     />
-                </Form>
-
-                {user ? (
-                    <div className='signed-in'>
-                        <Button><NotificationsIcon /></Button>
-                        <Button><ChatIcon /></Button>
-                        <AppDrawer user={user} username={username}></AppDrawer>
-                    </div>
-                ):(
-                    // sign in sign up buttons
-                    <div className='not-signed-in'>
-                        <Button className='signin-button' variant="contained" color="primary" onClick={toLogin}>Sign in<br/>Sign up</Button>
-                        <Button className='signin-button' variant="contained" color="primary" onClick={toAbout}>About</Button>
-
-                    </div>
-                )}
+  const toLogin = () => {
+    history.push('/login')
+  }
 
 
-            </div>
+  const toAbout = () => {
+    history.push('/about')
+  }
+
+  const toHome = () => {
+    history.push('/')
+  }
+
+  return (
+    <div className='navbar'>
+      <a onClick={toHome} alt="Go to Homepage">
+        <div className='logo-and-lc'>
+          <img
+            className="navbar-logo"
+            src="LensCleanse.png"
+            alt="Lens Cleanse"
+            width='75'
+            height='auto'
+          />
+          <h1 className='navbar-lc'>Lens Cleanse</h1>
         </div>
-    );
+      </a>
+
+      <div className='navbar-right'>
+        {/* items aligned to the right of the navbar */}
+
+        <Form className="search-bar">
+          <Button className='search-button' variant="outline-success"><SearchIcon /></Button>
+          <FormControl
+            type="search"
+            placeholder="Search"
+            className="search-input"
+            aria-label="Search"
+          />
+        </Form>
+
+        {user ? (
+          <div className='signed-in'>
+            <Button><NotificationsIcon /></Button>
+            <Button><ChatIcon /></Button>
+            <AppDrawer user={user} username={username}></AppDrawer>
+          </div>
+        ) : (
+          // sign in sign up buttons
+          <div className='not-signed-in'>
+            <Button className='signin-button' variant="contained" color="primary" onClick={toLogin}>Sign in<br />Sign up</Button>
+            <Button className='signin-button' variant="contained" color="primary" onClick={toAbout}>About</Button>
+
+          </div>
+        )}
+
+
+      </div>
+    </div>
+  );
 }
 
 export default Navbar;

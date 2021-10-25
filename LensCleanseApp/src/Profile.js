@@ -5,49 +5,76 @@ import CameraIcon from '@mui/icons-material/Camera';
 import TimerIcon from '@mui/icons-material/Timer';
 import IsoIcon from '@mui/icons-material/Iso';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
+import { collectPosts, auth } from './firebase'
+import Navbar from './Navbar';
 
 const sampleBackgroundImage = 'sampleProfilePicture.jpg'
 
-function Profile({ user, username }) {
+function Profile() {
   const classes = useStyles();
+
+
+  const [username, setUsername] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      if (authUser) {
+        // user logged in
+        console.log(authUser);
+        setUser(authUser);
+        setUsername(authUser.displayName);
+        setUserEmail(authUser.email)
+
+        if (authUser.displayName) {
+          // do not update username
+        } else {
+          // NEW USER
+          return updateProfile(authUser, {
+            displayName: username,
+          });
+        }
+
+      } else {
+        // user logged out
+        setUser(null);
+      }
+    })
+    return () => {
+      // some cleanup action
+      unsubscribe();
+    }
+  }, [user]);
+
   //! Replace p tags with information from Firebase
   return (
     <>
+
+      {user?.displayName ? (
+        <Navbar user={user} username={user.displayName} ></Navbar>
+      ) : (
+        <Navbar></Navbar>
+      )}
       <Grid container spacing={2} className={classes.grid} >
         <Grid item xs={12}>
           <Grid container justify="center" alignItems="center">
-            <Card className={classes.root}>
-              <CardHeader className={classes.header} title={username ? username : "UserName"}
-                action={
-                  <IconButton aria-label="settings" clasName={classes.iconColor}>
-                    <CameraAltIcon />
-                  </IconButton>
-                }
-              />
-              <CardContent className={classes.cardHover}>
-                <Typography variant="body2" gutterBottom className={classes.displayText}>
-                  <div className="showText">
-                    <div className={classes.cameraInfo}>
-                      <CameraIcon />
-                      <p> f/4</p>
-                    </div>
-                    <div className={classes.cameraInfo}>
-                      <TimerIcon />
-                      <p> 1/125 sec</p>
-                    </div>
-                    <div className={classes.cameraInfo}>
-                      <IsoIcon />
-                      <p> 300 </p>
-                    </div>
-                    <div className={classes.cameraInfo}>
-                      <VisibilityIcon />
-                      <p> 97.0 mm</p>
-                    </div>
-                  </div>
-
-                </Typography>
-              </CardContent>
-            </Card>
+            <div>
+              <Card className={classes.root}>
+                <CardHeader className={classes.header} title={username ? username : "UserName"}
+                  action={
+                    <IconButton aria-label="settings" clasName={classes.iconColor}>
+                      <CameraAltIcon />
+                    </IconButton>
+                  }
+                />
+              </Card>
+              <div className={classes.info}>
+                <h3>{username ? username : "Not Logged In"}</h3>
+                <h3>{username ? "Email: " + userEmail : ""}</h3>
+              </div>
+            </div>
           </Grid>
         </Grid>
       </Grid>
@@ -117,6 +144,10 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: "bolder",
       // backgroundColor: "red"
     }
+  },
+
+  info: {
+    paddingTop: "20px"
   }
 
   // // "*:after": {

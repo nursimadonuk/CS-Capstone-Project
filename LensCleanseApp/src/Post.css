@@ -1,17 +1,29 @@
 .post {
-    background-color:#4F6D7A;
+    background: linear-gradient(to bottom right, #732673 45%, #e60073);
+    /*
+
+
+    Hot-pink: #e60073
+    Dark bue: #003399
+    burgundy: #800020
+    skyblue: #00bfff
+    purple: #732673
+
+    to-left#557A95;
+    
     max-width: 500px;
     min-width: 500px;
     min-height: 200px;
-    border: 1px solid #9C9583;
-    margin-bottom: 45px;
+    */
+    width: 40%;
+    margin-bottom: 100px;
+    border-radius: 25px;
 }
 
 .image {
     width: 100%;
     object-fit: contain;
-    border-bottom: 1px solid #9C9583;
-    border-top: 1px solid #9C9583;
+    
 }
 
 .inner-post {

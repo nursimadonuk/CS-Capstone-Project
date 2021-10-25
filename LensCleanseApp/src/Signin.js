@@ -58,13 +58,7 @@ function Signin() {
 
         if(user) {
             history.push('/');
-        } 
-        
-        else {
-            // not sure if this is a good idea
-            setSigninPassword('');
-            setSigninEmail('');
-        } 
+        }
     }
 
     const signUp = (event) => {

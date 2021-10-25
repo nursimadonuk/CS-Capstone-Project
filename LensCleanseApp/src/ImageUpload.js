@@ -7,7 +7,7 @@ import { TextField, Input, LinearProgress, Button, IconButton } from "@material-
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import "./Post.css"
-import "./imageUpload.css"
+import "./ImageUpload.css"
 
 function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
@@ -108,11 +108,10 @@ function ImageUpload({ username }) {
 
         <div className="uploadFileComponents">
           <label htmlFor="contained-button-file">
-            <Input accept="image/*" id="contained-button-file" type="file" onChange={handleChange}
-            />
+            <Input className="file-input" accept="image/*" id="contained-button-file" type="file" onChange={handleChange} />
           </label>
 
-          <div className="uploadFileComponents">
+          <div className="uploadFile">
             <TextField className="imageupload_photoInfo" label="Enter Camera Type" defaultValue="Small" size="small" variant="filled" onChange={event => setCameraType(event.target.value)} value={cameraType} />
             <TextField className="imageupload_photoInfo" label="Enter ISO" defaultValue="Small" size="small" variant="filled" onChange={event => setISO(event.target.value)} value={ISO} />
             <TextField className="imageupload_photoInfo" label="Enter Exposure" defaultValue="Small" size="small" variant="filled" onChange={event => setExposure(event.target.value)} value={exposure} />

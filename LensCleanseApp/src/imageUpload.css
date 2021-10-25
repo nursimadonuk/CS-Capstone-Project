@@ -7,21 +7,36 @@
 }
 
 .imageupload_progress {
+    margin-left: 20px;
     width: 85%;
 }
 .imageupload_caption {
     width: 90%;
 }
 
+.file-input {
+    height: 40px;
+}
+
 .imageupload_photoInfo_other {
     width: 90%;
+    margin-top: 10px;
 }
 
 .imageupload_photoInfo {
     padding: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 .uploadFileComponents Button {
     padding: 10px;
-    margin-left: 10px;
+    margin-top: 20px;
+    width: 30%;
+    margin-left: 70%;
+}
+
+.imageupload_photoInfo {
+    margin: 10px;
+    width: 45%;
 }

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Login from './Login'
 import Profile from './Profile'
 import Settings from './Settings'
 import ImageUpload from './ImageUpload';

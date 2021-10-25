@@ -7,7 +7,7 @@ import { Button, Input } from '@material-ui/core';
 import CameraIcon from '@mui/icons-material/Camera';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
-function Post({ postId, username, user, caption, imageUrl, iso, cameraType, exposure, fStop, shutterSpeed, specifyFocus, verticalTilt, zoomFactor, captures}) {
+function Post({ postId, username, user, caption, imageUrl, iso, cameraType, exposure, fStop, shutterSpeed, specifyFocus, verticalTilt, zoomFactor, other, captures}) {
     const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
 
@@ -67,6 +67,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
                 <h4 className='info6'>Specify Focus: {specifyFocus} </h4>
                 <h4 className='info7'>Vertical Tilt: {verticalTilt} </h4>
                 <h4 className='info8'>Zoom Factor: {zoomFactor} </h4>
+                <h4 className='info9'>Other: {other} </h4>
 
             </div>
             

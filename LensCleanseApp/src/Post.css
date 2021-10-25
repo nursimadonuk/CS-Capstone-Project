@@ -1,5 +1,5 @@
 .post {
-    background: linear-gradient(to bottom right, #732673 45%, #e60073);
+    background: linear-gradient(to bottom right, #166088 25%, #DBE9EE);
     /*
 
 
@@ -10,11 +10,11 @@
     purple: #732673
 
     to-left#557A95;
-    
+    */
     max-width: 500px;
     min-width: 500px;
     min-height: 200px;
-    */
+    
     width: 40%;
     margin-bottom: 100px;
     border-radius: 25px;
@@ -50,36 +50,41 @@
 }
 
 .info1{
-    top:10%;
+    top:9%;
 }
 
 .info2{
-    top:20%;
+    top:18%;
 }
 
 .info3{
-    top:30%;
+    top:27%;
 }
 
 .info4{
-    top:40%;
+    top:36%;
 }
 
 .info5{
-    top:50%;
+    top:45%;
 }
 
 .info6{
-    top:60%;
+    top:54%;
 }
 
 .info7{
-    top:70%;
+    top:63%;
 }
 
 .info8{
-    top:80%;
+    top:72%;
 }
+
+.info9{
+    top:81%;
+}
+
 .post_captures {
     display: flex;
     margin-left: 20px;
@@ -115,6 +120,8 @@
 .post_commentbox {
     display: flex;
     margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 5px;
 }
 
 .post_input {
@@ -152,3 +159,5 @@
 .post_like_comment {
     display: flex;
 }
+
+

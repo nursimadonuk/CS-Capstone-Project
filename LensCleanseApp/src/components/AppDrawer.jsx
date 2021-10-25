@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function getModalStyle() {
   const top = 0;
-  const left = 25;
+  const left = 10;
 
   return {
     top: `${top}%`,

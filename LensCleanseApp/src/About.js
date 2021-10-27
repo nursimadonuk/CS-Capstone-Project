@@ -68,6 +68,7 @@ function About() {
             <p> NY 11429</p>
             <p>info@lenscleanse.com</p>
             <p>(347) 500- 4000</p>
+
             <p>(646) 200- 9999</p>
             <div className={classes.icons}>
               <button className={classes.icons}>

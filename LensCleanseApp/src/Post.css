@@ -49,41 +49,53 @@
     opacity: 1;
 }
 
+.text{
+  padding-left: 50px;
+  margin-bottom: 0;
+  border: 2px solid red;
+}
+
 .info1{
-    top:9%;
+  top:1%;
+  display: flex;
+  flex-direction: row 
 }
 
 .info2{
-    top:18%;
+    top:10%;
+    
 }
 
 .info3{
-    top:27%;
+    top:20%;
 }
 
 .info4{
-    top:36%;
+    top:30%;
 }
 
 .info5{
-    top:45%;
+    top:40%;
 }
 
 .info6{
-    top:54%;
+    top:50%;
 }
 
 .info7{
-    top:63%;
+    top:60%;
 }
 
 .info8{
-    top:72%;
+    top:70%;
+}
+.info9{
+    top:80%;
+}
+.info10{
+  top: 90%
 }
 
-.info9{
-    top:81%;
-}
 
 .post_captures {
     display: flex;

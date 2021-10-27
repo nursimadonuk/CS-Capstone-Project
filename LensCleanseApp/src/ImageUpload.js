@@ -15,12 +15,12 @@ function ImageUpload({ username }) {
   const [caption, setCaption] = useState('');
   const [cameraType, setCameraType] = useState('');
   const [ISO, setISO] = useState(0);
-  const [exposure, setExposure] = useState('');
+  const [lensType, setLensType] = useState('');
   const [fStop, setFStop] = useState(0);
-  const [shutterSpeed, setShutterSpeed] = useState(0);
-  const [specifyFocus, setSpecifyFocus] = useState("");
-  const [verticalTilt, setVerticalTilt] = useState(0);
-  const [zoomFactor, setZoomFactor] = useState(0);
+  const [shutterSpeed, setShutterSpeed] = useState("");
+  const [lighting, setLighting] = useState("");
+  const [location, setLocation] = useState("");
+  const [focalLength, setFocalLength] = useState(0);
   const [other, setOther] = useState("");
 
 
@@ -66,12 +66,12 @@ function ImageUpload({ username }) {
                 captures: 0,
                 ISO: ISO,
                 cameraType: cameraType,
-                exposure: exposure,
+                lensType: lensType,
                 fStop: fStop,
                 shutterSpeed: shutterSpeed,
-                specifyFocus: specifyFocus,
-                verticalTilt: verticalTilt,
-                zoomFactor: zoomFactor,
+                lighting: lighting,
+                location: location,
+                focalLength: focalLength,
                 other: other
 
               });
@@ -81,12 +81,12 @@ function ImageUpload({ username }) {
               setImage(null);
               setCameraType("");
               setISO(0);
-              setExposure("");
+              setLensType("");
               setFStop(0);
-              setShutterSpeed(0);
-              setSpecifyFocus("");
-              setVerticalTilt(0);
-              setZoomFactor(0);
+              setShutterSpeed("");
+              setLighting("");
+              setLocation("");
+              setFocalLength(0);
               setOther("");
 
             })
@@ -114,12 +114,12 @@ function ImageUpload({ username }) {
           <div className="uploadFile">
             <TextField className="imageupload_photoInfo" label="Enter Camera Type" defaultValue="Small" size="small" variant="filled" onChange={event => setCameraType(event.target.value)} value={cameraType} />
             <TextField className="imageupload_photoInfo" label="Enter ISO" defaultValue="Small" size="small" variant="filled" onChange={event => setISO(event.target.value)} value={ISO} />
-            <TextField className="imageupload_photoInfo" label="Enter Exposure" defaultValue="Small" size="small" variant="filled" onChange={event => setExposure(event.target.value)} value={exposure} />
+            <TextField className="imageupload_photoInfo" label="Enter Lens" defaultValue="Small" size="small" variant="filled" onChange={event => setLensType(event.target.value)} value={lensType} />
             <TextField className="imageupload_photoInfo" label="Enter fStop" defaultValue="Small" size="small" variant="filled" onChange={event => setFStop(event.target.value)} value={fStop} />
             <TextField className="imageupload_photoInfo" label="Enter Shutter Speed" defaultValue="Small" size="small" variant="filled" onChange={event => setShutterSpeed(event.target.value)} value={shutterSpeed} />
-            <TextField className="imageupload_photoInfo" label="Enter Specify Focus" defaultValue="Small" size="small" variant="filled" onChange={event => setSpecifyFocus(event.target.value)} value={specifyFocus} />
-            <TextField className="imageupload_photoInfo" label="Enter Verical Tilt" defaultValue="Small" size="small" variant="filled" onChange={event => setVerticalTilt(event.target.value)} value={verticalTilt} />
-            <TextField className="imageupload_photoInfo" label="Enter Zoom Factor" defaultValue="Small" size="small" variant="filled" onChange={event => setZoomFactor(event.target.value)} value={zoomFactor} />
+            <TextField className="imageupload_photoInfo" label="Enter Lighting Details" defaultValue="Small" size="small" variant="filled" onChange={event => setLighting(event.target.value)} value={lighting} />
+            <TextField className="imageupload_photoInfo" label="Enter Location" defaultValue="Small" size="small" variant="filled" onChange={event => setLocation(event.target.value)} value={location} />
+            <TextField className="imageupload_photoInfo" label="Enter Zoom Factor" defaultValue="Small" size="small" variant="filled" onChange={event => setFocalLength(event.target.value)} value={focalLength} />
             <TextField className="imageupload_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setOther(event.target.value)} value={other} />
 
           </div>

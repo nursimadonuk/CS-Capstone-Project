@@ -158,6 +158,7 @@
     color: rgb(70, 64, 64);
     font-weight: normal;
     text-decoration: underline;
+    margin-bottom: 10px;
 }
 
 .comment_container {

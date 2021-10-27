@@ -22,6 +22,7 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraIcon from '@mui/icons-material/Camera';
+import GroupIcon from '@mui/icons-material/Group';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,11 +70,14 @@ function AppDrawer({ user, username }) {
   let history = useHistory();
 
   const toUpload = () => {
-      setOpen(true)
+    setOpen(true)
   }
 
   const toProfile = () => {
     history.push('/profile')
+  }
+  const toAbout = () => {
+    history.push('/about')
   }
 
   const toSettings = () => {
@@ -89,48 +93,54 @@ function AppDrawer({ user, username }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List className='menu-list'>
-          <ListItem onClick={toProfile} button key={'My Profile'}>
-            <div className='list-item'>
-              <AccountBoxIcon className='icon'/>
-              <p>My Profile</p>
-            </div>
-          </ListItem>
-          <ListItem onClick={toUpload} button key={'Upload Image'}>
-            <div className='list-item'>
-              <InsertPhotoIcon className='icon'/>
-              <p>Upload Image</p>
-            </div>
-          </ListItem>
-          <ListItem button key={'Drafts'}>
-            <div className='list-item'>
-              <CollectionsIcon className='icon'/>
-              <p>Drafts</p>
-            </div>
-          </ListItem>
-          <ListItem button key={'Captured'}>
-            <div className='list-item'>
-              <CameraIcon className='icon'/>
-              <p>Captured</p>
-            </div>
-          </ListItem>
-          <ListItem button key={'Collaborate'}>
-            <div className='list-item'>
-              <SupervisorAccountIcon className='icon'/>
-              <p>Collaborate</p>
-            </div>
-          </ListItem>
-          <ListItem onClick={toSettings} button key={'Settings'}>
-            <div className='list-item'>
-              <SettingsIcon className='icon'/>
-              <p>Settings</p>
-            </div>
-          </ListItem>
-          <ListItem onClick={() => signOut(auth)} button key={'Log Out'}>
-            <div className='list-item'>
-              <PowerSettingsNewIcon className='icon'/>
-              <p>Log Out</p>
-            </div>
-          </ListItem>
+        <ListItem onClick={toProfile} button key={'My Profile'}>
+          <div className='list-item'>
+            <AccountBoxIcon className='icon' />
+            <p>My Profile</p>
+          </div>
+        </ListItem>
+        <ListItem onClick={toUpload} button key={'Upload Image'}>
+          <div className='list-item'>
+            <InsertPhotoIcon className='icon' />
+            <p>Upload Image</p>
+          </div>
+        </ListItem>
+        <ListItem button key={'Drafts'}>
+          <div className='list-item'>
+            <CollectionsIcon className='icon' />
+            <p>Drafts</p>
+          </div>
+        </ListItem>
+        <ListItem onClick={toAbout} button key={'About'}>
+          <div className='list-item'>
+            <GroupIcon className='icon' />
+            <p>About Us</p>
+          </div>
+        </ListItem>
+        <ListItem button key={'Captured'}>
+          <div className='list-item'>
+            <CameraIcon className='icon' />
+            <p>Captured</p>
+          </div>
+        </ListItem>
+        <ListItem button key={'Collaborate'}>
+          <div className='list-item'>
+            <SupervisorAccountIcon className='icon' />
+            <p>Collaborate</p>
+          </div>
+        </ListItem>
+        <ListItem onClick={toSettings} button key={'Settings'}>
+          <div className='list-item'>
+            <SettingsIcon className='icon' />
+            <p>Settings</p>
+          </div>
+        </ListItem>
+        <ListItem onClick={() => signOut(auth)} button key={'Log Out'}>
+          <div className='list-item'>
+            <PowerSettingsNewIcon className='icon' />
+            <p>Log Out</p>
+          </div>
+        </ListItem>
       </List>
       <Divider />
     </Box>
@@ -138,31 +148,31 @@ function AppDrawer({ user, username }) {
 
   return (
     <div>
-        <Modal
+      <Modal
         open={open}
         onClose={() => setOpen(false)}
-        >
-          <div style={modalStyle} className={classes.paper}>
-            <form className="app_signup">
-              <center className='sign_up_heading'>
-                  <img
-                    className="app_header_image"
-                    src="LensCleanse.png"
-                    alt="Lens Cleanse"
-                    width='80'
-                    height='auto'
-                  />
-                  <h1 className="app_header_h1">Lens Cleanse</h1>
-                </center>
-              {user?.displayName ? (           
-                <ImageUpload username={user.displayName} />
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app_signup">
+            <center className='sign_up_heading'>
+              <img
+                className="app_header_image"
+                src="LensCleanse.png"
+                alt="Lens Cleanse"
+                width='80'
+                height='auto'
+              />
+              <h1 className="app_header_h1">Lens Cleanse</h1>
+            </center>
+            {user?.displayName ? (
+              <ImageUpload username={user.displayName} />
 
-              ) : (
-                <h3 className="upload-login-message">Login to upload an image...</h3>
-              )}
-            </form>
-          </div>
-        </Modal>
+            ) : (
+              <h3 className="upload-login-message">Login to upload an image...</h3>
+            )}
+          </form>
+        </div>
+      </Modal>
 
       <React.Fragment className='togglebutton' key={'right'}>
         <Button onClick={toggleDrawer('right', true)}><Avatar className="post_avatar" alt={username} src={"/static/images/avatar/1.jpg"} /></Button>

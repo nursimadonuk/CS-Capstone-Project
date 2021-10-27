@@ -109,7 +109,7 @@ function Signin() {
                         <br></br>
                         <br></br>
                         <div className="section">
-                            <p class="text">&mdash; Don't Have an Account &mdash;</p>
+                            <p className="textt">&mdash; Don't Have an Account &mdash;</p>
                         </div>
                         <div class="section">
                             <button className="bottom-buttons" onClick={toSignUp}>SIGN UP</button>

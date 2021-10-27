@@ -23,6 +23,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraIcon from '@mui/icons-material/Camera';
 import GroupIcon from '@mui/icons-material/Group';
+import InfoIcon from '@mui/icons-material/Info';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -111,12 +112,6 @@ function AppDrawer({ user, username }) {
             <p>Drafts</p>
           </div>
         </ListItem>
-        <ListItem onClick={toAbout} button key={'About'}>
-          <div className='list-item'>
-            <GroupIcon className='icon' />
-            <p>About Us</p>
-          </div>
-        </ListItem>
         <ListItem button key={'Captured'}>
           <div className='list-item'>
             <CameraIcon className='icon' />
@@ -133,6 +128,12 @@ function AppDrawer({ user, username }) {
           <div className='list-item'>
             <SettingsIcon className='icon' />
             <p>Settings</p>
+          </div>
+        </ListItem>
+        <ListItem onClick={toAbout} button key={'About'}>
+          <div className='list-item'>
+            <InfoIcon className='icon' />
+            <p>About Us</p>
           </div>
         </ListItem>
         <ListItem onClick={() => signOut(auth)} button key={'Log Out'}>

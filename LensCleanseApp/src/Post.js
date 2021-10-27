@@ -3,9 +3,10 @@ import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc } from 'firebase/firestore';
 import { db, collectPosts } from './firebase'
-import { Button, Input } from '@material-ui/core';
+import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import CameraIcon from '@mui/icons-material/Camera';
 import AddCommentIcon from '@mui/icons-material/AddComment';
+
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { CameraIcon as Aperture } from '@mui/icons-material/Camera';
 import { TimerIcon as ShutterSpeed } from '@mui/icons-material/Timer';
@@ -13,14 +14,42 @@ import { FlashOnIcon as Lighting } from '@mui/icons-material/FlashOn';
 import { VisibilityIcon as FocalLength } from '@mui/icons-material/Visibility';
 import { LocationOnIcon as Location } from '@mui/icons-material/LocationOn';
 
-function Post({ postId, username, user, caption, imageUrl, iso, cameraType, exposure, fStop, shutterSpeed, specifyFocus, verticalTilt, other, zoomFactor,
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 700,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+function getModalStyle() {
+  const top = 0;
+  const left = 10;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, ${left}%)`,
+  };
+}
+
+function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fStop, shutterSpeed, other,
   captures,
   focalLength,
   lensType,
   lighting,
-  location, }) {
+  location,
+  numComments }) {
+
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
+  const [commentLimit, setCommentLimit] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [modalStyle] = React.useState(getModalStyle);
+  const classes = useStyles();
 
   useEffect(() => {
     let unsubscribe;
@@ -41,6 +70,10 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
       username: user.displayName,
       timestamp: serverTimestamp(FieldValue)
     });
+    const current_post = doc(collectPosts, postId);
+    updateDoc(current_post, {
+      numComments: numComments+1
+    });
     setComment('');
   }
 
@@ -52,8 +85,46 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
     });
   }
 
+  useEffect(() => { 
+    if (numComments > 2) {
+      setCommentLimit("true");
+    }
+  }, [numComments])
+
+  const commentView = () => {
+    setOpen(true)
+  } 
+
   return (
     <div className="post">
+
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app_signup">
+            <center className='sign_up_heading'>
+              <img
+                className="app_header_image"
+                src="LensCleanse.png"
+                alt="Lens Cleanse"
+                width='80'
+                height='auto'
+              />
+              <h1 className="app_header_h1">Lens Cleanse</h1>
+            </center>
+
+            <div className='post_comments'>
+            {comments.map((comment) => (
+              <h4 className='a_comment'> <strong>{comment.username}</strong> {comment.text} </h4>
+            ))}
+          </div>
+
+          </form>
+        </div>
+      </Modal>
+
       <div className="post_header">
         <Avatar
           className="post_avatar"
@@ -70,39 +141,15 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
 
         <img id="img" className="image" src={imageUrl} alt="" />
 
-        < h4 className='info1'>
-          Camera: {cameraType}
-        </h4>
-        {
-          lensType &&
-          <h4 className='info2'>Lens Type: {lensType} </h4>
-        }
+        < h4 className='info1'> Camera: {cameraType} </h4>
+        <h4 className='info2'>Lens Type: {lensType} </h4>
         <h4 className='info3'>ISO: {iso} </h4>
-        {
-          fStop &&
-          <h4 className='info4'>f-Stop: {fStop} </h4>
-        }
-        {
-          shutterSpeed &&
-          <h4 className='info5'>Shutter Speed: {shutterSpeed} s </h4>
-        }
-        {
-          focalLength &&
-          <h4 className='info6'>Focal Length: {focalLength} mm</h4>
-        }
-
-        {
-          lighting &&
-          <h4 className='info7'>Lighting: {lighting} </h4>
-        }
-        {
-          location &&
-          <h4 className='info8'>Location: {location} </h4>
-        }
-        {
-          other &&
-          <h4 className='info9'> {other} </h4>
-        }
+        <h4 className='info4'>f-Stop: {fStop} </h4>
+        <h4 className='info5'>Shutter Speed: {shutterSpeed} s </h4>
+        <h4 className='info6'>Focal Length: {focalLength} mm</h4>
+        <h4 className='info7'>Lighting: {lighting} </h4>
+        <h4 className='info8'>Location: {location} </h4>
+        <h4 className='info9'>Other Info: {other} </h4>
 
       </div>
 
@@ -120,11 +167,19 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, expo
 
       {/* 93728 comments... -> when clicked on opens a scrollable modal with the comments */}
 
-      <div className='post_comments'>
-        {comments.map((comment) => (
-          <h4 className='a_comment'> <strong>{comment.username}</strong> {comment.text} </h4>
-        ))}
-      </div>
+      {commentLimit ? (
+        <div className="comment_container">
+          <a className="comment_number" onClick={commentView}>View all {numComments} comments</a>
+        </div>
+
+        ) : (
+          <div className='post_comments'>
+            {comments.map((comment) => (
+              <h4 className='a_comment'> <strong>{comment.username}</strong> {comment.text} </h4>
+            ))}
+          </div>
+        )}
+
 
       {
         user && (

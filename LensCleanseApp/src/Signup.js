@@ -91,7 +91,7 @@ function Signup() {
                     <br></br>
                     <br></br>
                     <div className="section">
-                        <p class="text">&mdash; Already Have an Account? &mdash;</p>
+                        <p className="textt">&mdash; Already Have an Account? &mdash;</p>
                     </div>
                     <div class="section">
                         <button className="bottom-buttons" onClick={toSignIn}>SIGN IN</button>

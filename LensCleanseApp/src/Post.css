@@ -52,48 +52,43 @@
 .text{
   padding-left: 50px;
   margin-bottom: 0;
-  border: 2px solid red;
+  /*border: 2px solid red;*/
 }
 
 .info1{
-  top:1%;
-  display: flex;
-  flex-direction: row 
+  top: 9%;
 }
 
 .info2{
-    top:10%;
+    top:18%;
     
 }
 
 .info3{
-    top:20%;
+    top:27%;
 }
 
 .info4{
-    top:30%;
+    top:36%;
 }
 
 .info5{
-    top:40%;
+    top:45%;
 }
 
 .info6{
-    top:50%;
+    top:54%;
 }
 
 .info7{
-    top:60%;
+    top:63%;
 }
 
 .info8{
-    top:70%;
+    top:72%;
 }
 .info9{
-    top:80%;
-}
-.info10{
-  top: 90%
+    top:81%;
 }
 
 
@@ -156,6 +151,21 @@
     border-top: 1px solid #9C9583;
     border: none;
     flex: 0;
+}
+
+.comment_number {
+    padding: 20px;
+    color: rgb(70, 64, 64);
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+.comment_container {
+    text-align: left;
+}
+
+.comment_container:hover a{
+    color: rgb(30, 66, 114);
 }
 
 .post_comments {

@@ -72,7 +72,8 @@ function ImageUpload({ username }) {
                 lighting: lighting,
                 location: location,
                 focalLength: focalLength,
-                other: other
+                other: other,
+                numComments: 0
 
               });
 
@@ -119,7 +120,7 @@ function ImageUpload({ username }) {
             <TextField className="imageupload_photoInfo" label="Enter Shutter Speed" defaultValue="Small" size="small" variant="filled" onChange={event => setShutterSpeed(event.target.value)} value={shutterSpeed} />
             <TextField className="imageupload_photoInfo" label="Enter Lighting Details" defaultValue="Small" size="small" variant="filled" onChange={event => setLighting(event.target.value)} value={lighting} />
             <TextField className="imageupload_photoInfo" label="Enter Location" defaultValue="Small" size="small" variant="filled" onChange={event => setLocation(event.target.value)} value={location} />
-            <TextField className="imageupload_photoInfo" label="Enter Zoom Factor" defaultValue="Small" size="small" variant="filled" onChange={event => setFocalLength(event.target.value)} value={focalLength} />
+            <TextField className="imageupload_photoInfo" label="Enter Focal Length" defaultValue="Small" size="small" variant="filled" onChange={event => setFocalLength(event.target.value)} value={focalLength} />
             <TextField className="imageupload_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setOther(event.target.value)} value={other} />
 
           </div>

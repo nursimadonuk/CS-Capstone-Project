@@ -90,18 +90,15 @@ function App() {
                 imageUrl={post.imageUrl}
                 iso={post.ISO}
                 cameraType={post.cameraType}
-                exposure={post.exposure}
                 fStop={post.fStop}
                 shutterSpeed={post.shutterSpeed}
-                specifyFocus={post.specifyFocus}
-                verticalTilt={post.verticalTilt}
-                zoomFactor={post.zoomFactor}
                 captures={post.captures}
                 focalLength={post.focalLength}
                 lensType={post.lensType}
                 lighting={post.lighting}
                 location={post.location}
                 other={post.other}
+                numComments={post.numComments}
               />
             </div>
           ))

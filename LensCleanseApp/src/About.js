@@ -53,7 +53,7 @@ function About() {
       </div>
       <div className={classes.wrapper}>
         <div className={classes.secondWrappers}>
-          <div>
+          <div className={classes.aboutInfo}>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui aut porro explicabo, sunt ratione reprehenderit nostrum maxime consectetur ullam, dignissimos adipisci! Nihil quisquam exercitationem sit laboriosam, accusamus quae fugiat explicabo.
             </p>
@@ -123,7 +123,12 @@ const useStyles = makeStyles((theme) => ({
   icons: {
     border: "none",
     backgroundColor: "transparent"
-  }
+  },
+  aboutInfo: {
+    fontSize: 16,
+    padding: "25px",
+
+  },
 
 }));
 

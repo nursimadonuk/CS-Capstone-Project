@@ -3,11 +3,33 @@ import React, { useState } from 'react';
 import { storage, collectPosts } from './firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { serverTimestamp, FieldValue, addDoc } from 'firebase/firestore';
-import { TextField, Input, LinearProgress, Button, IconButton } from "@material-ui/core"
+import { TextField, Input, LinearProgress, Button, IconButton, Modal, makeStyles } from "@material-ui/core"
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
 import "./Post.css"
 import "./imageUpload.css"
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 700,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+function getModalStyle() {
+  const top = 0;
+  const left = 10;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, ${left}%)`,
+  };
+}
 
 function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
@@ -22,7 +44,9 @@ function ImageUpload({ username }) {
   const [location, setLocation] = useState("");
   const [focalLength, setFocalLength] = useState(0);
   const [other, setOther] = useState("");
-
+  const [open, setOpen] = useState(false);
+  const [modalStyle] = React.useState(getModalStyle);
+  const classes = useStyles();
 
   const fileInput = React.createRef()
 
@@ -89,6 +113,7 @@ function ImageUpload({ username }) {
               setLocation("");
               setFocalLength(0);
               setOther("");
+              setOpen(true);
 
             })
 
@@ -100,6 +125,29 @@ function ImageUpload({ username }) {
 
   return (
     <ThemeProvider theme={theme} className="imageupload">
+
+      <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+        >
+          <div style={modalStyle} className={classes.paper}>
+            <form className="app_signup">
+              <center className='sign_up_heading'>
+                <img
+                  className="app_header_image"
+                  src="LensCleanse.png"
+                  alt="Lens Cleanse"
+                  width='80'
+                  height='auto'
+                />
+                <h1 className="app_header_h1">Lens Cleanse</h1>
+              </center>
+
+              <h4> Your image has been successfully uploaded to Lens Cleanse! </h4>
+
+            </form>
+          </div>
+        </Modal>
       <div>
 
         <progress className="imageupload_progress" value={progress} max="100" />

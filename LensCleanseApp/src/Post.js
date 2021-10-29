@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc } from 'firebase/firestore';
@@ -95,6 +95,8 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     setOpen(true)
   } 
 
+  const commentBoxRef = useRef();
+
   return (
     <div className="post">
 
@@ -155,8 +157,11 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
 
       <br></br>
       <div className='post_like_comment'>
-        <Button onClick={addCapture}><CameraIcon /></Button>
-        <Button className='b'><AddCommentIcon /></Button>
+        <Button onClick={addCapture} disabled={user==null}><CameraIcon /></Button>
+        <Button onClick={() => {
+          commentBoxRef.current.focus();
+        }}
+        className='b' disabled={user==null} ><AddCommentIcon /></Button>
       </div>
       <br></br>
       <div>
@@ -186,6 +191,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
           <form className='post_commentbox'>
             <Input
               id='t'
+              ref={commentBoxRef}
               className='post_input'
               type='text'
               placeholder='Add a comment...'

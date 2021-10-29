@@ -3,7 +3,30 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, sign
 import { auth } from './firebase'
 import { useHistory } from 'react-router-dom';
 import Navbar from './Navbar';
+import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import './Signup.css'
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: 500,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
+function getModalStyle() {
+  const top = 10;
+  const left = 10;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, ${left}%)`,
+  };
+}
 
 function Signup() {
     let history = useHistory();
@@ -20,7 +43,9 @@ function Signup() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [user, setUser] = useState(null);
-
+    const [open, setOpen] = useState(false);
+    const [modalStyle] = React.useState(getModalStyle);
+    const classes = useStyles();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (authUser) => {
@@ -59,11 +84,34 @@ function Signup() {
               displayName: username
             })
           })
-          .catch((error) => alert(error.message));
+          .catch((error) => alert(error.message));     
     }
 
     return(
       <div className="wrap" >
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+        >
+          <div style={modalStyle} className={classes.paper}>
+            <form className="app_signup">
+              <center className='sign_up_heading'>
+                <img
+                  className="app_header_image"
+                  src="LensCleanse.png"
+                  alt="Lens Cleanse"
+                  width='80'
+                  height='auto'
+                />
+                <h1 className="app_header_h1">Lens Cleanse</h1>
+              </center>
+
+              <h4> You have successfully signed up for your Lens Cleanse account! Now you can sign in and start sharing your awesome work! </h4>
+
+            </form>
+          </div>
+        </Modal>
+
         <Navbar></Navbar>
         <div className="login">
             <div className="sign-in" style={{ backgroundImage: "url(/bg.jpg)" }}>

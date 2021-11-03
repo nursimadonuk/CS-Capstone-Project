@@ -55,7 +55,7 @@ function About() {
         <div className={classes.secondWrappers}>
           <div className={classes.aboutInfo}>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui aut porro explicabo, sunt ratione reprehenderit nostrum maxime consectetur ullam, dignissimos adipisci! Nihil quisquam exercitationem sit laboriosam, accusamus quae fugiat explicabo.
+              As photographers we long for an app that is dedicated to just us and our professional work where we can share our photos with other photographers. Photographers want to know what goes into other photographers' work and how they create them. Lens cleanse will allow us to learn just that.
             </p>
           </div>
 

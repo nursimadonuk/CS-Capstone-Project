@@ -1,0 +1,10 @@
+.profile-posts {
+    justify-content: left;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile-post {
+    width: 20%;
+    object-fit: contain;
+}

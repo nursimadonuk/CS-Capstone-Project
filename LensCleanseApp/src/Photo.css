@@ -1,0 +1,51 @@
+.image-wrapper {
+    padding: 10px;
+    position: relative;
+}
+
+.image-wrapper:hover img {
+    filter: blur(3px) brightness(60%);
+    transition: 1s;
+}
+
+.image-wrapper :not(img) {
+    z-index: 1;
+    color: #fff;
+    opacity: 0;
+    transition: .3s;
+    margin-left: 20px;
+    padding-bottom: 10px;
+}
+
+.image-wrapper:hover :not(img) {
+    opacity: 1;
+}
+
+.image {
+    object-fit: contain;   
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.info_display {
+    top: 10%;
+    position: absolute;
+}
+
+.capture_display {
+    top: 20%;
+    position: absolute;
+}
+
+.comment_display {
+    top: 30%;
+    position: absolute;
+}
+
+.caption_display {
+    top: 40%;
+    position: absolute;
+}

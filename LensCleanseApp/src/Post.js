@@ -143,7 +143,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
 
         <img id="img" className="image" src={imageUrl} alt="" />
 
-        < h4 className='info1'> Camera: {cameraType} </h4>
+        <h4 className='info1'>Camera: {cameraType} </h4>
         <h4 className='info2'>Lens Type: {lensType} </h4>
         <h4 className='info3'>ISO: {iso} </h4>
         <h4 className='info4'>f-Stop: {fStop} </h4>

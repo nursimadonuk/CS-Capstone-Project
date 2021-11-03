@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Profile from './Profile'
+import NewProfile from './Newprofile'
 import Settings from './Settings'
 import ImageUpload from './ImageUpload';
 import About from './About';
@@ -17,7 +17,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component = {App}/>
         <Route path="/login" component={Signin} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile" component={NewProfile} />
         <Route path="/imageupload">
             <ImageUpload />
         </Route>

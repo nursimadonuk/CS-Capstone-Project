@@ -10,6 +10,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { Input, makeStyles, Modal } from '@material-ui/core';
 import ImageUpload from '../ImageUpload';
 
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 
 import './AppDrawer.css';
 import { auth } from '../firebase'
@@ -24,6 +26,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraIcon from '@mui/icons-material/Camera';
 import GroupIcon from '@mui/icons-material/Group';
 import InfoIcon from '@mui/icons-material/Info';
+import NewProfile from '../Newprofile';
 
 const useStyles = makeStyles((theme) => ({
   paper: {

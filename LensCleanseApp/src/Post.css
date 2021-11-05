@@ -106,6 +106,21 @@
     display: flex;
     align-items: center;
     padding: 20px;
+    justify-content: space-between;
+}
+
+.post_header_button {
+    display: flex;
+    align-self: center;
+}
+
+.post_header_editbutton {
+    right: 0%;
+}
+
+.post_header_left {
+    display: flex;
+    align-items: center;
 }
 
 .post_avatar {

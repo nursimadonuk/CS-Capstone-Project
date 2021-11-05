@@ -100,6 +100,7 @@ function AppDrawer({ user, username }) {
         <ListItem onClick={toProfile} button key={'My Profile'}>
           <div className='list-item'>
             <AccountBoxIcon className='icon' />
+            {/* instead of redirecting to a page, pop up a modal with Profile user username */}
             <p>My Profile</p>
           </div>
         </ListItem>

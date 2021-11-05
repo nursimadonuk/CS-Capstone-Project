@@ -7,7 +7,6 @@ import Navbar from './Navbar';
 import Photo from './Photo';
 import './Newprofile.css'
 
-const sampleBackgroundImage = 'sampleProfilePicture.jpg'
 
 function NewProfile({ profileusername, profileuser }) {
   const [username, setUsername] = useState('');
@@ -44,6 +43,7 @@ function NewProfile({ profileusername, profileuser }) {
     }
   }, [user]);
 
+  /*
   if(user) {
       onSnapshot(query(collectPosts, where('username', "==", user.displayName)), (snapshot) => {
         // when posts changes this code runs
@@ -53,17 +53,24 @@ function NewProfile({ profileusername, profileuser }) {
           post: doc.data()
         })));
       })
-  }
+  }*/
+
+  useEffect(() => {
+    onSnapshot(query(collectPosts, where('username', "==", profileusername)), (snapshot) => {
+      // when posts changes this code runs
+      console.log("Snapshot", snapshot.docs)
+      setPosts(snapshot.docs.map(doc => ({
+        id: doc.id,
+        post: doc.data()
+      })));
+
+    })
+  }, []);
 
 
   //! Replace p tags with information from Firebase
   return (
     <div>
-      {user?.displayName ? (
-        <Navbar user={user} username={user.displayName} ></Navbar>
-      ) : (
-        <Navbar></Navbar>
-      )}
       <div className="info">
         <h3>{username ? username : "Not Logged In"}</h3>
         <h3>{username ? "Email: " + userEmail : ""}</h3>

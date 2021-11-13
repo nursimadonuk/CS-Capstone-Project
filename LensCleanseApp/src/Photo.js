@@ -125,7 +125,7 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
             </Modal>
 
             <div className="image-wrapper">
-                <img id="img" className="image" src={imageUrl} alt="" />
+                <img id="img" className="profile-post-image" src={imageUrl} alt="" />
                 <div className="content">
                     <a className="info_display" onClick={infoView}>View all photo information</a>
                     <p className="capture_display">{captures} captures</p>

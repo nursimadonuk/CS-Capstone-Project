@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, Button, Input, makeStyles, Typography, IconButton, Grid, Card, CardHeader, CardContent } from '@material-ui/core';
+import Grid from '@mui/material/Grid';
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { onSnapshot, orderBy, query, Timestamp, where } from 'firebase/firestore';
 import { collectPosts, auth } from './firebase'
-import Navbar from './Navbar';
 import Photo from './Photo';
 import './Newprofile.css'
 
@@ -14,46 +13,6 @@ function NewProfile({ profileusername, profileuser }) {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
-      if (authUser) {
-        // user logged in
-        console.log(authUser);
-        setUser(authUser);
-        setUsername(authUser.displayName);
-        setUserEmail(authUser.email)
-
-        if (authUser.displayName) {
-          // do not update username
-        } else {
-          // NEW USER
-          return updateProfile(authUser, {
-            displayName: username,
-          });
-        }
-
-      } else {
-        // user logged out
-        setUser(null);
-      }
-    })
-    return () => {
-      // some cleanup action
-      unsubscribe();
-    }
-  }, [user]);
-
-  /*
-  if(user) {
-      onSnapshot(query(collectPosts, where('username', "==", user.displayName)), (snapshot) => {
-        // when posts changes this code runs
-        console.log("Snapshot", snapshot.docs)
-        setPosts(snapshot.docs.map(doc => ({
-          id: doc.id,
-          post: doc.data()
-        })));
-      })
-  }*/
 
   useEffect(() => {
     onSnapshot(query(collectPosts, where('username', "==", profileusername)), (snapshot) => {
@@ -72,13 +31,14 @@ function NewProfile({ profileusername, profileuser }) {
   return (
     <div>
       <div className="info">
-        <h3>{username ? username : "Not Logged In"}</h3>
-        <h3>{username ? "Email: " + userEmail : ""}</h3>
+        <h3> {profileusername} </h3>
+        <h3>{username ? "Email: "  : "" }</h3>
       </div>
 
-      {
+      <Grid className="profile-posts-container" container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+        {
           posts.map(({ id, post }) => (
-            <div className="profile-posts" >
+            <Grid xs={2} sm={4} md={4} className="profile-posts" >
               <Photo
                 className="profile-post"
                 key={id}
@@ -99,9 +59,11 @@ function NewProfile({ profileusername, profileuser }) {
                 other={post.other}
                 numComments={post.numComments}
               />
-            </div>
+            </Grid>
           ))
         }
+      </Grid>
+
     </div>
   )
 }

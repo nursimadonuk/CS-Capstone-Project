@@ -21,8 +21,8 @@
     opacity: 1;
 }
 
-.image {
-    object-fit: contain;   
+.profile-post-image {
+    object-fit: contain; 
 }
 
 .content {

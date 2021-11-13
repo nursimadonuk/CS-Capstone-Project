@@ -7,12 +7,10 @@ import { Button, Input, makeStyles, Modal, TextField } from '@material-ui/core';
 import CameraIcon from '@mui/icons-material/Camera';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import { CameraIcon as Aperture } from '@mui/icons-material/Camera';
-import { TimerIcon as ShutterSpeed } from '@mui/icons-material/Timer';
-import { FlashOnIcon as Lighting } from '@mui/icons-material/FlashOn';
-import { VisibilityIcon as FocalLength } from '@mui/icons-material/Visibility';
-import { LocationOnIcon as Location } from '@mui/icons-material/LocationOn';
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -39,6 +37,10 @@ function getModalStyle() {
     transform: `translate(-${top}%, ${left}%)`,
   };
 }
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fStop, shutterSpeed, other,
   captures,
@@ -75,13 +77,17 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     let unsubscribe;
     if (postId) {
       unsubscribe = onSnapshot(query(collection(doc(collectPosts, postId), 'comments'), orderBy('timestamp', 'desc')), (snapshot) => {
-        setComments(snapshot.docs.map((doc) => doc.data()));
+        setComments(snapshot.docs.map((doc) => ({
+          id: doc.id,
+          comment: doc.data()
+        })));
       });
     }
     return () => {
       unsubscribe();
     };
-  }, [postId])
+  }, [postId, comment])
+
 
   const postComment = (event) => {
     event.preventDefault();
@@ -138,6 +144,9 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   }
 
   const deletePost = () => {
+    comments.map(({ id, comment }) => (
+      deleteDoc(doc(collection(doc(collectPosts, postId), 'comments'), id))
+    ))
     deleteDoc(doc(db, 'posts', postId))
   }
 
@@ -157,13 +166,14 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     updateDoc(current_post, {
       caption: updateCaption,
       cameraType: updateCameraType,
-      iso: updateISO,
+      ISO: updateISO,
       lensType: updateLensType,
       fStop: updateFStop,
       shutterSpeed: updateShutterSpeed,
       lighting: updateLighting,
       location: updateLocation,
-      focalLength: updateFocalLength
+      focalLength: updateFocalLength,
+      other: updateOther
     });
 
     setOpenEdit(false);
@@ -174,10 +184,10 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   const profileView = () => {
     if(openProfile) {
       setOpenProfile(false)
-    }
-    else {
+    } else {
       setOpenProfile(true)
     }
+      
   }
 
   const commentBoxRef = useRef();
@@ -203,7 +213,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
             </center>
 
             <div className='post_comments'>
-            {comments.map((comment) => (
+            {comments.map(({ id, comment }) => (
               <h4 className='a_comment'> <strong>{comment.username}</strong> {comment.text} </h4>
             ))}
           </div>
@@ -305,25 +315,42 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
         </div>
       </Modal>
 
-      <Modal
+      <Dialog
+        fullScreen
         open={openProfile}
         onClose={() => setOpenProfile(false)}
+        TransitionComponent={Transition}
+        className="profile-dialog"
       >
-        <div>
-          <center className='sign_up_heading'>
-            <img
-              className="app_header_image"
-              src="LensCleanse.png"
-              alt="Lens Cleanse"
-              width='80'
-              height='auto'
-            />
-            <h1 className="app_header_h1">Lens Cleanse</h1>
-          </center>
+        <center className='profile-nav-heading'>
 
-          <NewProfile profileuser={user} profileusername={username}></NewProfile>
-        </div>
-      </Modal>
+          <div className="profile-nav">
+            <div className="profile-nav-left">
+              <img
+                className="app_header_image"
+                src="LensCleanse.png"
+                alt="Lens Cleanse"
+                width='80'
+                height='auto'
+              />
+              <h1 className="app_header_h1">Lens Cleanse</h1>
+            </div>
+
+            <IconButton
+                className="x-button"
+                color="inherit"
+                onClick={profileView}
+                aria-label="close"
+              >
+                <CloseIcon />
+            </IconButton>
+          </div>
+
+        </center>
+
+        <NewProfile profileusername={username} profileuser={user}></NewProfile>
+
+      </Dialog>
 
       <div className="post_header">
         <div className="post_header_left">
@@ -332,10 +359,9 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
             alt={username}
             src={"/static/images/avatar/1.jpg"}
           />
-          <h3> {username} </h3>
+          <h3 onClick={profileView}> {username} </h3>
 
         </div>
-
 
         {ownPost ? (
           <div>
@@ -389,7 +415,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
 
         ) : (
           <div className='post_comments'>
-            {comments.map((comment) => (
+            {comments.map(({ id, comment }) => (
               <h4 className='a_comment'> <strong>{comment.username}</strong> {comment.text} </h4>
             ))}
           </div>

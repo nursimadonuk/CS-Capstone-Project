@@ -109,11 +109,6 @@
     justify-content: space-between;
 }
 
-.post_header_button {
-    display: flex;
-    align-self: center;
-}
-
 .post_header_editbutton {
     right: 0%;
 }
@@ -197,4 +192,25 @@
     display: flex;
 }
 
+.profile-dialog {
+    background-color: #C0D6DF;
+    width: 100%;
+}
 
+.profile-nav {
+    justify-content: space-between;
+    background-color: #DBE9EE;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    top: 0;
+    margin-bottom: 10px;
+}
+.profile-nav-left {
+    display: flex;
+}
+
+.x-button {
+    padding: 10px;
+    margin-right: 20px;
+}

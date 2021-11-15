@@ -42,13 +42,68 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const parseDay = (day) => {
+  if(day == 0) {
+    return "Mon"
+  }
+  else if(day == 1) {
+    return "Tue"
+  }
+  else if(day == 2) {
+    return "Wed"
+  }
+  else if(day == 3) {
+    return "Thu"
+  }
+  else if(day == 4) {
+    return "Fri"
+  }
+  else if(day == 5) {
+    return "Sat"
+  }
+  else if(day == 6) {
+    return "Sun"
+  }
+  else {
+    return ""
+  }
+}
+
+const parseTime = (timeArray) => {
+    const currentTimeStamp = serverTimestamp(FieldValue)
+    if(!currentTimeStamp) {return "No Time Stamp on Post"}
+    const currentDate = currentTimeStamp.toDate()
+    const post_day = timeArray[0]
+    const post_date = timeArray[1]
+    const post_month = timeArray[2]
+    const post_year = timeArray[3]
+    const post_hour = timeArray[4]
+    const post_minute = timeArray[5]
+    if(post_year < currentDate.getFullYear() || post_month < currentDate.getMonth()) {
+      let result = (post_month+1).toString()
+      result += "/"
+      result += post_date.toString()
+      result += "/"
+      result += post_year.toString()
+      result += " @ "
+      result += post_hour.toString()
+      result += ":"
+      result += post_minute.toString()
+      return result
+    }
+    else if(post_date == currentDate.getDate()) {
+      return "works"
+    }
+}
+
 function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fStop, shutterSpeed, other,
   captures,
   focalLength,
   lensType,
   lighting,
   location,
-  numComments }) {
+  numComments,
+  timePosted }) {
 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
@@ -443,6 +498,8 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
           </form>
         )
       }
+
+      <p className='a_comment'> {timePosted} </p>
 
     </div >
   )

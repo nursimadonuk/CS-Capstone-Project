@@ -12,6 +12,13 @@ import ImageUpload from './ImageUpload';
 import Navbar from './Navbar';
 import { popoverClasses } from '@mui/material';
 
+const splitTime = (date) => {
+  if(!date) { return [] }
+  date = date.toDate()
+  const date_elements = [date.getDay(), date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()]
+  return date_elements
+}
+
 function App() {
   const classes = useStyles();
   const [posts, setPosts] = useState([]);
@@ -99,6 +106,7 @@ function App() {
                 location={post.location}
                 other={post.other}
                 numComments={post.numComments}
+                timePosted={splitTime(post.timestamp)}
               />
             </div>
           ))

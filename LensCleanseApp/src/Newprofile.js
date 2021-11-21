@@ -6,6 +6,12 @@ import { collectPosts, auth } from './firebase'
 import Photo from './Photo';
 import './Newprofile.css'
 
+const splitTime = (date) => {
+  if(!date) { return [] }
+  date = date.toDate()
+  const date_elements = [date.getDay(), date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()]
+  return date_elements
+}
 
 function NewProfile({ profileusername, profileuser }) {
   const [username, setUsername] = useState('');
@@ -31,38 +37,42 @@ function NewProfile({ profileusername, profileuser }) {
   return (
     <div>
       <div className="info">
-        <h3> {profileusername} </h3>
-        <h3>{username ? "Email: "  : "" }</h3>
+        <h3> </h3>
+        <h3>{username ? "Email: "  : "" } email</h3>
       </div>
 
-      <Grid className="profile-posts-container" container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-        {
-          posts.map(({ id, post }) => (
-            <Grid xs={2} sm={4} md={4} className="profile-posts" >
-              <Photo
-                className="profile-post"
-                key={id}
-                postId={id}
-                user={user}
-                username={post.username}
-                caption={post.caption}
-                imageUrl={post.imageUrl}
-                iso={post.ISO}
-                cameraType={post.cameraType}
-                fStop={post.fStop}
-                shutterSpeed={post.shutterSpeed}
-                captures={post.captures}
-                focalLength={post.focalLength}
-                lensType={post.lensType}
-                lighting={post.lighting}
-                location={post.location}
-                other={post.other}
-                numComments={post.numComments}
-              />
-            </Grid>
-          ))
-        }
-      </Grid>
+      <div className="profile-wrapper">
+        <Grid className="profile-posts-container" container spacing={0.5}>
+          {
+            posts.map(({ id, post }) => (
+              <Grid className="profile-posts" >
+                <Photo
+                  className="profile-post"
+                  key={id}
+                  postId={id}
+                  user={profileuser}
+                  username={post.username}
+                  caption={post.caption}
+                  imageUrl={post.imageUrl}
+                  iso={post.ISO}
+                  cameraType={post.cameraType}
+                  fStop={post.fStop}
+                  shutterSpeed={post.shutterSpeed}
+                  captures={post.captures}
+                  focalLength={post.focalLength}
+                  lensType={post.lensType}
+                  lighting={post.lighting}
+                  location={post.location}
+                  other={post.other}
+                  numComments={post.numComments}
+                  timePosted={splitTime(post.timestamp)}
+                />
+              </Grid>
+            ))
+          }
+        </Grid>
+
+      </div>
 
     </div>
   )

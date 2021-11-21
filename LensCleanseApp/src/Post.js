@@ -388,7 +388,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
                 width='80'
                 height='auto'
               />
-              <h1 className="app_header_h1">Lens Cleanse</h1>
+              <h1 className="app_header_h1">{username}</h1>
             </div>
 
             <IconButton

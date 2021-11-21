@@ -10,6 +10,12 @@ import Avatar from '@material-ui/core/Avatar';
 import { Input, makeStyles, Modal } from '@material-ui/core';
 import ImageUpload from '../ImageUpload';
 
+
+import Dialog from '@mui/material/Dialog';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 
@@ -62,6 +68,7 @@ function AppDrawer({ user, username }) {
   });
 
   const [open, setOpen] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -88,6 +95,19 @@ function AppDrawer({ user, username }) {
     history.push('/settings')
   }
 
+  const profileView = () => {
+    if(openProfile) {
+      setOpenProfile(false)
+    } else {
+      setOpenProfile(true)
+    }
+      
+  }
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
   const list = (anchor) => (
     <Box
       className='menu-box'
@@ -97,11 +117,10 @@ function AppDrawer({ user, username }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List className='menu-list'>
-        <ListItem onClick={toProfile} button key={'My Profile'}>
+        <ListItem onClick={toggleDrawer(anchor, false)} button key={'My Profile'}>
           <div className='list-item'>
             <AccountBoxIcon className='icon' />
-            {/* instead of redirecting to a page, pop up a modal with Profile user username */}
-            <p>My Profile</p>
+            <p onClick={profileView}> My Profile</p>
           </div>
         </ListItem>
         <ListItem onClick={toUpload} button key={'Upload Image'}>
@@ -153,6 +172,43 @@ function AppDrawer({ user, username }) {
 
   return (
     <div>
+      <Dialog
+        fullScreen
+        open={openProfile}
+        onClose={() => setOpenProfile(false)}
+        TransitionComponent={Transition}
+        className="profile-dialog"
+      >
+        <center className='profile-nav-heading'>
+
+          <div className="profile-nav">
+            <div className="profile-nav-left">
+              <img
+                className="app_header_image"
+                src="LensCleanse.png"
+                alt="Lens Cleanse"
+                width='80'
+                height='auto'
+              />
+              <h1 className="app_header_h1">{username}</h1>
+            </div>
+
+            <IconButton
+                className="x-button"
+                color="inherit"
+                onClick={profileView}
+                aria-label="close"
+              >
+                <CloseIcon />
+            </IconButton>
+          </div>
+
+        </center>
+
+        <NewProfile profileusername={username} profileuser={user}></NewProfile>
+
+      </Dialog>
+
       <Modal
         open={open}
         onClose={() => setOpen(false)}

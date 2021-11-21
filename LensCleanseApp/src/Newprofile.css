@@ -1,10 +1,18 @@
+.profile-wrapper {
+    margin-left: 20px;
+    margin-right: 0;
+}
+
 .profile-posts {
     justify-content: left;
     display: flex;
     flex-direction: row;
-    width: 30%;
 }
 
 .profile-post {
     object-fit: contain;
+}
+
+.info {
+    margin-bottom: 30px;
 }

@@ -4,16 +4,18 @@ import Avatar from '@material-ui/core/Avatar';
 import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db, collectPosts } from './firebase'
 import { Button, Input, makeStyles, Modal, TextField } from '@material-ui/core';
+
 import CameraIcon from '@mui/icons-material/Camera';
+import CameraOutlinedIcon from '@mui/icons-material/CameraOutlined';
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import NewProfile from './Newprofile';
 
 const useStyles = makeStyles((theme) => ({
@@ -96,6 +98,15 @@ const parseTime = (timeArray) => {
     }
 }
 
+const removeElement= (capList, item) => {
+  const array = capList
+  const index = array.indexOf(item);
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+  return array
+}
+
 function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fStop, shutterSpeed, other,
   captures,
   focalLength,
@@ -134,7 +145,6 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     let unsubscribe;
     if (postId) {
       unsubscribe = onSnapshot(query(collection(doc(collectPosts, postId), 'comments'), orderBy('timestamp', 'desc')), (snapshot) => {
-        // console.log(snapshot.docs[0])
         setComments(snapshot.docs.map((doc) => ({
           id: doc.id,
           comment: doc.data()
@@ -161,15 +171,21 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     setComment('');
   }
 
-  const addCapture = (e) => {
-    e.preventDefault();
+  const addCapture = (event) => {
+    event.preventDefault();
     const current_post = doc(collectPosts, postId)
     updateDoc(current_post, {
       captures: [...captures, user.displayName]
     });
   }
 
-
+  const removeCapture = (event) => {
+    event.preventDefault();
+    const current_post = doc(collectPosts, postId)
+    updateDoc(current_post, {
+      captures: removeElement(captures, user.displayName)
+    });
+  }
 
   useEffect(() => { 
     if (numComments > 2) {
@@ -457,9 +473,9 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       <br></br>
       <div className='post_like_comment'>
         {
-          captures.find(capturedNames => capturedNames === user.displayName)
+          user && captures.find(capturedNames => capturedNames === user.displayName)
             ?
-            <> </>
+            <Button onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></Button>
             :
             <Button onClick={addCapture} disabled={user == null}><CameraIcon /></Button>
           }

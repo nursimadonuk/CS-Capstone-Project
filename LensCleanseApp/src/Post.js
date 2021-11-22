@@ -128,10 +128,13 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   const [updateFocalLength, setUpdateFocalLength] = useState(focalLength);
   const [updateOther, setUpdateOther] = useState(other);
 
+  const [userCaptured, setUserCaptured] = useState("")
+
   useEffect(() => {
     let unsubscribe;
     if (postId) {
       unsubscribe = onSnapshot(query(collection(doc(collectPosts, postId), 'comments'), orderBy('timestamp', 'desc')), (snapshot) => {
+        // console.log(snapshot.docs[0])
         setComments(snapshot.docs.map((doc) => ({
           id: doc.id,
           comment: doc.data()
@@ -158,19 +161,22 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     setComment('');
   }
 
-  const addCapture = (event) => {
-    event.preventDefault();
-    const current_post = doc(collectPosts, postId);
+  const addCapture = (e) => {
+    e.preventDefault();
+    const current_post = doc(collectPosts, postId)
     updateDoc(current_post, {
-      captures: captures + 1
+      captures: [...captures, user.displayName]
     });
   }
+
+
 
   useEffect(() => { 
     if (numComments > 2) {
       setCommentLimit("true");
     }
   }, [numComments])
+
 
   useEffect(() => {
     if(!user) {
@@ -450,7 +456,13 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
 
       <br></br>
       <div className='post_like_comment'>
-        <Button onClick={addCapture} disabled={user==null}><CameraIcon /></Button>
+        {
+          captures.find(capturedNames => capturedNames === user.displayName)
+            ?
+            <> </>
+            :
+            <Button onClick={addCapture} disabled={user == null}><CameraIcon /></Button>
+          }
         <Button onClick={() => {
           commentBoxRef.current.focus();
         }}
@@ -458,7 +470,8 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       </div>
       <br></br>
       <div>
-        <h4 className="post_captures"><strong> {captures} captures </strong></h4>
+        {/* {} */}
+        <h4 className="post_captures"><strong> {captures.length} captures </strong></h4>
       </div>
 
       <h4 className="post_text"> <strong>{username}</strong> {caption}</h4>

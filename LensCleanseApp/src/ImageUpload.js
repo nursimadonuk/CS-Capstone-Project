@@ -87,7 +87,7 @@ function ImageUpload({ username }) {
                 caption: caption,
                 imageUrl: url,
                 username: username,
-                captures: 0,
+                captures: [],
                 ISO: ISO,
                 cameraType: cameraType,
                 lensType: lensType,

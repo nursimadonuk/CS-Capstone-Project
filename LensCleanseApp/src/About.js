@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Input } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import Navbar from './Navbar';
-import { collectPosts, auth } from './firebase'
+import { auth } from './firebase'
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
-
-import { onSnapshot, orderBy, query, Timestamp } from 'firebase/firestore';
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 
 function About() {
@@ -103,7 +100,6 @@ const useStyles = makeStyles((theme) => ({
     height: "800px",
     display: "flex",
     flexDirection: "row",
-    margin: "0 auto",
     // border: "2px solid red",
     textAlign: "center",
     justifyContent: "center",

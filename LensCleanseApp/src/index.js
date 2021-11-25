@@ -9,7 +9,7 @@ import About from './About';
 import Signup from './Signup'
 import Signin from './Signin';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 ReactDOM.render(
   <Router>

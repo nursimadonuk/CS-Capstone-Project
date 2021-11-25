@@ -1,16 +1,6 @@
 .post {
     background: linear-gradient(to bottom right, #166088 25%, #DBE9EE);
-    /*
 
-
-    Hot-pink: #e60073
-    Dark bue: #003399
-    burgundy: #800020
-    skyblue: #00bfff
-    purple: #732673
-
-    to-left#557A95;
-    */
     max-width: 500px;
     min-width: 500px;
     min-height: 200px;
@@ -213,4 +203,11 @@
 .x-button {
     padding: 10px;
     margin-right: 20px;
+}
+
+.time {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-weight: normal;
+    text-align: left;
 }

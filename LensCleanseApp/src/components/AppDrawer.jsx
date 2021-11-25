@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import Avatar from '@material-ui/core/Avatar';
-import { Input, makeStyles, Modal } from '@material-ui/core';
+import { makeStyles, Modal } from '@material-ui/core';
 import ImageUpload from '../ImageUpload';
 
 
@@ -15,9 +15,6 @@ import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import ReactDOM from 'react-dom';
 
 import './AppDrawer.css';
 import { auth } from '../firebase'
@@ -30,7 +27,6 @@ import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraIcon from '@mui/icons-material/Camera';
-import GroupIcon from '@mui/icons-material/Group';
 import InfoIcon from '@mui/icons-material/Info';
 import NewProfile from '../Newprofile';
 
@@ -84,9 +80,6 @@ function AppDrawer({ user, username }) {
     setOpen(true)
   }
 
-  const toProfile = () => {
-    history.push('/profile')
-  }
   const toAbout = () => {
     history.push('/about')
   }
@@ -100,8 +93,12 @@ function AppDrawer({ user, username }) {
       setOpenProfile(false)
     } else {
       setOpenProfile(true)
-    }
-      
+    }   
+  }
+
+  const closeProfile = () => {
+    setOpenProfile(false);
+    history.go(0);
   }
 
   const Transition = React.forwardRef(function Transition(props, ref) {
@@ -117,10 +114,10 @@ function AppDrawer({ user, username }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List className='menu-list'>
-        <ListItem onClick={toggleDrawer(anchor, false)} button key={'My Profile'}>
+        <ListItem onClick={profileView} button key={'My Profile'}>
           <div className='list-item'>
             <AccountBoxIcon className='icon' />
-            <p onClick={profileView}> My Profile</p>
+            <p> My Profile</p>
           </div>
         </ListItem>
         <ListItem onClick={toUpload} button key={'Upload Image'}>
@@ -196,7 +193,7 @@ function AppDrawer({ user, username }) {
             <IconButton
                 className="x-button"
                 color="inherit"
-                onClick={profileView}
+                onClick={closeProfile}
                 aria-label="close"
               >
                 <CloseIcon />

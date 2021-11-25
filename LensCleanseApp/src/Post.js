@@ -71,30 +71,69 @@ const parseDay = (day) => {
   }
 }
 
-const parseTime = (timeArray) => {
-    const currentTimeStamp = serverTimestamp(FieldValue)
-    if(!currentTimeStamp) {return "No Time Stamp on Post"}
-    const currentDate = currentTimeStamp.toDate()
-    const post_day = timeArray[0]
-    const post_date = timeArray[1]
-    const post_month = timeArray[2]
-    const post_year = timeArray[3]
-    const post_hour = timeArray[4]
-    const post_minute = timeArray[5]
-    if(post_year < currentDate.getFullYear() || post_month < currentDate.getMonth()) {
-      let result = (post_month+1).toString()
-      result += "/"
-      result += post_date.toString()
-      result += "/"
-      result += post_year.toString()
-      result += " @ "
-      result += post_hour.toString()
-      result += ":"
-      result += post_minute.toString()
-      return result
+const parseTime = (datePosted) => {
+    const now = new Date();
+
+    if(!datePosted) { return "No Time Stamp on Post" }
+
+    const secDifference = (now.getTime() - datePosted.getTime()) / 1000;
+
+    if (secDifference < 60) {
+      let result = "Posted " + secDifference;
+      if (secDifference == 1) {
+        result += " second ago";
+      }
+      else {
+        result += " seconds ago";
+      }
+      return result;
     }
-    else if(post_date == currentDate.getDate()) {
-      return "works"
+    else if (secDifference < 3600) {
+      let result = "Posted " + Math.floor(secDifference/60);
+      if (Math.floor(secDifference/60) == 1) {
+        result += " minute ago";
+      }
+      else {
+        result += " minutes ago";
+      }
+      return result;
+    }
+    else if (secDifference < 86400) {
+      let result = "Posted " + Math.floor(secDifference/3600);
+      if (Math.floor(secDifference/3600) == 1) {
+        result += " hour ago";
+      }
+      else {
+        result += " hours ago";
+      }
+      return result;
+    }
+    else if (secDifference < 1296000) {
+      let result = "Posted " + Math.floor(secDifference/86400);
+      if (Math.floor(secDifference/3600) == 1) {
+        result += " day ago";
+      }
+      else {
+        result += " days ago";
+      }
+      return result;
+    }
+    else {
+      let result = "Posted " + (datePosted.getMonth()+1)
+      result += "/"
+      result += datePosted.getDate()
+      result += "/"
+      result += datePosted.getFullYear()
+      result += ", "
+      result += parseDay(datePosted.getDay())
+      result += " at "
+      result += datePosted.getHours()
+      result += ":"
+      if (datePosted.getMinutes() < 10) {
+        result += "0"
+      }
+      result += datePosted.getMinutes()
+      return result
     }
 }
 
@@ -528,7 +567,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
         )
       }
 
-      <p className='a_comment'> {timePosted} </p>
+      <p className='time'> {parseTime(timePosted)} </p>
 
     </div >
   )

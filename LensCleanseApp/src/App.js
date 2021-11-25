@@ -2,25 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post';
 import { collectPosts, auth } from './firebase'
-import { onSnapshot, orderBy, query, Timestamp } from 'firebase/firestore';
+import { onSnapshot, orderBy, query } from 'firebase/firestore';
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import { Button, Input, makeStyles, Modal } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, red } from '@material-ui/core/colors';
-import ImageUpload from './ImageUpload';
 import Navbar from './Navbar';
-import { popoverClasses } from '@mui/material';
 
 const splitTime = (date) => {
   if(!date) { return [] }
   date = date.toDate()
-  const date_elements = [date.getDay(), date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()]
-  return date_elements
+  // const date_elements = [date.getDay(), date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()]
+  return date
 }
 
 function App() {
-  const classes = useStyles();
   const [posts, setPosts] = useState([]);
   const [username, setUsername] = useState('');
   const [user, setUser] = useState(null);

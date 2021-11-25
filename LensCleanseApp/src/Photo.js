@@ -23,6 +23,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import CameraIcon from '@mui/icons-material/Camera';
+import CameraOutlinedIcon from '@mui/icons-material/CameraOutlined';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
 
@@ -125,8 +126,20 @@ import AddCommentIcon from '@mui/icons-material/AddComment';
     result += " at "
     result += post_hour
     result += ":"
+    if (post_minute < 10) {
+      result += "0"
+    }
     result += post_minute
     return result
+}
+
+const removeElement= (capList, item) => {
+  const array = capList
+  const index = array.indexOf(item);
+  if (index > -1) {
+    array.splice(index, 1);
+  }
+  return array
 }
 
 function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fStop, shutterSpeed, other,
@@ -190,13 +203,21 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
 
       }
 
-    const addCapture = (event) => {
+      const addCapture = (event) => {
         event.preventDefault();
-        const current_post = doc(collectPosts, postId);
+        const current_post = doc(collectPosts, postId)
         updateDoc(current_post, {
-        captures: captures + 1
+          captures: [...captures, user.displayName]
         });
-    }
+      }
+
+      const removeCapture = (event) => {
+        event.preventDefault();
+        const current_post = doc(collectPosts, postId)
+        updateDoc(current_post, {
+          captures: removeElement(captures, user.displayName)
+        });
+      }
 
     const descriptionElementRef = React.useRef(null);
     useEffect(() => {
@@ -290,17 +311,24 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
                 />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        <p>{captures} captures</p>
+                        <p>{captures.length} captures</p>
                         <a onClick={handleViewComments}>View all {numComments} comments</a>
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton disabled={!user} onClick={addCapture} aria-label="add to favorites">
-                        <CameraIcon />
-                    </IconButton>
+                <CardActions className="buttons" disableSpacing>
+                  <div>
+                    {
+                    user && captures.find(capturedNames => capturedNames === user.displayName)
+                      ?
+                      <IconButton className="likeandcomment" onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></IconButton>
+                      :
+                      <IconButton className="likeandcomment" onClick={addCapture} disabled={user == null}><CameraIcon /></IconButton>
+                    }
                     <IconButton disabled={!user} onClick={handleClickOpen} aria-label="share">
                         <AddCommentIcon />
                     </IconButton>
+
+                  </div>
                     <ExpandMore
                         expand={expanded}
                         onClick={handleExpandClick}

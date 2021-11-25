@@ -32,6 +32,11 @@ function NewProfile({ profileusername, profileuser }) {
     })
   }, []);
 
+  const getEmail = () => {
+    if (profileuser && profileusername==profileuser.displayName) {
+      
+    }
+  }
 
   //! Replace p tags with information from Firebase
   return (

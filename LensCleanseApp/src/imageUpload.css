@@ -29,16 +29,22 @@
     margin-left: 10px;
 }
 
-.uploadFileComponents Button {
+/*.uploadFileComponents Button {
     padding: 10px;
     margin-top: 20px;
     width: 30%;
     margin-left: 70%;
     
-}
+}*/
 
 
 .imageupload_photoInfo {
     margin: 10px;
     width: 45%;
+}
+
+.image-upload-buttons {
+    display: flex;
+    margin-top: 20px;
+    margin-left: 40%;
 }

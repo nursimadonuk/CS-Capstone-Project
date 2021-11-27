@@ -211,3 +211,12 @@
     font-weight: normal;
     text-align: left;
 }
+
+.post-edit-button {
+    margin-top: 20px;
+    margin-left: 70%;
+}
+
+.post_delete_buttons {
+    margin-top: 20px;
+}

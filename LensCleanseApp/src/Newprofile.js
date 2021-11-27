@@ -34,7 +34,10 @@ function NewProfile({ profileusername, profileuser }) {
 
   const getEmail = () => {
     if (profileuser && profileusername==profileuser.displayName) {
-      
+      return "equal"
+    }
+    else {
+      return "not equal"
     }
   }
 
@@ -43,7 +46,7 @@ function NewProfile({ profileusername, profileuser }) {
     <div>
       <div className="info">
         <h3> </h3>
-        <h3>{username ? "Email: "  : "" } email</h3>
+        <h3> Email: {profileusername}@gmail.com </h3>
       </div>
 
       <div className="profile-wrapper">

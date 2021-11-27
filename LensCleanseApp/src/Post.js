@@ -358,8 +358,8 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
             <h4> Are you sure you want to delete this post? </h4>
 
             <div className='post_delete_buttons'>
-                <button onClick={deletePost}> YES </button>
-                <button onClick={deleteView}> CANCEL </button>
+                <button className="bottom-buttons" onClick={deletePost}> YES </button>
+                <button className="bottom-buttons" onClick={deleteView}> CANCEL </button>
             </div>
 
           </form>
@@ -398,10 +398,11 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
                 <TextField className="imageupload_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateOther(event.target.value)} value={updateOther} />
               </div>
 
-              <Button variant="contained" color="primary" onClick={updatePost}>
-                Update
-              </Button>
-
+              <div className="post-edit-button">
+                <button className="bottom-buttons" variant="contained" color="primary" onClick={updatePost}>
+                  Update
+                </button>
+              </div>
             </div>
 
           </form>

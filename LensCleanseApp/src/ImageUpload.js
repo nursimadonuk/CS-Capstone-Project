@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 function getModalStyle() {
   const top = 0;
-  const left = 10;
+  const left = 5;
 
   return {
     top: `${top}%`,
@@ -172,9 +172,15 @@ function ImageUpload({ username }) {
             <TextField className="imageupload_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setOther(event.target.value)} value={other} />
 
           </div>
-          <Button variant="contained" color="primary" onClick={handleUpload}>
-            Upload
-          </Button>
+
+          <div className="image-upload-buttons">
+            <button className="bottom-buttons" variant="contained" color="primary" onClick={handleUpload}>
+              Save As Draft
+            </button>
+            <button className="bottom-buttons" variant="contained" color="primary" onClick={handleUpload}>
+              Upload
+            </button>
+          </div>
         </div>
 
       </div>

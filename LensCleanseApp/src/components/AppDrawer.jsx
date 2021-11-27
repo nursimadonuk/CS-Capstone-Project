@@ -10,7 +10,6 @@ import Avatar from '@material-ui/core/Avatar';
 import { makeStyles, Modal } from '@material-ui/core';
 import ImageUpload from '../ImageUpload';
 
-
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -114,12 +113,12 @@ function AppDrawer({ user, username }) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List className='menu-list'>
-        <ListItem onClick={profileView} button key={'My Profile'}>
+        {/*<ListItem onClick={profileView} button key={'My Profile'}>
           <div className='list-item'>
             <AccountBoxIcon className='icon' />
             <p> My Profile</p>
           </div>
-        </ListItem>
+  </ListItem>*/}
         <ListItem onClick={toUpload} button key={'Upload Image'}>
           <div className='list-item'>
             <InsertPhotoIcon className='icon' />
@@ -169,7 +168,7 @@ function AppDrawer({ user, username }) {
 
   return (
     <div>
-      <Dialog
+      {/*<Dialog
         fullScreen
         open={openProfile}
         onClose={() => setOpenProfile(false)}
@@ -204,7 +203,7 @@ function AppDrawer({ user, username }) {
 
         <NewProfile profileusername={username} profileuser={user}></NewProfile>
 
-      </Dialog>
+      </Dialog>*/}
 
       <Modal
         open={open}

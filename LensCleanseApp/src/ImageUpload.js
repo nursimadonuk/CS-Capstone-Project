@@ -63,11 +63,12 @@ function ImageUpload({ username }) {
           alert(error.message);
         },
         () => {
-
-          getDownloadURL(ref(storage, `images/${image.name}`))
+          let time = serverTimestamp(FieldValue)
+          setTimeout(() => {
+            getDownloadURL(ref(storage, `images/${image.name}`))
             .then(url => {
               addDoc(collectPosts, {
-                timestamp: serverTimestamp(FieldValue),
+                timestamp: time,
                 caption: caption,
                 imageUrl: url,
                 username: username,
@@ -101,7 +102,7 @@ function ImageUpload({ username }) {
 
             })
 
-            new Promise(resolve => setTimeout(resolve, 100));
+          }, 500)
           }
 
       )

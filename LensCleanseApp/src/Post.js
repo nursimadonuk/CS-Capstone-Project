@@ -75,8 +75,11 @@ const parseTime = (datePosted) => {
     const now = new Date();
 
     if(!datePosted) { return "No Time Stamp on Post" }
-    
-    if(now.getTime() == datePosted.getTime()){
+
+    try {
+      let miliSecs = datePosted.getTime();
+    }
+    catch(err) {
       return "Posted seconds ago"
     }
 
@@ -264,6 +267,11 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   }
 
   const deletePost = () => {
+    const current_post = doc(collectPosts, postId)
+    updateDoc(current_post, {
+      captures: []
+    });
+
     comments.map(({ id, comment }) => (
       deleteDoc(doc(collection(doc(collectPosts, postId), 'comments'), id))
     ))

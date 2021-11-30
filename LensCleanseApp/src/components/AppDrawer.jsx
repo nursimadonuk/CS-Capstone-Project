@@ -7,10 +7,13 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import Avatar from '@material-ui/core/Avatar';
-import { makeStyles, Modal } from '@material-ui/core';
 import ImageUpload from '../ImageUpload';
 
 import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
@@ -29,32 +32,9 @@ import CameraIcon from '@mui/icons-material/Camera';
 import InfoIcon from '@mui/icons-material/Info';
 import NewProfile from '../Newprofile';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 700,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-function getModalStyle() {
-  const top = 0;
-  const left = 10;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, ${left}%)`,
-  };
-}
 
 function AppDrawer({ user, username }) {
 
-  const [modalStyle] = React.useState(getModalStyle);
-  const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -77,6 +57,10 @@ function AppDrawer({ user, username }) {
 
   const toUpload = () => {
     setOpen(true)
+  }
+
+  const closeUpload = () => {
+    setOpen(false)
   }
 
   const toAbout = () => {
@@ -205,31 +189,19 @@ function AppDrawer({ user, username }) {
 
       </Dialog>*/}
 
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app_signup">
-            <center className='sign_up_heading'>
-              <img
-                className="app_header_image"
-                src="LensCleanse.png"
-                alt="Lens Cleanse"
-                width='80'
-                height='auto'
-              />
-              <h1 className="app_header_h1">Lens Cleanse</h1>
-            </center>
-            {user?.displayName ? (
-              <ImageUpload username={user.displayName} />
+      <Dialog 
+      open={open} 
+      onClose={closeUpload}
+      fullWidth={true}
+      maxWidth={'md'}>
 
-            ) : (
-              <h3 className="upload-login-message">Login to upload an image...</h3>
-            )}
-          </form>
-        </div>
-      </Modal>
+      <DialogTitle> <h1 className="app_header_h1">Lens Cleanse Image Upload </h1> </DialogTitle>
+      <DialogContent>{user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+        ) : (
+        <h3 className="upload-login-message">Login to upload an image...</h3>
+        )}</DialogContent>
+      </Dialog>
 
       <React.Fragment className='togglebutton' key={'right'}>
         <Button onClick={toggleDrawer('right', true)}><Avatar className="post_avatar" alt={username} src={"/static/images/avatar/1.jpg"} /></Button>

@@ -9,27 +9,12 @@ import { blue, red } from '@material-ui/core/colors';
 import "./Post.css"
 import "./imageUpload.css"
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 700,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-function getModalStyle() {
-  const top = 0;
-  const left = 5;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, ${left}%)`,
-  };
-}
 
 function ImageUpload({ username }) {
   const [image, setImage] = useState(null);
@@ -45,8 +30,7 @@ function ImageUpload({ username }) {
   const [focalLength, setFocalLength] = useState(0);
   const [other, setOther] = useState("");
   const [open, setOpen] = useState(false);
-  const [modalStyle] = React.useState(getModalStyle);
-  const classes = useStyles();
+
 
   const fileInput = React.createRef()
 
@@ -117,7 +101,8 @@ function ImageUpload({ username }) {
 
             })
 
-        }
+            new Promise(resolve => setTimeout(resolve, 100));
+          }
 
       )
     }
@@ -126,14 +111,14 @@ function ImageUpload({ username }) {
   return (
     <ThemeProvider theme={theme} className="imageupload">
 
-      <Modal
+        <Dialog
           open={open}
           onClose={() => setOpen(false)}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
         >
-          <div style={modalStyle} className={classes.paper}>
-            <form className="app_signup">
-              <center className='sign_up_heading'>
-                <img
+          <DialogTitle id="alert-dialog-title">
+              <img
                   className="app_header_image"
                   src="LensCleanse.png"
                   alt="Lens Cleanse"
@@ -141,13 +126,16 @@ function ImageUpload({ username }) {
                   height='auto'
                 />
                 <h1 className="app_header_h1">Lens Cleanse</h1>
-              </center>
-
-              <h4> Your image has been successfully uploaded to Lens Cleanse! </h4>
-
-            </form>
-          </div>
-        </Modal>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+            Your image has been successfully uploaded to Lens Cleanse! 
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setOpen(false)}>OK</Button>
+          </DialogActions>
+        </Dialog>
       <div>
 
         <progress className="imageupload_progress" value={progress} max="100" />

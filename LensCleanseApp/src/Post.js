@@ -75,6 +75,10 @@ const parseTime = (datePosted) => {
     const now = new Date();
 
     if(!datePosted) { return "No Time Stamp on Post" }
+    
+    if(now.getTime() == datePosted.getTime()){
+      return "Posted seconds ago"
+    }
 
     const secDifference = (now.getTime() - datePosted.getTime()) / 1000;
 

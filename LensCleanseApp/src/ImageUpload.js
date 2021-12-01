@@ -1,6 +1,6 @@
 // import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
-import { storage, collectPosts } from './firebase';
+import { storage, collectPosts, collectDrafts } from './firebase';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { serverTimestamp, FieldValue, addDoc } from 'firebase/firestore';
 import { TextField, Input, LinearProgress, Button, IconButton, Modal, makeStyles } from "@material-ui/core"
@@ -17,7 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 function ImageUpload({ username }) {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("https://st2.depositphotos.com/1561359/12101/v/950/depositphotos_121012076-stock-illustration-blank-photo-icon.jpg");
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState('');
   const [cameraType, setCameraType] = useState('');
@@ -38,7 +38,62 @@ function ImageUpload({ username }) {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
-  };
+  }
+  
+  const handleDraftUpload = () => {
+      const uploadTask = uploadBytesResumable(ref(storage, `images/${image.name}`), image);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress function
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgress(progress);
+        },
+        (error) => {
+          console.log(error);
+          alert(error.message);
+        },
+        () => {
+            getDownloadURL(ref(storage, `images/${image.name}`))
+            .then(url => {
+              addDoc(collectDrafts, {
+                caption: caption,
+                imageUrl: url,
+                username: username,
+                ISO: ISO,
+                cameraType: cameraType,
+                lensType: lensType,
+                fStop: fStop,
+                shutterSpeed: shutterSpeed,
+                lighting: lighting,
+                location: location,
+                focalLength: focalLength,
+                other: other
+
+              });
+
+              setProgress(0);
+              setCaption("");
+              setImage("https://st2.depositphotos.com/1561359/12101/v/950/depositphotos_121012076-stock-illustration-blank-photo-icon.jpg");
+              setCameraType("");
+              setISO(0);
+              setLensType("");
+              setFStop(0);
+              setShutterSpeed("");
+              setLighting("");
+              setLocation("");
+              setFocalLength(0);
+              setOther("");
+              setOpen(true);
+
+            })
+          }
+
+      )
+
+  }
 
   const handleUpload = () => {
 
@@ -88,7 +143,7 @@ function ImageUpload({ username }) {
 
               setProgress(0);
               setCaption("");
-              setImage(null);
+              setImage("https://st2.depositphotos.com/1561359/12101/v/950/depositphotos_121012076-stock-illustration-blank-photo-icon.jpg");
               setCameraType("");
               setISO(0);
               setLensType("");
@@ -163,7 +218,7 @@ function ImageUpload({ username }) {
           </div>
 
           <div className="image-upload-buttons">
-            <button className="bottom-buttons" variant="contained" color="primary" onClick={handleUpload}>
+            <button className="bottom-buttons" variant="contained" color="primary" onClick={handleDraftUpload}>
               Save As Draft
             </button>
             <button className="bottom-buttons" variant="contained" color="primary" onClick={handleUpload}>

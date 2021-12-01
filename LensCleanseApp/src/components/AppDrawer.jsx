@@ -31,7 +31,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import CameraIcon from '@mui/icons-material/Camera';
 import InfoIcon from '@mui/icons-material/Info';
 import NewProfile from '../Newprofile';
-
+import Drafts from '../Drafts';
 
 function AppDrawer({ user, username }) {
 
@@ -44,6 +44,7 @@ function AppDrawer({ user, username }) {
 
   const [open, setOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [openDrafts, setOpenDrafts] = useState(false);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -84,6 +85,19 @@ function AppDrawer({ user, username }) {
     history.go(0);
   }
 
+  const draftsView = () => {
+    if(openDrafts) {
+      setOpenDrafts(false)
+    } else {
+      setOpenDrafts(true)
+    }   
+  }
+
+  const closeDrafts = () => {
+    setOpenDrafts(false);
+    history.go(0);
+  }
+
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
@@ -109,7 +123,7 @@ function AppDrawer({ user, username }) {
             <p>Upload Image</p>
           </div>
         </ListItem>
-        <ListItem button key={'Drafts'}>
+        <ListItem onClick={draftsView} button key={'Drafts'}>
           <div className='list-item'>
             <CollectionsIcon className='icon' />
             <p>Drafts</p>
@@ -152,6 +166,43 @@ function AppDrawer({ user, username }) {
 
   return (
     <div>
+      <Dialog
+        fullScreen
+        open={openDrafts}
+        onClose={() => setOpenDrafts(false)}
+        TransitionComponent={Transition}
+        className="profile-dialog"
+      >
+        <center className='profile-nav-heading'>
+
+          <div className="profile-nav">
+            <div className="profile-nav-left">
+              <img
+                className="app_header_image"
+                src="LensCleanse.png"
+                alt="Lens Cleanse"
+                width='80'
+                height='auto'
+              />
+              <h1 className="app_header_h1">My Drafts</h1>
+            </div>
+
+            <IconButton
+                className="x-button"
+                color="inherit"
+                onClick={closeDrafts}
+                aria-label="close"
+              >
+                <CloseIcon />
+            </IconButton>
+          </div>
+
+        </center>
+
+        <Drafts user={user} username={username}></Drafts>
+      </Dialog>
+
+
       {/*<Dialog
         fullScreen
         open={openProfile}

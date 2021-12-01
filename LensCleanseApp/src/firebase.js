@@ -17,7 +17,8 @@ const firebaseApp = initializeApp({
 const auth = getAuth(firebaseApp); // login sign up
 const db = getFirestore(firebaseApp); // database
 const collectPosts = collection(db, 'posts');
+const collectDrafts = collection(db, 'drafts');
 const storage = getStorage(firebaseApp); // upload pics
 
 
-export { auth, collectPosts, db, storage };
+export { auth, collectPosts, collectDrafts, db, storage };

@@ -59,8 +59,9 @@ function About() {
           <div>
             <br />
             <br />
-            <h2>Contact Us</h2>
             <br />
+            <h2>Contact Us</h2>
+            
             <p> 63-10 Something Ave, Rego Park, </p>
             <p> NY 11429</p>
             <p>info@lenscleanse.com</p>
@@ -83,10 +84,7 @@ function About() {
 
 
         </div>
-        <div className={classes.secondWrappers}>
 
-          {/* <img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80" alt="photo" /> */}
-        </div>
       </div>
     </div>
   )
@@ -100,7 +98,6 @@ const useStyles = makeStyles((theme) => ({
     height: "800px",
     display: "flex",
     flexDirection: "row",
-    // border: "2px solid red",
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
@@ -109,20 +106,30 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     fontWeight: "500",
-    fontSize: 12
+    fontSize: 20,
   },
   secondWrappers: {
     flex: 1,
     width: "500px",
-    padding: "20px"
+    //border: "5px solid red",
+    margin: "50px",
+    fontSize: 25,
+    padding: "35px",
+    borderRadius: "15px",
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+    padding: "45px",
+    color: "white",
+    lineHeight: "30px",
+    fontFamily: "Cambria",
+    fontWeight: "semibold"
   },
   icons: {
     border: "none",
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    color: "white"
   },
   aboutInfo: {
-    fontSize: 16,
-    padding: "25px",
+
 
   },
 

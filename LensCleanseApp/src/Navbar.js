@@ -116,9 +116,9 @@ function Navbar({ user, username }) {
 
         {user ? (
           <div className='signed-in'>
-            <Button><NotificationsIcon /></Button>
-            <Button><ChatIcon /></Button>
-            <Button onClick={profileView}><AccountBoxIcon /></Button>
+            <Button style={{color: "#195c79"}}><NotificationsIcon /></Button>
+            <Button style={{color: "#195c79"}}><ChatIcon /></Button>
+            <Button style={{color: "#195c79"}} onClick={profileView}><AccountBoxIcon /></Button>
             <AppDrawer user={user} username={username}></AppDrawer>
           </div>
         ) : (

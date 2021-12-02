@@ -1,18 +1,49 @@
+/*
 .profile-wrapper {
     margin-left: 20px;
     margin-right: 0;
+    border: solid yellow 7px;
+    
+}
+
+.profile-posts-container{
+    border: solid blue 7px;
 }
 
 .profile-posts {
     justify-content: left;
     display: flex;
     flex-direction: row;
+    border: solid red 7px;
+    width: 300px;
 }
 
 .profile-post {
     object-fit: contain;
+    border: solid green 7px;
+}
+*/
+
+
+
+
+
+.profile-posts {
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+  	margin-left: 50px;
+	margin-right: auto;
 }
 
+
+
 .info {
-    margin-bottom: 30px;
+    margin: 30px;
+    margin-left: 50px;
+    background-color: #195c79;
+    border-radius: 15px;;
+    padding: 20px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

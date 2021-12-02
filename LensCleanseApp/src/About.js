@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     width: "500px",
     //border: "5px solid red",
-    margin: "50px",
+    margin: "5px 120px",
     fontSize: 25,
     padding: "35px",
     borderRadius: "15px",

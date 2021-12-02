@@ -60,7 +60,7 @@ function NewProfile({ profileusername, profileuser }) {
       </div>
 
       <div className="profile-wrapper">
-        <Grid className="profile-posts-container" container spacing={0.5}>
+        <Grid className="profile-posts-container"> {/* container spacing={0.5} */}
           {
             posts.map(({ id, post }) => (
               <Grid className="profile-posts" >

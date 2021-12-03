@@ -9,9 +9,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ImageUpload from './ImageUpload';
 
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
-import { collection, onSnapshot, doc, addDoc, Timestamp, serverTimestamp, FieldValue, orderBy, query, updateDoc } from 'firebase/firestore';
-import { collectPosts, auth, collectDrafts } from './firebase'
+import { collection, onSnapshot, doc, addDoc, Timestamp, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collectPosts, auth, collectDrafts, db } from './firebase'
 import './Photo.css'
+import './DraftPhoto.css'
 
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
@@ -45,9 +46,9 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
 
     const [expanded, setExpanded] = useState(false); 
     const [openEdit, setOpenEdit] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
 
     const [updateCaption, setUpdateCaption] = useState(caption);
-    const [updateImageUrl, setUpdateImageUrl] = useState(imageUrl);
     const [updateCameraType, setUpdateCameraType] = useState(cameraType);
     const [updateISO, setUpdateISO] = useState(iso);
     const [updateLensType, setUpdateLensType] = useState(lensType);
@@ -64,6 +65,10 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
 
     const handleOpenEdit = () => {
       setOpenEdit(!openEdit);
+    };
+
+    const handleOpenDelete = () => {
+      setOpenDelete(!openDelete);
     };
 
     const updateDraft = (event) => {
@@ -84,6 +89,39 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
       setOpenEdit(false);
     }
 
+    const deleteDraft = () => {
+      const current_post = doc(collectDrafts, postId)
+      deleteDoc(doc(db, 'drafts', postId))
+    }
+
+    const uploadDraft = () => {
+      if (!imageUrl || !updateCaption) {
+        alert('PLEASE MAKE SURE YOU ENTERED BOTH IMAGE AND CAPTION')
+        return;
+      }
+      let time = serverTimestamp(FieldValue)
+      addDoc(collectPosts, {
+        timestamp: time,
+        caption: updateCaption,
+        imageUrl: imageUrl,
+        username: username,
+        captures: [],
+        ISO: updateISO,
+        cameraType: updateCameraType,
+        lensType: updateLensType,
+        fStop: updateFStop,
+        shutterSpeed: updateShutterSpeed,
+        lighting: updateLighting,
+        location: updateLocation,
+        focalLength: updateFocalLength,
+        other: updateOther,
+        numComments: 0
+
+      });
+      const current_post = doc(collectDrafts, postId)
+      deleteDoc(doc(db, 'drafts', postId))
+    }
+
     const descriptionElementRef = React.useRef(null);
 
     return (
@@ -94,34 +132,56 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
             fullWidth={true}
             maxWidth={'md'}>
 
-            <DialogTitle> <h1 className="app_header_h1">Lens Cleanse Image Upload </h1> </DialogTitle>
+            <DialogTitle> <h1 className="app_header_h1">Lens Cleanse Draft Edit </h1> </DialogTitle>
             <DialogContent>
 
-            <div className="uploadFileComponents">
+            
               <div className="uploadFile">
-                <TextField id="standard-basic" className="imageupload_caption" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCaption(event.target.value)} value={updateCaption} />
-                <TextField className="imageupload_photoInfo" label="Enter Camera Type" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCameraType(event.target.value)} value={updateCameraType} />
-                <TextField className="imageupload_photoInfo" label="Enter ISO" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateISO(event.target.value)} value={updateISO} />
-                <TextField className="imageupload_photoInfo" label="Enter Lens" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateLensType(event.target.value)} value={updateLensType} />
-                <TextField className="imageupload_photoInfo" label="Enter fStop" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateFStop(event.target.value)} value={updateFStop} />
-                <TextField className="imageupload_photoInfo" label="Enter Shutter Speed" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateShutterSpeed(event.target.value)} value={updateShutterSpeed} />
-                <TextField className="imageupload_photoInfo" label="Enter Lighting Details" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateLighting(event.target.value)} value={updateLighting} />
-                <TextField className="imageupload_photoInfo" label="Enter Location" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateLocation(event.target.value)} value={updateLocation} />
-                <TextField className="imageupload_photoInfo" label="Enter Focal Length" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateFocalLength(event.target.value)} value={updateFocalLength} />
-                <TextField className="imageupload_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateOther(event.target.value)} value={updateOther} />
+                <TextField id="standard-basic" className="draft_caption" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCaption(event.target.value)} value={updateCaption} />
+                <TextField className="draft_photoInfo" label="Enter Camera Type" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCameraType(event.target.value)} value={updateCameraType} />
+                <TextField className="draft_photoInfo" label="Enter ISO" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateISO(event.target.value)} value={updateISO} />
+                <TextField className="draft_photoInfo" label="Enter Lens" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateLensType(event.target.value)} value={updateLensType} />
+                <TextField className="draft_photoInfo" label="Enter fStop" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateFStop(event.target.value)} value={updateFStop} />
+                <TextField className="draft_photoInfo" label="Enter Shutter Speed" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateShutterSpeed(event.target.value)} value={updateShutterSpeed} />
+                <TextField className="draft_photoInfo" label="Enter Lighting Details" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateLighting(event.target.value)} value={updateLighting} />
+                <TextField className="draft_photoInfo" label="Enter Location" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateLocation(event.target.value)} value={updateLocation} />
+                <TextField className="draft_photoInfo" label="Enter Focal Length" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateFocalLength(event.target.value)} value={updateFocalLength} />
+                <TextField className="draft_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateOther(event.target.value)} value={updateOther} />
               </div>
-            </div>
-            <div className="post-edit-button">
+            
+            <div className="draft-delete-button">
               <button className="bottom-buttons" variant="contained" color="primary" onClick={updateDraft}>
                 Update
               </button>
-              <button className="bottom-buttons" variant="contained" color="primary" onClick={updateDraft}>
+              <button className="bottom-buttons" variant="contained" color="primary" onClick={uploadDraft}>
                 Upload
               </button>
             </div>
 
             </DialogContent>
             </Dialog>
+
+            <Dialog 
+            open={openDelete} 
+            onClose={handleOpenDelete}
+            fullWidth={true}
+            maxWidth={'md'}>
+
+            <DialogTitle> <h1 className="app_header_h1">Lens Cleanse Delete Draft </h1> </DialogTitle>
+            <DialogContent>
+
+            <div className="uploadFileComponents">
+            <h4> Are you sure you want to delete this draft? </h4>
+
+            <div className='draft_delete_buttons'>
+                <button className="bottom-buttons" onClick={deleteDraft}> YES </button>
+                <button className="bottom-buttons" onClick={handleOpenDelete}> CANCEL </button>
+            </div>
+            </div>
+
+            </DialogContent>
+            </Dialog>
+
 
             <Card sx={{ maxWidth: 400 }}>
                 <CardMedia
@@ -136,7 +196,7 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
                         Edit
                     </Button>
 
-                    <Button disabled={!user} onClick={handleOpenEdit} aria-label="share">
+                    <Button disabled={!user} onClick={handleOpenDelete} aria-label="share">
                         Delete
                     </Button>
 

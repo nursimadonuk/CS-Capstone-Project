@@ -17,7 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 function ImageUpload({ username }) {
-  const [image, setImage] = useState("https://st2.depositphotos.com/1561359/12101/v/950/depositphotos_121012076-stock-illustration-blank-photo-icon.jpg");
+  const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
   const [caption, setCaption] = useState('');
   const [cameraType, setCameraType] = useState('');
@@ -41,6 +41,10 @@ function ImageUpload({ username }) {
   }
   
   const handleDraftUpload = () => {
+    if (!image) {
+      alert('PLEASE MAKE SURE YOU ENTERED AN IMAGE');
+      return;
+    }
       const uploadTask = uploadBytesResumable(ref(storage, `images/${image.name}`), image);
       uploadTask.on(
         "state_changed",
@@ -76,7 +80,7 @@ function ImageUpload({ username }) {
 
               setProgress(0);
               setCaption("");
-              setImage("https://st2.depositphotos.com/1561359/12101/v/950/depositphotos_121012076-stock-illustration-blank-photo-icon.jpg");
+              setImage(null);
               setCameraType("");
               setISO(0);
               setLensType("");

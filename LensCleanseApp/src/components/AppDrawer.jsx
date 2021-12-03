@@ -32,6 +32,7 @@ import CameraIcon from '@mui/icons-material/Camera';
 import InfoIcon from '@mui/icons-material/Info';
 import NewProfile from '../Newprofile';
 import Drafts from '../Drafts';
+import Captured from '../Captured';
 
 function AppDrawer({ user, username }) {
 
@@ -45,7 +46,7 @@ function AppDrawer({ user, username }) {
   const [open, setOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [openDrafts, setOpenDrafts] = useState(false);
-
+  const [openCaptured, setOpenCaptured] = useState(false);
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -93,6 +94,15 @@ function AppDrawer({ user, username }) {
     }   
   }
 
+  const handleOpenCaptured = () => {
+    setOpenCaptured(!openCaptured);
+  }
+
+  const closeCaptured = () => {
+    setOpenCaptured(false);
+    history.go(0);
+  }
+
   const closeDrafts = () => {
     setOpenDrafts(false);
     history.go(0);
@@ -129,7 +139,7 @@ function AppDrawer({ user, username }) {
             <p>Drafts</p>
           </div>
         </ListItem>
-        <ListItem button key={'Captured'}>
+        <ListItem onClick={handleOpenCaptured} button key={'Captured'}>
           <div className='list-item'>
             <CameraIcon className='icon' />
             <p>Captured</p>
@@ -202,11 +212,10 @@ function AppDrawer({ user, username }) {
         <Drafts user={user} username={username}></Drafts>
       </Dialog>
 
-
-      {/*<Dialog
+      <Dialog
         fullScreen
-        open={openProfile}
-        onClose={() => setOpenProfile(false)}
+        open={openCaptured}
+        onClose={handleOpenCaptured}
         TransitionComponent={Transition}
         className="profile-dialog"
       >
@@ -221,13 +230,13 @@ function AppDrawer({ user, username }) {
                 width='80'
                 height='auto'
               />
-              <h1 className="app_header_h1">{username}</h1>
+              <h1 className="app_header_h1">My Captured Photos</h1>
             </div>
 
             <IconButton
                 className="x-button"
                 color="inherit"
-                onClick={closeProfile}
+                onClick={closeCaptured}
                 aria-label="close"
               >
                 <CloseIcon />
@@ -236,9 +245,8 @@ function AppDrawer({ user, username }) {
 
         </center>
 
-        <NewProfile profileusername={username} profileuser={user}></NewProfile>
-
-      </Dialog>*/}
+        <Captured profileusername={username} profileuser={user} ></Captured>
+      </Dialog>
 
       <Dialog 
       open={open} 

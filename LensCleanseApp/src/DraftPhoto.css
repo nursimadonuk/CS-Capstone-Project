@@ -1,0 +1,16 @@
+.draft_delete_buttons {
+    margin-top: 10px;
+}
+
+.draft_photoInfo {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    width: 45%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.draft_photoInfo_other {
+    width: 90%;
+}

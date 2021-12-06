@@ -155,6 +155,7 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
 
     const [isClicked, setisClicked] = useState(false);
     const [capturesList, setCapturesList] = useState([]);
+    const [usersCaptured, setUsersCaptured] = useState([]);
 
     const addList = (l, i) => {
       let res = l;
@@ -225,6 +226,14 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
         setisClicked(true)
       }
   }
+  useEffect(() => {
+    if (postId) {
+      setUsersCaptured([]);
+      capturesList.map(({ id, name }) => (
+        setUsersCaptured(addList(usersCaptured, name.username))
+      ))
+    }
+  }, [postId])
 
     const postComment = (event) => {
         event.preventDefault();
@@ -253,7 +262,9 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
           username: user.displayName
         });
         //captureExists();
-        setisClicked(true)
+        //setisClicked(true);
+        setUsersCaptured(addList(usersCaptured, user.displayName));
+
       }
 
       const deleteCaptureDoc = (target, docid) => {
@@ -273,7 +284,9 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
           deleteCaptureDoc(name.username, id)
          ))
          //captureExists();
-        setisClicked(false);
+        //setisClicked(false);
+        setUsersCaptured(removeElement(usersCaptured, user.displayName));
+
       }
 
     const descriptionElementRef = React.useRef(null);
@@ -375,7 +388,7 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
                 <CardActions className="buttons" disableSpacing>
                   <div>
                     {
-                    user && isClicked
+                    user && usersCaptured.find(capturedNames => capturedNames === user.displayName)
                       ?
                       <IconButton className="likeandcomment" onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></IconButton>
                       :

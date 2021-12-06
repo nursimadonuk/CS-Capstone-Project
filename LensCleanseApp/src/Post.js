@@ -229,28 +229,48 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
 
   useEffect(() => {
     if (postId) {
-      setUsersCaptured([])
+      setUsersCaptured([]);
       capturesList.map(({ id, name }) => (
         setUsersCaptured(addList(usersCaptured, name.username))
       ))
     }
-    
-  }, [captures])
-
-  /*if(capturesList.length >= 1) {
-    usersCaptured = capturesList[0].name;
-  }*/
+  }, [postId, captures])
 
   const captureExists = () => {
       const q = query(collection(doc(collectPosts, postId), 'captures'), where("username", "==", user.displayName));
       //const docSnap = getDoc(docRef);
       const querySnapshot = getDocs(q);
-      if(q.length == 0) {
+      /*if(q.length == 0) {
         setisClicked(false)
       }
       else {
         setisClicked(true)
       }
+      querySnapshot.forEach((doc) => {
+        return true;
+      });
+      return false;*/
+      return querySnapshot;
+  }
+
+  const capturedByUser = () => {
+    for(let i = 0; i < usersCaptured.length; i++) {
+      if(usersCaptured[i] == user.displayName) {
+        setisClicked(true);
+        return;
+      }
+    }
+    setisClicked(false);
+    return;
+  }
+
+  const capturedByUserVtwo = () => {
+    for(let i = 0; i < usersCaptured.length; i++) {
+      if(usersCaptured[i] === user.displayName) {
+        return true;
+      }
+    }
+    return false;
   }
   
 
@@ -278,7 +298,9 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       username: user.displayName
     });
     //setisClicked(true);
-    captureExists();
+    //captureExists();
+    //capturedByUser();
+    //setUsersCaptured(addList(usersCaptured, user.displayName));
   }
 
   const deleteCaptureDoc = (target, docid) => {
@@ -297,7 +319,9 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     capturesList.map(({ id, name }) => (
      deleteCaptureDoc(name.username, id)
     ))
-    captureExists();
+    //captureExists();
+    //capturedByUser();
+    //setUsersCaptured(removeElement(usersCaptured, user.displayName));
     //setisClicked(false);
   }
 
@@ -601,7 +625,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       <br></br>
       <div className='post_like_comment'>
         {
-          user && isClicked
+          user && usersCaptured.find(capturedNames => capturedNames === user.displayName)
             ?
             <Button onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></Button>
             :

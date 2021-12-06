@@ -245,7 +245,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       const q = query(collection(doc(collectPosts, postId), 'captures'), where("username", "==", user.displayName));
       //const docSnap = getDoc(docRef);
       const querySnapshot = getDocs(q);
-      if(!querySnapshot) {
+      if(q.length == 0) {
         setisClicked(false)
       }
       else {
@@ -277,8 +277,8 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     addDoc(collection(doc(collectPosts, postId), 'captures'), {
       username: user.displayName
     });
-    setisClicked(true);
-    //captureExists();
+    //setisClicked(true);
+    captureExists();
   }
 
   const deleteCaptureDoc = (target, docid) => {
@@ -297,8 +297,8 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     capturesList.map(({ id, name }) => (
      deleteCaptureDoc(name.username, id)
     ))
-    //captureExists();
-    setisClicked(false);
+    captureExists();
+    //setisClicked(false);
   }
 
   const isCaptured = () => {

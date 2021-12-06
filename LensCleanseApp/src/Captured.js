@@ -32,7 +32,7 @@ function Captured({ profileusername, profileuser }) {
 
 
   useEffect(() => {
-    onSnapshot(collectPosts, (snapshot) => {
+    onSnapshot(query(collectPosts), (snapshot) => {
       // when posts changes this code runs
       console.log("Snapshot", snapshot.docs)
       setPosts(snapshot.docs.map(doc => ({
@@ -53,27 +53,30 @@ function Captured({ profileusername, profileuser }) {
           {
             posts.map(({ id, post }) => (
               <Grid className="profile-posts" >
+                {profileuser && post.captures.find(capturedNames => capturedNames === profileuser.displayName) ?
                 <CapturedPhoto
-                  className="profile-post"
-                  key={id}
-                  postId={id}
-                  user={profileuser}
-                  username={post.username}
-                  caption={post.caption}
-                  imageUrl={post.imageUrl}
-                  iso={post.ISO}
-                  cameraType={post.cameraType}
-                  fStop={post.fStop}
-                  shutterSpeed={post.shutterSpeed}
-                  captures={post.captures}
-                  focalLength={post.focalLength}
-                  lensType={post.lensType}
-                  lighting={post.lighting}
-                  location={post.location}
-                  other={post.other}
-                  numComments={post.numComments}
-                  timePosted={splitTime(post.timestamp)}
-                />
+                className="profile-post"
+                key={id}
+                postId={id}
+                user={profileuser}
+                username={post.username}
+                caption={post.caption}
+                imageUrl={post.imageUrl}
+                iso={post.ISO}
+                cameraType={post.cameraType}
+                fStop={post.fStop}
+                shutterSpeed={post.shutterSpeed}
+                captures={post.captures}
+                focalLength={post.focalLength}
+                lensType={post.lensType}
+                lighting={post.lighting}
+                location={post.location}
+                other={post.other}
+                numComments={post.numComments}
+                timePosted={splitTime(post.timestamp)}
+              />            :
+            <div></div>}
+
               </Grid>
             ))
           }

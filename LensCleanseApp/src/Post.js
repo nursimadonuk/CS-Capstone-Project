@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
-import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc, getDocs, where } from 'firebase/firestore';
+import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db, collectPosts } from './firebase'
 import { Button, Input, makeStyles, Modal, TextField } from '@material-ui/core';
 
@@ -85,7 +85,10 @@ const parseTime = (datePosted) => {
 
     const secDifference = (now.getTime() - datePosted.getTime()) / 1000;
 
-    if (secDifference < 60) {
+    if(secDifference < 10) {
+      return "Posted a few seconds ago"
+    }
+    else if (secDifference < 60) {
       let result = "Posted " + secDifference;
       if (secDifference == 1) {
         result += " second ago";
@@ -165,7 +168,6 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
   const [commentLimit, setCommentLimit] = useState(null);
-  const [capturesList, setCapturesList] = useState([]);
   const [ownPost, setOwnPost] = useState(null);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -186,16 +188,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   const [updateFocalLength, setUpdateFocalLength] = useState(focalLength);
   const [updateOther, setUpdateOther] = useState(other);
 
-  //const [userCaptured, setUserCaptured] = useState("");
-  const [usersCaptured, setUsersCaptured] = useState([]);
-  const [isClicked, setisClicked] = useState(false);
-
-  // let usersCaptured = [];
-  const addList = (l, i) => {
-    let res = l;
-    res.push(i);
-    return res;
-  }
+  const [userCaptured, setUserCaptured] = useState("")
 
   useEffect(() => {
     let unsubscribe;
@@ -212,67 +205,6 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     };
   }, [postId, comment])
 
-  useEffect(() => {
-    let unsubscribe;
-    if (postId) {
-      unsubscribe = onSnapshot(collection(doc(collectPosts, postId), 'captures'), (snapshot) => {
-        setCapturesList(snapshot.docs.map((doc) => ({
-          id: doc.id,
-          name: doc.data()
-        })));
-      });
-    }
-    return () => {
-      unsubscribe();
-    };
-  }, [postId, captures])
-
-  useEffect(() => {
-    if (postId) {
-      setUsersCaptured([]);
-      capturesList.map(({ id, name }) => (
-        setUsersCaptured(addList(usersCaptured, name.username))
-      ))
-    }
-  }, [postId, captures])
-
-  const captureExists = () => {
-      const q = query(collection(doc(collectPosts, postId), 'captures'), where("username", "==", user.displayName));
-      //const docSnap = getDoc(docRef);
-      const querySnapshot = getDocs(q);
-      /*if(q.length == 0) {
-        setisClicked(false)
-      }
-      else {
-        setisClicked(true)
-      }
-      querySnapshot.forEach((doc) => {
-        return true;
-      });
-      return false;*/
-      return querySnapshot;
-  }
-
-  const capturedByUser = () => {
-    for(let i = 0; i < usersCaptured.length; i++) {
-      if(usersCaptured[i] == user.displayName) {
-        setisClicked(true);
-        return;
-      }
-    }
-    setisClicked(false);
-    return;
-  }
-
-  const capturedByUserVtwo = () => {
-    for(let i = 0; i < usersCaptured.length; i++) {
-      if(usersCaptured[i] === user.displayName) {
-        return true;
-      }
-    }
-    return false;
-  }
-  
 
   const postComment = (event) => {
     event.preventDefault();
@@ -292,46 +224,16 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     event.preventDefault();
     const current_post = doc(collectPosts, postId)
     updateDoc(current_post, {
-      captures: captures+1
+      captures: [...captures, user.displayName]
     });
-    addDoc(collection(doc(collectPosts, postId), 'captures'), {
-      username: user.displayName
-    });
-    //setisClicked(true);
-    //captureExists();
-    //capturedByUser();
-    //setUsersCaptured(addList(usersCaptured, user.displayName));
-  }
-
-  const deleteCaptureDoc = (target, docid) => {
-    if(target == user.displayName) {
-      deleteDoc(doc(collection(doc(collectPosts, postId), 'captures'), docid))
-    }
   }
 
   const removeCapture = (event) => {
     event.preventDefault();
     const current_post = doc(collectPosts, postId)
     updateDoc(current_post, {
-      captures: captures-1
+      captures: removeElement(captures, user.displayName)
     });
-    
-    capturesList.map(({ id, name }) => (
-     deleteCaptureDoc(name.username, id)
-    ))
-    //captureExists();
-    //capturedByUser();
-    //setUsersCaptured(removeElement(usersCaptured, user.displayName));
-    //setisClicked(false);
-  }
-
-  const isCaptured = () => {
-    for(let i = 0; i < usersCaptured.length; i++) {
-      if(usersCaptured[i] == user.displayName) {
-        return true;
-      }
-    }
-    return false;
   }
 
   useEffect(() => { 
@@ -368,10 +270,10 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   }
 
   const deletePost = () => {
-    capturesList.map(({ id, name }) => (
-      deleteDoc(doc(collection(doc(collectPosts, postId), 'captures'), id))
-    ))
-
+    const current_post = doc(collectPosts, postId)
+    updateDoc(current_post, {
+      captures: []
+    })
     comments.map(({ id, comment }) => (
       deleteDoc(doc(collection(doc(collectPosts, postId), 'comments'), id))
     ))
@@ -625,7 +527,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       <br></br>
       <div className='post_like_comment'>
         {
-          user && usersCaptured.find(capturedNames => capturedNames === user.displayName)
+          user && captures.find(capturedNames => capturedNames === user.displayName)
             ?
             <Button onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></Button>
             :
@@ -638,7 +540,8 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       </div>
       <br></br>
       <div>
-        <h4 className="post_captures"><strong> {captures} captures </strong></h4>
+        {/* {} */}
+        <h4 className="post_captures"><strong> {captures.length} captures </strong></h4>
       </div>
 
       <h4 className="post_text"> <strong>{username}</strong> {caption}</h4>

@@ -252,8 +252,8 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
         addDoc(collection(doc(collectPosts, postId), 'captures'), {
           username: user.displayName
         });
-        captureExists();
-        //setisClicked(true)
+        //captureExists();
+        setisClicked(true)
       }
 
       const deleteCaptureDoc = (target, docid) => {
@@ -272,8 +272,8 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
         capturesList.map(({ id, name }) => (
           deleteCaptureDoc(name.username, id)
          ))
-         captureExists();
-        //setisClicked(false);
+         //captureExists();
+        setisClicked(false);
       }
 
     const descriptionElementRef = React.useRef(null);

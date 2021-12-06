@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
-import { collection, onSnapshot, doc, addDoc, Timestamp, serverTimestamp, FieldValue, orderBy, query, updateDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, addDoc, Timestamp, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc } from 'firebase/firestore';
 import { collectPosts, auth } from './firebase'
 import './Photo.css'
 
@@ -153,9 +153,37 @@ function CapturedPhoto({ postId, username, user, caption, imageUrl, iso, cameraT
     const [openViewComments, setOpenViewComments] = useState(false);
     const [openCommentPosted, setOpenCommentPosted] = useState(false);
 
+    const [usersCaptured, setUsersCaptured] = useState([]);
+    const [isClicked, setisClicked] = useState(false);
+    const [capturesList, setCapturesList] = useState([]);
+
     const handleCloseCommentPosted = () => {
         setOpenCommentPosted(!openCommentPosted)
     }
+
+    const addList = (l, i) => {
+      let res = l;
+      res.push(i);
+      return res;
+    }
+
+    useEffect(() => {
+      let unsubscribe;
+      if (postId) {
+        unsubscribe = onSnapshot(collection(doc(collectPosts, postId), 'captures'), (snapshot) => {
+          setCapturesList(snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data()
+          })));
+        });
+        capturesList.map(({ id, name }) => (
+          setUsersCaptured(addList(usersCaptured, name.username))
+        ))
+      }
+      return () => {
+        unsubscribe();
+      };
+    }, [postId, captures])
 
     const handleClickOpen = () => {
       setOpenComment(true);
@@ -207,16 +235,31 @@ function CapturedPhoto({ postId, username, user, caption, imageUrl, iso, cameraT
         event.preventDefault();
         const current_post = doc(collectPosts, postId)
         updateDoc(current_post, {
-          captures: [...captures, user.displayName]
+          captures: captures+1
         });
+        addDoc(collection(doc(collectPosts, postId), 'captures'), {
+          username: user.displayName
+        });
+        setisClicked(true);
+      }
+
+      const deleteCaptureDoc = (target, docid) => {
+        if(target == user.displayName) {
+          deleteDoc(doc(collection(doc(collectPosts, postId), 'captures'), docid))
+        }
       }
 
       const removeCapture = (event) => {
         event.preventDefault();
         const current_post = doc(collectPosts, postId)
         updateDoc(current_post, {
-          captures: removeElement(captures, user.displayName)
+          captures: captures-1
         });
+
+        capturesList.map(({ id, name }) => (
+          deleteCaptureDoc(name.username, id)
+         ))
+         setisClicked(false);
       }
 
     const descriptionElementRef = React.useRef(null);
@@ -314,14 +357,14 @@ function CapturedPhoto({ postId, username, user, caption, imageUrl, iso, cameraT
                         <p>{caption}</p>
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        <p>{captures.length} captures</p>
+                        <p>{captures} captures</p>
                         <a onClick={handleViewComments}>View all {numComments} comments</a>
                     </Typography>
                 </CardContent>
                 <CardActions className="buttons" disableSpacing>
                   <div>
                     {
-                    user && captures.find(capturedNames => capturedNames === user.displayName)
+                    user && isClicked
                       ?
                       <IconButton className="likeandcomment" onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></IconButton>
                       :

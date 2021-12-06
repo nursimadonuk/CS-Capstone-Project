@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
-import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc, getDocs, where } from 'firebase/firestore';
 import { db, collectPosts } from './firebase'
 import { Button, Input, makeStyles, Modal, TextField } from '@material-ui/core';
 
@@ -165,6 +165,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
   const [commentLimit, setCommentLimit] = useState(null);
+  const [capturesList, setCapturesList] = useState([]);
   const [ownPost, setOwnPost] = useState(null);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -185,7 +186,16 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   const [updateFocalLength, setUpdateFocalLength] = useState(focalLength);
   const [updateOther, setUpdateOther] = useState(other);
 
-  const [userCaptured, setUserCaptured] = useState("")
+  //const [userCaptured, setUserCaptured] = useState("");
+  const [usersCaptured, setUsersCaptured] = useState([]);
+  const [isClicked, setisClicked] = useState(false);
+
+  // let usersCaptured = [];
+  const addList = (l, i) => {
+    let res = l;
+    res.push(i);
+    return res;
+  }
 
   useEffect(() => {
     let unsubscribe;
@@ -202,6 +212,47 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     };
   }, [postId, comment])
 
+  useEffect(() => {
+    let unsubscribe;
+    if (postId) {
+      unsubscribe = onSnapshot(collection(doc(collectPosts, postId), 'captures'), (snapshot) => {
+        setCapturesList(snapshot.docs.map((doc) => ({
+          id: doc.id,
+          name: doc.data()
+        })));
+      });
+    }
+    return () => {
+      unsubscribe();
+    };
+  }, [postId, captures])
+
+  useEffect(() => {
+    if (postId) {
+      setUsersCaptured([])
+      capturesList.map(({ id, name }) => (
+        setUsersCaptured(addList(usersCaptured, name.username))
+      ))
+    }
+    
+  }, [captures])
+
+  /*if(capturesList.length >= 1) {
+    usersCaptured = capturesList[0].name;
+  }*/
+
+  const captureExists = () => {
+      const q = query(collection(doc(collectPosts, postId), 'captures'), where("username", "==", user.displayName));
+      //const docSnap = getDoc(docRef);
+      const querySnapshot = getDocs(q);
+      if(!querySnapshot) {
+        setisClicked(false)
+      }
+      else {
+        setisClicked(true)
+      }
+  }
+  
 
   const postComment = (event) => {
     event.preventDefault();
@@ -221,16 +272,42 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
     event.preventDefault();
     const current_post = doc(collectPosts, postId)
     updateDoc(current_post, {
-      captures: [...captures, user.displayName]
+      captures: captures+1
     });
+    addDoc(collection(doc(collectPosts, postId), 'captures'), {
+      username: user.displayName
+    });
+    setisClicked(true);
+    //captureExists();
+  }
+
+  const deleteCaptureDoc = (target, docid) => {
+    if(target == user.displayName) {
+      deleteDoc(doc(collection(doc(collectPosts, postId), 'captures'), docid))
+    }
   }
 
   const removeCapture = (event) => {
     event.preventDefault();
     const current_post = doc(collectPosts, postId)
     updateDoc(current_post, {
-      captures: removeElement(captures, user.displayName)
+      captures: captures-1
     });
+    
+    capturesList.map(({ id, name }) => (
+     deleteCaptureDoc(name.username, id)
+    ))
+    //captureExists();
+    setisClicked(false);
+  }
+
+  const isCaptured = () => {
+    for(let i = 0; i < usersCaptured.length; i++) {
+      if(usersCaptured[i] == user.displayName) {
+        return true;
+      }
+    }
+    return false;
   }
 
   useEffect(() => { 
@@ -267,10 +344,9 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   }
 
   const deletePost = () => {
-    const current_post = doc(collectPosts, postId)
-    updateDoc(current_post, {
-      captures: []
-    });
+    capturesList.map(({ id, name }) => (
+      deleteDoc(doc(collection(doc(collectPosts, postId), 'captures'), id))
+    ))
 
     comments.map(({ id, comment }) => (
       deleteDoc(doc(collection(doc(collectPosts, postId), 'comments'), id))
@@ -525,7 +601,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       <br></br>
       <div className='post_like_comment'>
         {
-          user && captures.find(capturedNames => capturedNames === user.displayName)
+          user && isClicked
             ?
             <Button onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></Button>
             :
@@ -538,8 +614,7 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
       </div>
       <br></br>
       <div>
-        {/* {} */}
-        <h4 className="post_captures"><strong> {captures.length} captures </strong></h4>
+        <h4 className="post_captures"><strong> {captures} captures </strong></h4>
       </div>
 
       <h4 className="post_text"> <strong>{username}</strong> {caption}</h4>

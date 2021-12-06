@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
-import { collection, onSnapshot, doc, addDoc, Timestamp, serverTimestamp, FieldValue, orderBy, query, updateDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, addDoc, Timestamp, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc, getDocs, where } from 'firebase/firestore';
 import { collectPosts, auth } from './firebase'
 import './Photo.css'
 
@@ -153,6 +153,15 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
     const [openViewComments, setOpenViewComments] = useState(false);
     const [openCommentPosted, setOpenCommentPosted] = useState(false);
 
+    const [isClicked, setisClicked] = useState(false);
+    const [capturesList, setCapturesList] = useState([]);
+
+    const addList = (l, i) => {
+      let res = l;
+      res.push(i);
+      return res;
+    }
+
     const handleCloseCommentPosted = () => {
         setOpenCommentPosted(!openCommentPosted)
     }
@@ -181,10 +190,41 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
         };
       }, [postId])
 
+      useEffect(() => {
+        let unsubscribe;
+        if (postId) {
+          unsubscribe = onSnapshot(collection(doc(collectPosts, postId), 'captures'), (snapshot) => {
+            setCapturesList(snapshot.docs.map((doc) => ({
+              id: doc.id,
+              name: doc.data()
+            })));
+          });
+          /*
+          capturesList.map(({ id, name }) => (
+            setUsersCaptured(addList(usersCaptured, name.username))
+          ))*/
+        }
+        return () => {
+          unsubscribe();
+        };
+      }, [postId, captures])
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const captureExists = () => {
+      const q = query(collection(doc(collectPosts, postId), 'captures'), where("username", "==", user.displayName));
+      //const docSnap = getDoc(docRef);
+      const querySnapshot = getDocs(q);
+      if(querySnapshot.length == 0) {
+        setisClicked(false)
+      }
+      else {
+        setisClicked(true)
+      }
+  }
 
     const postComment = (event) => {
         event.preventDefault();
@@ -207,16 +247,33 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
         event.preventDefault();
         const current_post = doc(collectPosts, postId)
         updateDoc(current_post, {
-          captures: [...captures, user.displayName]
+          captures: captures+1
         });
+        addDoc(collection(doc(collectPosts, postId), 'captures'), {
+          username: user.displayName
+        });
+        captureExists();
+        //setisClicked(true)
+      }
+
+      const deleteCaptureDoc = (target, docid) => {
+        if(target == user.displayName) {
+          deleteDoc(doc(collection(doc(collectPosts, postId), 'captures'), docid))
+        }
       }
 
       const removeCapture = (event) => {
         event.preventDefault();
         const current_post = doc(collectPosts, postId)
         updateDoc(current_post, {
-          captures: removeElement(captures, user.displayName)
+          captures: captures-1
         });
+
+        capturesList.map(({ id, name }) => (
+          deleteCaptureDoc(name.username, id)
+         ))
+         captureExists();
+        //setisClicked(false);
       }
 
     const descriptionElementRef = React.useRef(null);
@@ -311,14 +368,14 @@ function Photo({ postId, username, user, caption, imageUrl, iso, cameraType, fSt
                 />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        <p>{captures.length} captures</p>
+                        <p>{captures} captures</p>
                         <a onClick={handleViewComments}>View all {numComments} comments</a>
                     </Typography>
                 </CardContent>
                 <CardActions className="buttons" disableSpacing>
                   <div>
                     {
-                    user && captures.find(capturedNames => capturedNames === user.displayName)
+                    user && isClicked
                       ?
                       <IconButton className="likeandcomment" onClick={removeCapture} disabled={user == null}><CameraOutlinedIcon /></IconButton>
                       :

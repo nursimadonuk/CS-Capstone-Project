@@ -3,7 +3,7 @@ import './Post.css';
 import Avatar from '@material-ui/core/Avatar';
 import { collection, onSnapshot, doc, addDoc, serverTimestamp, FieldValue, orderBy, query, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db, collectPosts } from './firebase'
-import { Button, Input, makeStyles, Modal, TextField } from '@material-ui/core';
+import { Button, Input, TextField } from '@material-ui/core';
 
 import CameraIcon from '@mui/icons-material/Camera';
 import CameraOutlinedIcon from '@mui/icons-material/CameraOutlined';
@@ -12,33 +12,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
 import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogActions from '@mui/material/DialogActions';
+
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 
 import NewProfile from './Newprofile';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 700,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
-
-function getModalStyle() {
-  const top = 0;
-  const left = 10;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, ${left}%)`,
-  };
-}
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -74,7 +58,7 @@ const parseDay = (day) => {
 const parseTime = (datePosted) => {
     const now = new Date();
 
-    if(!datePosted) { return "No Time Stamp on Post" }
+    if(!datePosted) { return "" }
 
     try {
       let miliSecs = datePosted.getTime();
@@ -174,8 +158,6 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   const [openEdit, setOpenEdit] = useState(false);
   const [openUpdateMessage, setOpenUpdateMessage] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
-  const [modalStyle] = React.useState(getModalStyle);
-  const classes = useStyles();
 
   const [updateCaption, setUpdateCaption] = useState(caption);
   const [updateCameraType, setUpdateCameraType] = useState(cameraType);
@@ -325,81 +307,61 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
   return (
     <div className="post">
 
-      <Modal
+      <Dialog
         open={open}
         onClose={() => setOpen(false)}
+        scroll={'paper'}
+        className='post-dialogs'
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
       >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app_signup">
-            <center className='sign_up_heading'>
-              <img
-                className="app_header_image"
-                src="LensCleanse.png"
-                alt="Lens Cleanse"
-                width='80'
-                height='auto'
-              />
-              <h1 className="app_header_h1">Lens Cleanse</h1>
-            </center>
-
-            <div className='post_comments'>
+        <DialogTitle id="scroll-dialog-title">
+          <h1 className="app_header_h1">Lens Cleanse Comments</h1>
+        </DialogTitle>
+        <DialogContent className='post-dialogs'>
+          <div className='post_comments'>
             {comments.map(({ id, comment }) => (
               <h4 className='a_comment'> <strong>{comment.username}</strong> {comment.text} </h4>
             ))}
           </div>
 
-          </form>
-        </div>
-      </Modal>
+        </DialogContent>
+      </Dialog>
 
-      <Modal
+      <Dialog
         open={openDelete}
         onClose={() => setOpenDelete(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        className='post-dialogs'
       >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app_signup">
-            <center className='sign_up_heading'>
-              <img
-                className="app_header_image"
-                src="LensCleanse.png"
-                alt="Lens Cleanse"
-                width='80'
-                height='auto'
-              />
-              <h1 className="app_header_h1">Lens Cleanse</h1>
-            </center>
-
-            <h4> Are you sure you want to delete this post? </h4>
-
+        <DialogTitle id="alert-dialog-title">
+          <h1 className="app_header_h1">Lens Cleanse Delete</h1>
+        </DialogTitle>
+        <DialogContent className='post-dialogs'>
+          <DialogContentText id="alert-dialog-description">
+          Are you sure you want to delete this post?
+          </DialogContentText>
+        </DialogContent >
+        <DialogActions>
             <div className='post_delete_buttons'>
                 <button className="bottom-buttons" onClick={deletePost}> YES </button>
                 <button className="bottom-buttons" onClick={deleteView}> CANCEL </button>
             </div>
+        </DialogActions>
+      </Dialog>
 
-          </form>
-        </div>
-      </Modal>
 
-      <Modal
-        open={openEdit}
-        onClose={() => setOpenEdit(false)}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app_signup">
-            <center className='sign_up_heading'>
-              <img
-                className="app_header_image"
-                src="LensCleanse.png"
-                alt="Lens Cleanse"
-                width='80'
-                height='auto'
-              />
-              <h1 className="app_header_h1">Lens Cleanse</h1>
-            </center>
-
-            <div className="uploadFileComponents">
-
-              <div className="uploadFile">
+      <Dialog 
+      open={openEdit}
+      onClose={() => setOpenEdit(false)} 
+      
+     >
+        <DialogTitle>
+        <h1 className="app_header_h1">Lens Cleanse Edit</h1>
+        </DialogTitle>
+        <DialogContent className="edit-dialog">
+            <div className="uploadFile">
                 <TextField id="standard-basic" className="imageupload_caption" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCaption(event.target.value)} value={updateCaption} />
                 <TextField className="imageupload_photoInfo" label="Enter Camera Type" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCameraType(event.target.value)} value={updateCameraType} />
                 <TextField className="imageupload_photoInfo" label="Enter ISO" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateISO(event.target.value)} value={updateISO} />
@@ -411,40 +373,32 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
                 <TextField className="imageupload_photoInfo" label="Enter Focal Length" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateFocalLength(event.target.value)} value={updateFocalLength} />
                 <TextField className="imageupload_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateOther(event.target.value)} value={updateOther} />
               </div>
-
+        </DialogContent>
+        <DialogActions>
               <div className="post-edit-button">
                 <button className="bottom-buttons" variant="contained" color="primary" onClick={updatePost}>
                   Update
                 </button>
               </div>
-            </div>
+        </DialogActions>
+      </Dialog>
 
-          </form>
-        </div>
-      </Modal>
-
-      <Modal
+      <Dialog
         open={openUpdateMessage}
         onClose={() => setOpenUpdateMessage(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        className='post-dialogs'
       >
-        <div style={modalStyle} className={classes.paper}>
-          <form className="app_signup">
-            <center className='sign_up_heading'>
-              <img
-                className="app_header_image"
-                src="LensCleanse.png"
-                alt="Lens Cleanse"
-                width='80'
-                height='auto'
-              />
-              <h1 className="app_header_h1">Lens Cleanse</h1>
-            </center>
-
-            <h3> Your post has been updated successfully! </h3>
-
-          </form>
-        </div>
-      </Modal>
+        <DialogTitle id="alert-dialog-title">
+          <h1 className="app_header_h1">Lens Cleanse</h1>
+        </DialogTitle>
+        <DialogContent className='post-dialogs'>
+          <DialogContentText id="alert-dialog-description">
+          <h3> Your post has been updated successfully! </h3>
+          </DialogContentText>
+        </DialogContent >
+      </Dialog>
 
       <Dialog
         fullScreen
@@ -496,12 +450,12 @@ function Post({ postId, username, user, caption, imageUrl, iso, cameraType, fSto
 
         {ownPost ? (
           <div>
-            <Button className="post_header_editbutton" onClick={editView}><EditIcon/></Button>
-            <Button className="post_header_editbutton" onClick={deleteView}><DeleteIcon/></Button>
+            <Button className="post_header_editbutton" onClick={editView} disabled={user == null} ><EditIcon/></Button>
+            <Button className="post_header_editbutton" onClick={deleteView} disabled={user == null} ><DeleteIcon/></Button>
           </div>
         ) : (
           <div>
-            <Button className="post_header_button" onclick={profileView}>View Profile</Button>
+            {/*<Button className="post_header_button" onclick={profileView}>View Profile</Button>*/}
           </div>
 
         )}

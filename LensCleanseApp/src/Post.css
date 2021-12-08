@@ -220,3 +220,11 @@
 .post_delete_buttons {
     margin-top: 20px;
 }
+
+.post-dialogs {
+    min-width: 1000px;
+}
+
+.edit-dialog {
+    width: 650px;
+}

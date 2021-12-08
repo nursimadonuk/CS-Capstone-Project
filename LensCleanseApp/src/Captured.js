@@ -4,9 +4,9 @@ import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import { onSnapshot, orderBy, query, Timestamp, where } from 'firebase/firestore';
 import { collectPosts, auth } from './firebase'
 
-import './Newprofile.css'
+import './Newprofile.css';
 
-import CapturedPhoto from './CapturedPhoto';
+import Post from './Post';
 
 const splitTime = (date) => {
   if(!date) { return [] }
@@ -46,16 +46,14 @@ function Captured({ profileusername, profileuser }) {
 
   //! Replace p tags with information from Firebase
   return (
-    <div>
 
       <div className="profile-wrapper">
-        <Grid className="profile-posts-container"> {/* container spacing={0.5} */}
-          {
-            posts.map(({ id, post }) => (
-              <Grid className="profile-posts" >
+
+          {posts.map(({ id, post }) => (
+            <div>
                 {profileuser && post.captures.find(capturedNames => capturedNames === profileuser.displayName) ?
-                <CapturedPhoto
-                className="profile-post"
+                <Post
+                className="captured-post"
                 key={id}
                 postId={id}
                 user={profileuser}
@@ -73,18 +71,14 @@ function Captured({ profileusername, profileuser }) {
                 location={post.location}
                 other={post.other}
                 numComments={post.numComments}
-                timePosted={splitTime(post.timestamp)}
+                timePosted={null}
               />            :
             <div></div>}
 
-              </Grid>
-            ))
-          }
-        </Grid>
-
+            </div>))}     
+      
       </div>
 
-    </div>
   )
 }
 

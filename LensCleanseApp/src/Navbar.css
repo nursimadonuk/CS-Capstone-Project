@@ -64,3 +64,120 @@
     color: #195c79;
 
 }
+
+.app_header_h1 {
+    text-align: center;
+    align-self: center;
+    color: #4F6D7A;
+    font-family: 'Brush Script MT', cursive;
+}
+
+.app_header_image {
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+
+.sign_up_heading {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.tooltip .tooltip-logout .tooltip-capture .tooltip-signin .tooltip-about{
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #4F6D7A;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #4F6D7A;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-top: 70px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  
+  .tooltip-logout .tooltiptext-logout {
+    visibility: hidden;
+    width: 120px;
+    background-color: #4F6D7A;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-top: 70px;
+    margin-right: 50px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip-logout:hover .tooltiptext-logout {
+    visibility: visible;
+  }
+
+  .tooltip-capture .tooltiptext-capture {
+    visibility: hidden;
+    width: 180px;
+    background-color: #4F6D7A;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-top: 70px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip-capture:hover .tooltiptext-capture {
+    visibility: visible;
+  }
+
+  .tooltip-signin .tooltiptext-signin {
+    visibility: hidden;
+    width: 160px;
+    background-color: #4F6D7A;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-top: 70px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip-signin:hover .tooltiptext-signin {
+    visibility: visible;
+  }
+
+  .tooltip-about .tooltiptext-about {
+    visibility: hidden;
+    width: 120px;
+    background-color: #4F6D7A;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    margin-top: 70px;
+    margin-right: 50px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltip-about:hover .tooltiptext-about {
+    visibility: visible;
+  }

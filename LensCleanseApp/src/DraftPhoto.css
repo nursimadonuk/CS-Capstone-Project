@@ -3,14 +3,24 @@
 }
 
 .draft_photoInfo {
-    margin-bottom: 5px;
+    padding: 30px;
+    margin-bottom: 10px;
     margin-left: 10px;
-    width: 45%;
-    height: 50px;
-    display: flex;
-    flex-direction: column;
+    width: 450px;
+    height: 40px;
 }
 
+.editdraft {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.draft_caption {
+    width: 900px;
+    height: 40px;
+}
 .draft_photoInfo_other {
-    width: 90%;
+    width: 900px;
+    height: 40px;
+    margin-bottom: 20px;
 }

@@ -136,7 +136,7 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
             <DialogContent>
 
             
-              <div className="uploadFile">
+              <div className="editdraft">
                 <TextField id="standard-basic" className="draft_caption" label="Enter a caption" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCaption(event.target.value)} value={updateCaption} />
                 <TextField className="draft_photoInfo" label="Enter Camera Type" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateCameraType(event.target.value)} value={updateCameraType} />
                 <TextField className="draft_photoInfo" label="Enter ISO" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateISO(event.target.value)} value={updateISO} />
@@ -148,7 +148,10 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
                 <TextField className="draft_photoInfo" label="Enter Focal Length" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateFocalLength(event.target.value)} value={updateFocalLength} />
                 <TextField className="draft_photoInfo_other" label="Enter Other Info" defaultValue="Small" size="small" variant="filled" onChange={event => setUpdateOther(event.target.value)} value={updateOther} />
               </div>
-            
+
+            </DialogContent>
+
+            <DialogActions>
             <div className="draft-delete-button">
               <button className="bottom-buttons" variant="contained" color="primary" onClick={updateDraft}>
                 Update
@@ -157,8 +160,7 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
                 Upload
               </button>
             </div>
-
-            </DialogContent>
+            </DialogActions>
             </Dialog>
 
             <Dialog 

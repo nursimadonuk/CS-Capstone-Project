@@ -216,6 +216,7 @@ function DraftPhoto({ postId, username, user, caption, imageUrl, iso, cameraType
                     <CardContent>
                     <Typography paragraph>Details:</Typography>
                     <Typography paragraph>
+                            <p className='info1'> <strong>Caption: </strong> {caption} </p>
                             <p className='info1'> <strong>Camera: </strong> {cameraType} </p>
                             <p className='info2'> <strong> Lens Type: </strong>  {lensType} </p>
                             <p className='info3'> <strong> ISO: </strong>  {iso} </p>

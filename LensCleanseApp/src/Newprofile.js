@@ -59,6 +59,15 @@ function NewProfile({ profileusername, profileuser }) {
         
       </div>
 
+      <div className="info">
+        {posts.length==1 ? (
+          <h3> {posts.length} post </h3>  
+        ) : (
+          <h3> {posts.length} posts </h3>  
+        )}
+              
+      </div>
+
       <div className="profile-wrapper">
         <Grid className="profile-posts-container"> {/* container spacing={0.5} */}
           {

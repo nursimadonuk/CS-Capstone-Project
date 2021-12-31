@@ -6,3 +6,6 @@ Image Sharing App designed for Photographers by
  - `Rafsan Hasan`
  - `Mena Bebawy`
  - `Jiaying Wu`
+
+The app is hosted on the link https://lens-cleanse.web.app/
+
